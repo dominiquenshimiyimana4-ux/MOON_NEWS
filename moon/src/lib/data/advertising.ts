@@ -1,0 +1,198 @@
+import type { AdPayment, AdvertiserAccount, Advertisement, RevenueReportRow } from "@/lib/types";
+
+/** Demo advertising campaigns used to seed the advertiser dashboard. */
+export const advertisements: Advertisement[] = [
+  {
+    id: "ad1",
+    advertiser: "Bank of Kigali",
+    advertiserId: "adv1",
+    placement: "homepage",
+    type: "banner",
+    startDate: new Date("2025-09-01").toISOString(),
+    endDate: new Date("2025-12-31").toISOString(),
+    budget: 4_500_000,
+    spent: 2_100_000,
+    impressions: 812_400,
+    clicks: 14_320,
+    status: "active",
+    headline: "Bank of Kigali — banking that moves with you.",
+    targetUrl: "https://bk.rw",
+    submittedAt: new Date("2025-08-28").toISOString(),
+    reviewedBy: "Keza M.",
+    reviewedAt: new Date("2025-08-30").toISOString(),
+  },
+  {
+    id: "ad2",
+    advertiser: "MTN Rwanda",
+    advertiserId: "adv2",
+    placement: "article",
+    type: "native",
+    startDate: new Date("2025-08-15").toISOString(),
+    endDate: new Date("2025-11-15").toISOString(),
+    budget: 3_200_000,
+    spent: 2_640_000,
+    impressions: 604_900,
+    clicks: 9_870,
+    status: "active",
+    headline: "MTN — everywhere you go.",
+    targetUrl: "https://mtn.rw",
+    submittedAt: new Date("2025-08-12").toISOString(),
+    reviewedBy: "Keza M.",
+    reviewedAt: new Date("2025-08-14").toISOString(),
+  },
+  {
+    id: "ad3",
+    advertiser: "RSSB",
+    placement: "sidebar",
+    type: "banner",
+    startDate: new Date("2025-06-01").toISOString(),
+    endDate: new Date("2025-09-30").toISOString(),
+    budget: 1_800_000,
+    spent: 1_800_000,
+    impressions: 421_000,
+    clicks: 5_640,
+    status: "ended",
+  },
+  {
+    id: "ad4",
+    advertiser: "Irembo",
+    placement: "newsletter",
+    type: "native",
+    startDate: new Date("2025-10-01").toISOString(),
+    endDate: new Date("2026-01-31").toISOString(),
+    budget: 2_400_000,
+    spent: 0,
+    impressions: 0,
+    clicks: 0,
+    status: "scheduled",
+  },
+  {
+    id: "ad5",
+    advertiser: "Volcano Coffee",
+    placement: "category",
+    type: "banner",
+    startDate: new Date("2025-09-10").toISOString(),
+    endDate: new Date("2025-10-10").toISOString(),
+    budget: 900_000,
+    spent: 310_000,
+    impressions: 96_300,
+    clicks: 2_110,
+    status: "paused",
+  },
+  {
+    id: "ad6",
+    advertiser: "Airtel Rwanda",
+    placement: "article",
+    type: "video",
+    startDate: new Date("2025-10-05").toISOString(),
+    endDate: new Date("2026-02-28").toISOString(),
+    budget: 5_000_000,
+    spent: 0,
+    impressions: 0,
+    clicks: 0,
+    status: "draft",
+  },
+];
+
+/** Ad revenue reported per month for the dashboard chart. */
+export const adRevenueTrend: RevenueReportRow[] = [
+  { month: "Apr", advertising: 6_200_000, sponsoredContent: 1_100_000, subscriptions: 320_000, affiliate: 90_000, other: 40_000 },
+  { month: "May", advertising: 7_050_000, sponsoredContent: 1_400_000, subscriptions: 360_000, affiliate: 110_000, other: 55_000 },
+  { month: "Jun", advertising: 6_800_000, sponsoredContent: 1_250_000, subscriptions: 410_000, affiliate: 130_000, other: 60_000 },
+  { month: "Jul", advertising: 8_400_000, sponsoredContent: 1_900_000, subscriptions: 470_000, affiliate: 160_000, other: 70_000 },
+  { month: "Aug", advertising: 9_100_000, sponsoredContent: 2_200_000, subscriptions: 520_000, affiliate: 180_000, other: 80_000 },
+  { month: "Sep", advertising: 10_350_000, sponsoredContent: 2_600_000, subscriptions: 590_000, affiliate: 210_000, other: 95_000 },
+];
+
+export const placementLabels: Record<Advertisement["placement"], string> = {
+  homepage: "Homepage",
+  article: "Article",
+  sidebar: "Sidebar",
+  newsletter: "Newsletter",
+  category: "Category",
+};
+
+export const adTypeLabels: Record<Advertisement["type"], string> = {
+  banner: "Banner",
+  video: "Video",
+  native: "Native",
+};
+
+/**
+ * Registered advertising businesses. These back the self-service advertiser
+ * dashboard: each account owns the campaigns whose `advertiserId` matches.
+ */
+export const advertiserAccounts: AdvertiserAccount[] = [
+  {
+    id: "adv1",
+    userId: "u-adv1",
+    businessName: "Bank of Kigali",
+    contactName: "Alice Uwase",
+    email: "ads@bk.rw",
+    phone: "+250 788 100 000",
+    website: "https://bk.rw",
+    category: "Finance",
+    about: "Rwanda's largest commercial bank.",
+    createdAt: new Date("2025-08-20").toISOString(),
+  },
+  {
+    id: "adv2",
+    userId: "u-adv2",
+    businessName: "MTN Rwanda",
+    contactName: "Eric Habimana",
+    email: "brand@mtn.rw",
+    phone: "+250 788 200 000",
+    website: "https://mtn.rw",
+    category: "Telecom",
+    about: "Mobile network operator serving Rwanda.",
+    createdAt: new Date("2025-08-05").toISOString(),
+  },
+];
+
+/** Payments advertisers have made against their campaign budgets. */
+export const adPayments: AdPayment[] = [
+  {
+    id: "pay1",
+    adId: "ad1",
+    advertiserId: "adv1",
+    advertiser: "Bank of Kigali",
+    amount: 2_100_000,
+    method: "bank_transfer",
+    reference: "BK-2025-0912",
+    createdAt: new Date("2025-09-02").toISOString(),
+    status: "paid",
+  },
+  {
+    id: "pay2",
+    adId: "ad1",
+    advertiserId: "adv1",
+    advertiser: "Bank of Kigali",
+    amount: 1_200_000,
+    method: "bank_transfer",
+    reference: "BK-2025-1030",
+    createdAt: new Date("2025-10-01").toISOString(),
+    status: "pending",
+  },
+  {
+    id: "pay3",
+    adId: "ad2",
+    advertiserId: "adv2",
+    advertiser: "MTN Rwanda",
+    amount: 2_640_000,
+    method: "mobile_money",
+    reference: "MTN-MOMO-88213",
+    createdAt: new Date("2025-08-20").toISOString(),
+    status: "paid",
+  },
+  {
+    id: "pay4",
+    adId: "ad2",
+    advertiserId: "adv2",
+    advertiser: "MTN Rwanda",
+    amount: 560_000,
+    method: "mobile_money",
+    reference: "MTN-MOMO-90442",
+    createdAt: new Date("2025-10-02").toISOString(),
+    status: "pending",
+  },
+];
