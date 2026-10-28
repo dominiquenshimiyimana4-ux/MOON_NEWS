@@ -4,31 +4,62 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const connectDB = async () => {
+export const connectDB = async (): Promise<void> => {
+  const mongoUri = process.env.MONGODB_URI?.trim();
+
+  if (!mongoUri) {
+    throw new Error(
+      'MONGODB_URI is missing. Set it in Render Environment.'
+    );
+  }
+
+  let parsedUri: URL;
+
   try {
-    const mongoUri = process.env.MONGODB_URI;
+    parsedUri = new URL(mongoUri);
+  } catch {
+    throw new Error(
+      'MONGODB_URI is not a valid URL. Copy the complete URI from MongoDB Atlas.'
+    );
+  }
 
-    if (!mongoUri) {
-      throw new Error(
-        'MONGODB_URI is missing. Set it in Render Environment.'
-      );
-    }
+  if (
+    parsedUri.protocol !== 'mongodb:' &&
+    parsedUri.protocol !== 'mongodb+srv:'
+  ) {
+    throw new Error(
+      'MONGODB_URI must start with mongodb:// or mongodb+srv://'
+    );
+  }
 
-    if (
-      !mongoUri.startsWith('mongodb://') &&
-      !mongoUri.startsWith('mongodb+srv://')
-    ) {
-      throw new Error(
-        'MONGODB_URI must start with mongodb:// or mongodb+srv://'
-      );
-    }
+  if (!parsedUri.hostname || !parsedUri.hostname.includes('.')) {
+    throw new Error(
+      'MongoDB hostname is missing or incomplete. Copy the URI from Atlas.'
+    );
+  }
 
-    await mongoose.connect(mongoUri);
+  if (
+    mongoUri.includes('<db_password>') ||
+    mongoUri.includes('YOUR_REAL_CLUSTER_HOST')
+  ) {
+    throw new Error(
+      'MONGODB_URI still contains a placeholder. Replace it with your actual Atlas values.'
+    );
+  }
+
+  try {
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 10000,
+    });
 
     console.log('MongoDB Connected Successfully');
   } catch (error) {
-    console.error('MongoDB Connection Error:', error);
-    process.exit(1);
+    console.error(
+      'MongoDB connection failed. Check Atlas credentials, hostname, and Network Access.',
+      error instanceof Error ? error.message : 'Unknown connection error'
+    );
+
+    throw error;
   }
 };
 
