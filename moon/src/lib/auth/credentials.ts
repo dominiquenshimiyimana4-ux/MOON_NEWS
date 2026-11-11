@@ -99,18 +99,39 @@ export function stableUserId(email: string): string {
   return `u-${hash.toString(36)}`;
 }
 
+/**
+ * Provisioned accounts come from the environment so no password is ever
+ * committed to the repository. Set them in `moon/.env.local` (see
+ * `.env.example`); the fallbacks below only keep the demo working out of the box.
+ */
+function env(value: string | undefined, fallback: string): string {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : fallback;
+}
+
 /** Administrator sign-in address. Self-registration for this e-mail is blocked. */
-export const ADMIN_EMAIL = "nshimiyimanadominique4@gmail.com";
-const ADMIN_NAME = "Dominique Nshimiyimana";
-const ADMIN_PASSWORD = "Dominique@2006";
+export const ADMIN_EMAIL = env(process.env.NEXT_PUBLIC_ADMIN_EMAIL, "nshimiyimanadominique4@gmail.com").toLowerCase();
+const ADMIN_NAME = env(process.env.NEXT_PUBLIC_ADMIN_NAME, "Dominique Nshimiyimana");
+const ADMIN_PASSWORD = env(process.env.NEXT_PUBLIC_ADMIN_PASSWORD, "Dominique@2006");
 
 /** Staff sign-in for the author studio. */
-export const AUTHOR_EMAIL = "authormoonnews@gmail.com";
+export const AUTHOR_EMAIL = env(process.env.NEXT_PUBLIC_AUTHOR_EMAIL, "authormoonnews@gmail.com").toLowerCase();
+const AUTHOR_NAME = env(process.env.NEXT_PUBLIC_AUTHOR_NAME, "Moon News Author");
+const AUTHOR_PASSWORD = env(process.env.NEXT_PUBLIC_AUTHOR_PASSWORD, "Author01");
+
 /** Advertiser sign-in for the self-service advertiser dashboard. */
-export const ADVERTISER_EMAIL = "advertisermoonnews@gmail.com";
+export const ADVERTISER_EMAIL = env(
+  process.env.NEXT_PUBLIC_ADVERTISER_EMAIL,
+  "advertisermoonnews@gmail.com"
+).toLowerCase();
+const ADVERTISER_NAME = env(process.env.NEXT_PUBLIC_ADVERTISER_NAME, "Moon News Advertiser");
+const ADVERTISER_PASSWORD = env(process.env.NEXT_PUBLIC_ADVERTISER_PASSWORD, "advertiser02");
+
+/** E-mails of the provisioned accounts; the public register form refuses them. */
+const RESERVED_EMAILS = [ADMIN_EMAIL, AUTHOR_EMAIL, ADVERTISER_EMAIL];
 
 export function isReservedEmail(email: string): boolean {
-  return email.trim().toLowerCase() === ADMIN_EMAIL;
+  return RESERVED_EMAILS.includes(email.trim().toLowerCase());
 }
 
 function readVault(): StoredCredential[] {
@@ -140,11 +161,11 @@ function findCredential(email: string): StoredCredential | undefined {
  */
 const BUILT_IN_ACCOUNTS: { email: string; name: string; password: string; role: UserRole }[] = [
   { email: ADMIN_EMAIL, name: ADMIN_NAME, password: ADMIN_PASSWORD, role: "admin" },
-  { email: AUTHOR_EMAIL, name: "Moon News Author", password: "Author01", role: "journalist" },
+  { email: AUTHOR_EMAIL, name: AUTHOR_NAME, password: AUTHOR_PASSWORD, role: "journalist" },
   {
     email: ADVERTISER_EMAIL,
-    name: "Moon News Advertiser",
-    password: "advertiser02",
+    name: ADVERTISER_NAME,
+    password: ADVERTISER_PASSWORD,
     role: "advertiser",
   },
   { email: "editor@moonnews.rw", name: "Moon News Editor", password: "editor123", role: "editor" },
