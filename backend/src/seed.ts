@@ -25,8 +25,12 @@ const seedData = async () => {
     const adminEmail = (process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com').toLowerCase();
     const adminPassword = await hashPassword(process.env.ADMIN_PASSWORD ?? 'Dominique@2006');
     // Staff accounts for the author studio and the advertiser dashboard.
+    // Like the admin, they come from the environment and only the bcrypt hash
+    // is stored, so the same credentials work against the frontend login form.
+    const authorName = process.env.AUTHOR_NAME ?? 'Moon News Author';
     const authorEmail = (process.env.AUTHOR_EMAIL ?? 'authormoonnews@gmail.com').toLowerCase();
     const authorPassword = await hashPassword(process.env.AUTHOR_PASSWORD ?? 'Author01');
+    const advertiserName = process.env.ADVERTISER_NAME ?? 'Moon News Advertiser';
     const advertiserEmail = (process.env.ADVERTISER_EMAIL ?? 'advertisermoonnews@gmail.com').toLowerCase();
     const advertiserPassword = await hashPassword(process.env.ADVERTISER_PASSWORD ?? 'advertiser02');
     const users = await User.insertMany([
@@ -38,14 +42,14 @@ const seedData = async () => {
         avatar: 'https://picsum.photos/seed/admin/100/100',
       },
       {
-        name: 'Moon News Author',
+        name: authorName,
         email: authorEmail,
         password: authorPassword,
         role: 'journalist',
         avatar: 'https://picsum.photos/seed/author/100/100',
       },
       {
-        name: 'Moon News Advertiser',
+        name: advertiserName,
         email: advertiserEmail,
         password: advertiserPassword,
         role: 'advertiser',
@@ -255,13 +259,14 @@ const seedData = async () => {
     await articles[1].save();
 
     console.log('✓ Seed data loaded successfully!');
-    console.log('\nSeed Accounts:');
-    console.log(`- Admin: ${adminEmail} (from ADMIN_EMAIL / ADMIN_PASSWORD env)`);
-    console.log('- Author: authormoonnews@gmail.com / Author01');
-    console.log('- Advertiser: advertisermoonnews@gmail.com / advertiser02');
-    console.log('- Editor: editor@moonnews.rw / password123');
-    console.log('- Journalist: author1@moonnews.rw / password123');
-    console.log('- Reader: reader@moonnews.rw / password123');
+    // E-mails only: passwords are never echoed, they live in .env.
+    console.log('\nSeed Accounts (passwords come from .env):');
+    console.log(`- Admin:      ${adminEmail} (ADMIN_EMAIL / ADMIN_PASSWORD)`);
+    console.log(`- Author:     ${authorEmail} (AUTHOR_EMAIL / AUTHOR_PASSWORD)`);
+    console.log(`- Advertiser: ${advertiserEmail} (ADVERTISER_EMAIL / ADVERTISER_PASSWORD)`);
+    console.log('- Editor:     editor@moonnews.rw (password123)');
+    console.log('- Journalist: author1@moonnews.rw (password123)');
+    console.log('- Reader:     reader@moonnews.rw (password123)');
 
     process.exit(0);
   } catch (error) {

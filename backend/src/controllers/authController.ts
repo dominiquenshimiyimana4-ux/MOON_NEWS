@@ -23,11 +23,15 @@ export interface RegisterRequest {
 const PUBLIC_REGISTER_ROLES = ['reader', 'advertiser'];
 
 /**
- * The administrator account is provisioned separately (see
- * scripts/updateAdminCredentials.ts). Its e-mail is reserved: the public
- * register endpoint must not be usable to create or impersonate it.
+ * Provisioned accounts (admin, author, advertiser) are created by the seed
+ * script, never through the public register endpoint. Their e-mails are
+ * reserved so nobody can sign up with them and shadow the real account.
  */
-const RESERVED_ADMIN_EMAILS = [(process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase()];
+const RESERVED_ADMIN_EMAILS = [
+  process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com',
+  process.env.AUTHOR_EMAIL ?? 'authormoonnews@gmail.com',
+  process.env.ADVERTISER_EMAIL ?? 'advertisermoonnews@gmail.com',
+].map((email) => email.trim().toLowerCase());
 
 export interface AuthResponse {
   token: string;
