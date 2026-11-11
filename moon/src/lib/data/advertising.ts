@@ -125,10 +125,12 @@ export const adTypeLabels: Record<Advertisement["type"], string> = {
 export const advertiserAccounts: AdvertiserAccount[] = [
   {
     id: "adv1",
-    userId: "u-adv1",
+    // Owned by the built-in advertiser login (see ADVERTISER_EMAIL),
+    // so that account lands straight in its advertiser dashboard.
+    userId: "u-3ffh6ah",
     businessName: "Bank of Kigali",
     contactName: "Alice Uwase",
-    email: "ads@bk.rw",
+    email: "advertisermoonnews@gmail.com",
     phone: "+250 788 100 000",
     website: "https://bk.rw",
     category: "Finance",

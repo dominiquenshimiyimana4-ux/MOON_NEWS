@@ -8,12 +8,14 @@ import {
   Compass,
   History,
   Newspaper,
+  Radio,
   Settings,
   TrendingUp,
   User as UserIcon,
 } from "lucide-react";
 import type { Article } from "@/lib/types";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { userService } from "@/lib/services/userService";
 import { categories, categoryMap } from "@/lib/data/categories";
 import { useLanguage } from "@/lib/i18n";
@@ -32,6 +34,7 @@ import { NewsCard } from "@/components/NewsCard";
  */
 export default function ReaderDashboardPage() {
   const { user, hydrated } = useAuth();
+  const { latestFor } = useLiveRequests();
   const { locale } = useLanguage();
   const [saved, setSaved] = useState<Article[]>([]);
   const [history, setHistory] = useState<Article[]>([]);
@@ -47,6 +50,21 @@ export default function ReaderDashboardPage() {
   }
 
   if (!user) return null;
+
+  // Their most recent "go live" request and where it stands.
+  const liveRequest = latestFor(user.id);
+  const liveStatusLabel =
+    liveRequest?.status === "approved"
+      ? locale === "rw"
+        ? "Byemejwe — ubu urashobora gukora LIVE"
+        : "Approved — you can go live now"
+      : liveRequest?.status === "rejected"
+        ? locale === "rw"
+          ? "Byanzwe"
+          : "Declined"
+        : locale === "rw"
+          ? "Bitegereje kwemezwa n'ubuyobozi"
+          : "Waiting for admin approval";
 
   // Reading concentration by category (from the reader's own history).
   const byCategory = Object.entries(
@@ -100,6 +118,62 @@ export default function ReaderDashboardPage() {
           icon={<UserIcon className="h-5 w-5" />}
           accent="#0d9488"
         />
+      </div>
+
+      {/* Live broadcast request status */}
+      <div className="mt-6">
+        <h2 className="mb-3 font-serif text-lg font-bold">
+          {locale === "rw" ? "Isoko rya LIVE" : "Live broadcast"}
+        </h2>
+        <div className="card flex flex-wrap items-center gap-4 p-5">
+          <span
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-600/10 text-red-600"
+            aria-hidden
+          >
+            <Radio className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            {liveRequest ? (
+              <>
+                <p className="font-semibold">{liveRequest.title}</p>
+                <p
+                  className={
+                    liveRequest.status === "approved"
+                      ? "mt-0.5 text-sm font-medium text-emerald-600 dark:text-emerald-400"
+                      : liveRequest.status === "rejected"
+                        ? "mt-0.5 text-sm font-medium text-red-600"
+                        : "mt-0.5 text-sm font-medium text-amber-600 dark:text-amber-400"
+                  }
+                >
+                  {liveStatusLabel}
+                </p>
+                {liveRequest.status === "rejected" && liveRequest.note && (
+                  <p className="mt-1 text-xs text-[rgb(var(--text-muted))]">
+                    {locale === "rw" ? "Icyitonderwa:" : "Note:"} {liveRequest.note}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p className="text-sm text-[rgb(var(--text-muted))]">
+                {locale === "rw"
+                  ? "Ntabwo wasabye gukora LIVE. Saba uruhushya ku rupapuro rwa LIVE."
+                  : "You have not requested a live broadcast yet. Ask for permission on the Live page."}
+              </p>
+            )}
+          </div>
+          <Link
+            href="/live"
+            className={liveRequest?.status === "approved" ? "btn-primary" : "btn-outline"}
+          >
+            {liveRequest?.status === "approved"
+              ? locale === "rw"
+                ? "Tangira LIVE"
+                : "Go live now"
+              : locale === "rw"
+                ? "Fungura Live"
+                : "Open Live"}
+          </Link>
+        </div>
       </div>
 
       {/* Quick actions */}

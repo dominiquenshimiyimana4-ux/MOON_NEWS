@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, LogIn } from "lucide-react";
+import { Loader2, Lock, LogIn } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { dashboardRouteFor } from "@/lib/services/authService";
@@ -91,53 +91,14 @@ export function LoginForm() {
             </Link>
           </p>
 
-          {/* Advertising portal entry point. */}
-          <div className="mt-5 rounded-xl border border-border bg-[rgb(var(--bg-subtle))] p-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-muted))]">
-              {locale === "rw" ? "Ikwamamaza" : "Advertising"}
-            </p>
-            <p className="mt-1 text-xs text-[rgb(var(--text-muted))]">
-              {locale === "rw"
-                ? "Ufite ubucuruzi? Injira ukoresheje konti y'ikwamamaza ukoreshe amakuru yawe yose."
-                : "Have a business? Sign in with your advertiser account to manage campaigns."}
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail("ads@bk.rw");
-                setPassword("ads123");
-                setError("");
-              }}
-              className="mt-2 text-xs font-semibold text-brand-600 hover:underline"
-            >
-              {locale === "rw" ? "Koresha konti y'ikwamamaza (demo)" : "Use advertiser demo account"}
-            </button>
-          </div>
-        </div>
-
-        {/* Demo login banner hidden on purpose — staff and readers log in with their own
-            credentials instead of the one-click demo accounts.
-        <div className="mt-4 rounded-xl border border-border bg-[rgb(var(--bg-subtle))] p-4">
-          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[rgb(var(--text-muted))]">
-            <ShieldCheck className="h-3.5 w-3.5" /> {t("auth.demoHint")}
+          {/* Security note. Staff credentials are never displayed here. */}
+          <p className="mt-4 flex items-start gap-1.5 text-center text-xs text-[rgb(var(--text-muted))]">
+            <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            {locale === "rw"
+              ? "Amagambo y'ibanga abikwa mu buryo buhishwe (hashed) — ntabwo aboneka muri sisitemu."
+              : "Passwords are stored as salted hashes and are never displayed."}
           </p>
-          <div className="flex flex-wrap gap-2">
-            {DEMO_ACCOUNTS.map((d) => (
-              <button
-                key={d.email}
-                type="button"
-                onClick={() => {
-                  setEmail(d.email);
-                  setPassword(d.password);
-                }}
-                className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium transition-colors hover:border-brand-500 hover:text-brand-600"
-              >
-                {d.role}
-              </button>
-            ))}
-          </div>
         </div>
-        */}
       </div>
     </div>
   );

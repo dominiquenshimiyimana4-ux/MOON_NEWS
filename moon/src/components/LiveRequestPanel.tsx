@@ -58,7 +58,9 @@ export function LiveRequestPanel() {
             </p>
           </div>
         </div>
-        {user && !latest && !open && (
+        {/* Requesting again is allowed (e.g. after a decline or a finished
+            stream); the latest status is always shown below the form entry. */}
+        {user && !open && (
           <button type="button" onClick={() => setOpen(true)} className="btn-primary">
             <Radio className="h-4 w-4" /> {t("Saba LIVE", "Request to go live")}
           </button>

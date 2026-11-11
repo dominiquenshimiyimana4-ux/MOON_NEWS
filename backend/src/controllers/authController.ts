@@ -13,7 +13,21 @@ export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
+  role?: string;
 }
+
+/**
+ * Roles a visitor may pick when signing up. Staff accounts (admin, editor,
+ * journalist) can never be created through the public register endpoint.
+ */
+const PUBLIC_REGISTER_ROLES = ['reader', 'advertiser'];
+
+/**
+ * The administrator account is provisioned separately (see
+ * scripts/updateAdminCredentials.ts). Its e-mail is reserved: the public
+ * register endpoint must not be usable to create or impersonate it.
+ */
+const RESERVED_ADMIN_EMAILS = [(process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase()];
 
 export interface AuthResponse {
   token: string;
@@ -36,7 +50,7 @@ export const authController = {
         return res.status(400).json({ error: 'Email and password are required' });
       }
 
-      const user = await User.findOne({ email: email.toLowerCase() });
+      const user = await User.findOne({ email: email.trim().toLowerCase() }).select('+password');
       if (!user) {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
@@ -73,27 +87,37 @@ export const authController = {
 
   register: async (req: AuthRequest, res: Response) => {
     try {
-      const { name, email, password }: RegisterRequest = req.body;
+      const { name, email, password, role }: RegisterRequest = req.body;
 
       if (!name || !email || !password) {
         return res.status(400).json({ error: 'Name, email, and password are required' });
       }
 
-      if (password.length < 6) {
-        return res.status(400).json({ error: 'Password must be at least 6 characters' });
+      if (password.length < 8) {
+        return res.status(400).json({ error: 'Password must be at least 8 characters' });
       }
 
-      const existingUser = await User.findOne({ email: email.toLowerCase() });
+      const normalizedEmail = email.trim().toLowerCase();
+
+      // Never let the public register form claim a staff/administrator address.
+      if (RESERVED_ADMIN_EMAILS.includes(normalizedEmail)) {
+        return res.status(403).json({ error: 'This e-mail address cannot be registered.' });
+      }
+
+      const requestedRole = role && PUBLIC_REGISTER_ROLES.includes(role) ? role : 'reader';
+
+      const existingUser = await User.findOne({ email: normalizedEmail });
       if (existingUser) {
         return res.status(409).json({ error: 'Email already in use' });
       }
 
+      // Passwords are stored as bcrypt hashes only — never in plain text.
       const hashedPassword = await hashPassword(password);
       const newUser = new User({
         name,
-        email: email.toLowerCase(),
+        email: normalizedEmail,
         password: hashedPassword,
-        role: 'reader',
+        role: requestedRole,
       });
 
       await newUser.save();

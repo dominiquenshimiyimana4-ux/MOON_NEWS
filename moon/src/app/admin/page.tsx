@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useAdmin } from "@/lib/admin/AdminProvider";
 import { useAnalytics } from "@/lib/analytics/useAnalytics";
+import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { comments } from "@/lib/data/comments";
 import { users } from "@/lib/data/admin";
 import { subscribers, dailyViews, userGrowth } from "@/lib/data/admin";
@@ -33,6 +34,8 @@ import { UploadButton } from "@/components/admin/UploadButton";
 export default function AdminDashboard() {
   const { articles, media, ads, hydrated, addMedia } = useAdmin();
   const { snapshot, onlineNow } = useAnalytics("7d");
+  const { pending: pendingLiveRequests } = useLiveRequests();
+  const pendingLiveCount = pendingLiveRequests.length;
   const router = useRouter();
 
   const published = articles.filter((a) => a.status === "published");
@@ -137,6 +140,7 @@ export default function AdminDashboard() {
             { href: "/admin/comments", label: "Manage Feedback", desc: "Approve or remove reader comments", icon: MessageSquare, accent: "#db2777", count: `${comments.length} comments` },
             { href: "/admin/media", label: "Manage Media", desc: "Upload & organise images, videos and article files", icon: ImageIcon, accent: "#0d9488", count: `${media.length} files` },
             { href: "/admin/breaking", label: "Breaking News", desc: "Control the breaking-news bar", icon: Radio, accent: "#dc2626", count: breaking.length > 0 ? "Active" : "Off" },
+            { href: "/admin/live-requests", label: "Live Requests", desc: "Approve readers who want to go live", icon: Radio, accent: "#dc2626", count: pendingLiveCount > 0 ? `${pendingLiveCount} waiting` : "No pending requests" },
             { href: "/admin/advertising", label: "Advertiser Dashboard", desc: "Campaigns, spend & ad performance", icon: Megaphone, accent: "#7c3aed", count: `${ads.length} campaigns` },
             { href: "/admin/ad-review", label: "Ad Review", desc: "Approve or reject submitted campaigns", icon: Megaphone, accent: "#db2777", count: `${ads.filter((a) => a.status === "pending").length} pending` },
             { href: "/admin/revenue", label: "Advertising Revenue", desc: "Payments, revenue & ad delivery", icon: Wallet, accent: "#16a34a", count: "Revenue" },

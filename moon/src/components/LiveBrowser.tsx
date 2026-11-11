@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { ExternalLink, RefreshCw, Radio } from "lucide-react";
 import type { LiveEvent } from "@/lib/types";
 import { contentService } from "@/lib/services/newsService";
+import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { useLanguage } from "@/lib/i18n";
 import { pick } from "@/lib/utils";
 import { LiveTimeline } from "./LiveTimeline";
@@ -15,6 +16,9 @@ const REFRESH_INTERVAL = 30000;
 
 export function LiveBrowser() {
   const { locale } = useLanguage();
+  // Streams approved in the admin review queue are shown alongside the
+  // newsroom's own live events, newest first.
+  const { approvedEvents } = useLiveRequests();
   const [events, setEvents] = useState<LiveEvent[]>([]);
   const [selected, setSelected] = useState<LiveEvent | null>(null);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
@@ -62,6 +66,7 @@ export function LiveBrowser() {
     };
   }, [load]);
 
+  const allEvents = useMemo(() => [...approvedEvents, ...events], [approvedEvents, events]);
   const event = selected;
 
   const selectEvent = (e: LiveEvent) => {
@@ -83,9 +88,9 @@ export function LiveBrowser() {
       <LiveRequestPanel />
 
       {/* Event selector */}
-      {events.length > 1 && (
+      {allEvents.length > 1 && (
         <div className="scrollbar-hide mb-6 flex gap-3 overflow-x-auto pb-2">
-          {events.map((e) => (
+          {allEvents.map((e) => (
             <button
               key={e.id}
               type="button"
@@ -102,7 +107,11 @@ export function LiveBrowser() {
         </div>
       )}
 
-      {event ? (
+      {allEvents.length === 0 ? (
+        <p className="text-sm text-[rgb(var(--text-muted))]">
+          {locale === "rw" ? "Nta mukino urimo ubu." : "No live events right now."}
+        </p>
+      ) : event ? (
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             {event.streamUrl ? (

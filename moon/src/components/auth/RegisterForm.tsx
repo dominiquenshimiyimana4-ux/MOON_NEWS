@@ -3,12 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, UserPlus } from "lucide-react";
+import { Loader2, Lock, UserPlus } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { dashboardRouteFor } from "@/lib/services/authService";
+import { dashboardRouteFor, isAdminEmail, MIN_PASSWORD_LENGTH } from "@/lib/services/authService";
 import { useLanguage } from "@/lib/i18n";
 import type { UserRole } from "@/lib/types";
+
+/** Newsroom staff addresses are provisioned internally, never self-registered. */
+function isStaffEmail(email: string): boolean {
+  const normalized = email.trim().toLowerCase();
+  return /@moonnews\.rw$/.test(normalized) && normalized !== "reader@moonnews.rw";
+}
 
 export function RegisterForm() {
   const router = useRouter();
@@ -24,6 +30,31 @@ export function RegisterForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    // Administrator/staff accounts are provisioned — they can never be created here.
+    if (isAdminEmail(email)) {
+      setError(
+        locale === "rw"
+          ? "Iyi imeyili ntishobora kwiyandikisha. Injira ukoresheje amakuru yawe."
+          : "This e-mail address cannot be registered. Please sign in instead."
+      );
+      return;
+    }
+    if (isStaffEmail(email)) {
+      setError(
+        locale === "rw"
+          ? "Konti z'abakozi zitegurwa n'ubuyobozi, ntiziyandikisha ku rukuta."
+          : "Staff accounts are created by the newsroom, not self-registered."
+      );
+      return;
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setError(
+        locale === "rw"
+          ? `Ijambo ry'ibanga rigomba kuba nibura inyuguti ${MIN_PASSWORD_LENGTH}.`
+          : `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`
+      );
+      return;
+    }
     if (password !== confirm) {
       setError(locale === "rw" ? "Amagambo y'ibanga ntabwo ahuye." : "Passwords do not match.");
       return;
@@ -101,7 +132,7 @@ export function RegisterForm() {
             </div>
             <div>
               <label className="label" htmlFor="password">{t("auth.password")}</label>
-              <input id="password" type="password" required autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" placeholder="At least 6 characters" />
+              <input id="password" type="password" required minLength={MIN_PASSWORD_LENGTH} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" placeholder={`At least ${MIN_PASSWORD_LENGTH} characters`} />
             </div>
             <div>
               <label className="label" htmlFor="confirm">{t("auth.confirmPassword")}</label>
@@ -112,6 +143,14 @@ export function RegisterForm() {
               {t("auth.register")}
             </button>
           </form>
+
+          <p className="mt-4 flex items-start gap-1.5 text-xs text-[rgb(var(--text-muted))]">
+            <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            {locale === "rw"
+              ? "Ijambo ry'ibanga rihindurwa muburyo buhishwe (hashed) mbere yo kubikwa."
+              : "Your password is hashed before it is stored — only the reader and advertiser accounts can be created here."
+            }
+          </p>
 
           <p className="mt-5 text-center text-sm text-[rgb(var(--text-muted))]">
             {t("auth.haveAccount")}{" "}

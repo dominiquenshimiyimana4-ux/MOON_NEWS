@@ -1,5 +1,12 @@
 import type { User, UserRole } from "@/lib/types";
-import { users } from "@/lib/data/admin";
+import {
+  ADMIN_EMAIL,
+  checkCredentials,
+  createCredential,
+  credentialToUser,
+  isReservedEmail,
+  type PublicRole,
+} from "@/lib/auth/credentials";
 import { api, hasBackend, setToken, simulateLatency } from "./api";
 
 const USER_KEY = "moon_news_user";
@@ -14,7 +21,7 @@ export interface RegisterPayload {
   email: string;
   password: string;
   /** Account type chosen at sign-up. Defaults to a reader account. */
-  role?: Extract<UserRole, "reader" | "advertiser">;
+  role?: PublicRole;
 }
 
 export interface AuthResponse {
@@ -30,14 +37,25 @@ export const roleLabels: Record<UserRole, string> = {
   advertiser: "Advertiser",
 };
 
-/** Demo credentials accepted by the local (no-backend) auth service. */
-export const DEMO_ACCOUNTS: { email: string; password: string; role: UserRole }[] = [
-  { email: "kajipo tefu", password: "kajipo123", role: "admin" },
-  { email: "editor@moonnews.rw", password: "editor123", role: "editor" },
-  { email: "author@moonnews.rw", password: "author123", role: "journalist" },
-  { email: "reader@moonnews.rw", password: "reader123", role: "reader" },
-  { email: "ads@bk.rw", password: "ads123", role: "advertiser" },
-];
+/** The administrator sign-in address (kept out of every public UI surface). */
+export { ADMIN_EMAIL };
+
+/** Minimum password length enforced on registration. */
+export const MIN_PASSWORD_LENGTH = 8;
+
+/**
+ * True when e-mail/password match the administrator account. Used to keep the
+ * admin credentials out of the register form even before hitting the service.
+ */
+export function isAdminEmail(email: string): boolean {
+  return isReservedEmail(email);
+}
+
+/**
+ * Role labels shown in demo hints. Credentials themselves are intentionally
+ * NOT exported — the administrator password must never reach the client bundle.
+ */
+export const DEMO_ROLES: UserRole[] = ["editor", "journalist", "reader", "advertiser"];
 
 export function readStoredUser(): User | null {
   if (typeof window === "undefined") return null;
@@ -61,20 +79,6 @@ function fakeToken(user: User): string {
   return `demo.${payload}.signature`;
 }
 
-/**
- * Deterministic user id derived from an email address.
- *
- * Demo accounts that are not in the users directory (for example a business
- * signing in with its own advertising credentials) need an id that stays the
- * same across logins — otherwise the advertiser account they registered would
- * be orphaned every time they sign back in.
- */
-function stableUserId(email: string): string {
-  let hash = 0;
-  for (let i = 0; i < email.length; i++) hash = (hash * 31 + email.charCodeAt(i)) >>> 0;
-  return `u-${hash.toString(36)}`;
-}
-
 export const authService = {
   async login({ email, password }: LoginPayload): Promise<AuthResponse> {
     if (hasBackend) {
@@ -83,31 +87,29 @@ export const authService = {
       storeUser(res.user);
       return res;
     }
-    await simulateLatency(500);
-    const demo = DEMO_ACCOUNTS.find(
-      (d) => d.email.toLowerCase() === email.trim().toLowerCase()
-    );
-    const known = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
-    if (!demo || demo.password !== password) {
+    await simulateLatency(300);
+    // Passwords are compared against a salted SHA-256 digest, never plain text.
+    const credential = await checkCredentials(email, password);
+    if (!credential) {
       throw new Error("Invalid email or password.");
     }
-    const user: User =
-      known ?? {
-        // Deterministic id: the same email always resolves to the same account,
-        // so a business registered on first login is still found on the next.
-        id: stableUserId(email.trim().toLowerCase()),
-        name: email.split("@")[0],
-        email: email.trim(),
-        role: demo.role,
-        createdAt: new Date().toISOString(),
-      };
+    const user = credentialToUser(credential);
     const token = fakeToken(user);
     setToken(token);
     storeUser(user);
     return { token, user };
   },
 
-  async register({ name, email, password, role = "reader" }: RegisterPayload): Promise<AuthResponse> {
+  async register({
+    name,
+    email,
+    password,
+    role = "reader",
+  }: RegisterPayload): Promise<AuthResponse> {
+    // Administrator accounts are provisioned, never self-registered.
+    if (isReservedEmail(email)) {
+      throw new Error("This e-mail address cannot be registered.");
+    }
     if (hasBackend) {
       const res = await api.post<AuthResponse>("/api/auth/register", {
         name,
@@ -119,17 +121,12 @@ export const authService = {
       storeUser(res.user);
       return res;
     }
-    await simulateLatency(500);
-    if (!password || password.length < 6) {
-      throw new Error("Password must be at least 6 characters.");
+    await simulateLatency(300);
+    if (!password || password.length < MIN_PASSWORD_LENGTH) {
+      throw new Error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
     }
-    const user: User = {
-      id: stableUserId(email.trim().toLowerCase()),
-      name: name.trim(),
-      email: email.trim(),
-      role,
-      createdAt: new Date().toISOString(),
-    };
+    const credential = await createCredential({ name, email, password, role });
+    const user = credentialToUser(credential);
     const token = fakeToken(user);
     setToken(token);
     storeUser(user);

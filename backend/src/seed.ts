@@ -21,14 +21,35 @@ const seedData = async () => {
 
     // Create users
     const hashedPassword = await hashPassword('password123');
-    const adminPassword = await hashPassword('kajipo123');
+    // Admin credentials come from the environment; only the bcrypt hash is stored.
+    const adminEmail = (process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com').toLowerCase();
+    const adminPassword = await hashPassword(process.env.ADMIN_PASSWORD ?? 'Dominique@2006');
+    // Staff accounts for the author studio and the advertiser dashboard.
+    const authorEmail = (process.env.AUTHOR_EMAIL ?? 'authormoonnews@gmail.com').toLowerCase();
+    const authorPassword = await hashPassword(process.env.AUTHOR_PASSWORD ?? 'Author01');
+    const advertiserEmail = (process.env.ADVERTISER_EMAIL ?? 'advertisermoonnews@gmail.com').toLowerCase();
+    const advertiserPassword = await hashPassword(process.env.ADVERTISER_PASSWORD ?? 'advertiser02');
     const users = await User.insertMany([
       {
-        name: 'kajipo tefu',
-        email: 'kajipo tefu',
+        name: process.env.ADMIN_NAME ?? 'Dominique Nshimiyimana',
+        email: adminEmail,
         password: adminPassword,
         role: 'admin',
         avatar: 'https://picsum.photos/seed/admin/100/100',
+      },
+      {
+        name: 'Moon News Author',
+        email: authorEmail,
+        password: authorPassword,
+        role: 'journalist',
+        avatar: 'https://picsum.photos/seed/author/100/100',
+      },
+      {
+        name: 'Moon News Advertiser',
+        email: advertiserEmail,
+        password: advertiserPassword,
+        role: 'advertiser',
+        avatar: 'https://picsum.photos/seed/advertiser/100/100',
       },
       {
         name: 'Editor User',
@@ -60,7 +81,7 @@ const seedData = async () => {
         avatar: 'https://picsum.photos/seed/reader/100/100',
       },
     ]);
-    console.log('Created 5 users');
+    console.log(`Created ${users.length} users`);
 
     // Create articles
     const articles = await Article.insertMany([
@@ -234,8 +255,10 @@ const seedData = async () => {
     await articles[1].save();
 
     console.log('✓ Seed data loaded successfully!');
-    console.log('\nDemo Accounts:');
-    console.log('- Admin: kajipo tefu / kajipo123');
+    console.log('\nSeed Accounts:');
+    console.log(`- Admin: ${adminEmail} (from ADMIN_EMAIL / ADMIN_PASSWORD env)`);
+    console.log('- Author: authormoonnews@gmail.com / Author01');
+    console.log('- Advertiser: advertisermoonnews@gmail.com / advertiser02');
     console.log('- Editor: editor@moonnews.rw / password123');
     console.log('- Journalist: author1@moonnews.rw / password123');
     console.log('- Reader: reader@moonnews.rw / password123');

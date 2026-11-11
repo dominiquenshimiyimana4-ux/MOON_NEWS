@@ -22,6 +22,7 @@ import {
 import { Logo } from "@/components/Logo";
 import { AdminProvider } from "@/lib/admin/AdminProvider";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { canAccessAdmin, roleLabels } from "@/lib/services/authService";
 import { cn } from "@/lib/utils";
 
@@ -61,6 +62,8 @@ const navGroups: { label: string; items: { href: string; label: string; icon: ty
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, hydrated, logout } = useAuth();
+  const { pending: liveRequestsPending } = useLiveRequests();
+  const liveRequestCount = liveRequestsPending.length;
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -121,6 +124,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   >
                     <item.icon className="h-[18px] w-[18px]" />
                     {item.label}
+                    {item.href === "/admin/live-requests" && liveRequestCount > 0 && (
+                      <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1.5 text-[11px] font-bold text-white">
+                        {liveRequestCount}
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>
