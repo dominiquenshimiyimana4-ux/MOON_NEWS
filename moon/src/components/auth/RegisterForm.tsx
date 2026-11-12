@@ -8,7 +8,6 @@ import { Logo } from "@/components/Logo";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { dashboardRouteFor, isAdminEmail, MIN_PASSWORD_LENGTH } from "@/lib/services/authService";
 import { useLanguage } from "@/lib/i18n";
-import type { UserRole } from "@/lib/types";
 
 /** Newsroom staff addresses are provisioned internally, never self-registered. */
 function isStaffEmail(email: string): boolean {
@@ -24,7 +23,6 @@ export function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [role, setRole] = useState<Extract<UserRole, "reader" | "advertiser">>("reader");
   const [error, setError] = useState("");
 
   async function onSubmit(e: React.FormEvent) {
@@ -60,7 +58,9 @@ export function RegisterForm() {
       return;
     }
     try {
-      const user = await register({ name, email, password, role });
+      // Only reader accounts can be self-registered. Advertiser, author and
+      // admin accounts are provisioned and sign in through the browser.
+      const user = await register({ name, email, password, role: "reader" });
       router.push(dashboardRouteFor(user));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed.");
@@ -94,35 +94,6 @@ export function RegisterForm() {
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <span className="label">{locale === "rw" ? "Ubwoko bwa konti" : "Account type"}</span>
-              <div className="grid grid-cols-2 gap-2">
-                {([
-                  { value: "reader", label: locale === "rw" ? "Umukoresha" : "Reader" },
-                  { value: "advertiser", label: locale === "rw" ? "Ikwamamaza" : "Advertiser" },
-                ] as const).map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => setRole(opt.value)}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-                      role === opt.value
-                        ? "border-brand-600 bg-brand-600 text-white"
-                        : "border-border text-[rgb(var(--text-muted))] hover:text-[rgb(var(--text))]"
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-              {role === "advertiser" && (
-                <p className="mt-1.5 text-xs text-[rgb(var(--text-muted))]">
-                  {locale === "rw"
-                    ? "Uzakenera kwandikisha ubucuruzi bwawe nyuma yo kwinjira."
-                    : "You'll register your business after signing in."}
-                </p>
-              )}
-            </div>
-            <div>
               <label className="label" htmlFor="name">{t("auth.name")}</label>
               <input id="name" required value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="Jane Doe" />
             </div>
@@ -148,7 +119,7 @@ export function RegisterForm() {
             <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             {locale === "rw"
               ? "Ijambo ry'ibanga rihindurwa muburyo buhishwe (hashed) mbere yo kubikwa."
-              : "Your password is hashed before it is stored — only the reader and advertiser accounts can be created here."
+              : "Your password is hashed before it is stored — only reader accounts can be created here."
             }
           </p>
 

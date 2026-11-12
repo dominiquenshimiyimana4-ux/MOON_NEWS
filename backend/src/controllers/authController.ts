@@ -17,10 +17,11 @@ export interface RegisterRequest {
 }
 
 /**
- * Roles a visitor may pick when signing up. Staff accounts (admin, editor,
- * journalist) can never be created through the public register endpoint.
+ * Roles a visitor may pick when signing up. Only reader accounts can be
+ * self-registered; advertiser, author and admin accounts are provisioned and
+ * sign in through the browser.
  */
-const PUBLIC_REGISTER_ROLES = ['reader', 'advertiser'];
+const PUBLIC_REGISTER_ROLES = ['reader'];
 
 /**
  * Provisioned accounts (admin, author, advertiser) are created by the seed
