@@ -82,7 +82,7 @@ export default function AdvertiserLayout({ children }: { children: React.ReactNo
         {/* Sidebar */}
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-50 w-64 shrink-0 border-r border-border bg-[rgb(var(--surface))] transition-transform lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:translate-x-0",
+            "fixed inset-y-0 left-0 z-50 flex w-64 shrink-0 flex-col border-r border-border bg-[rgb(var(--surface))] transition-transform lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] lg:translate-x-0",
             open ? "translate-x-0" : "-translate-x-full"
           )}
         >
@@ -95,7 +95,7 @@ export default function AdvertiserLayout({ children }: { children: React.ReactNo
               <X className="h-5 w-5" />
             </button>
           </div>
-          <nav className="p-3">
+          <nav className="flex-1 overflow-y-auto p-3 pb-32 sm:pb-40">
             {advertiserNav.map((group) => (
               <div key={group.label} className="mb-4">
                 <p className="mb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-[rgb(var(--text-muted))]">

@@ -75,10 +75,19 @@ export function Header() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const today = new Date().toLocaleDateString(
-    locale === "rw" ? "rw-RW" : "en-US",
-    { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-  );
+  // `new Date()` differs between the server render and the client render, which
+  // breaks hydration. Compute it after mount so server and client agree.
+  const [today, setToday] = useState("");
+  useEffect(() => {
+    setToday(
+      new Date().toLocaleDateString(locale === "rw" ? "rw-RW" : "en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }, [locale]);
 
   // Every signed-in role gets a link to its own dashboard. Readers previously
   // had none; staff keep the newsroom/author labels they had before.

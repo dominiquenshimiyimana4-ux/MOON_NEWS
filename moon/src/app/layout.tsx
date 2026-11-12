@@ -120,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <OfflineBanner />
           <Header />
           <BreakingNews />
-          <main id="main" className="flex-1 pb-16 sm:pb-0">
+          <main id="main" className="flex-1 pb-20 sm:pb-0">
             {children}
           </main>
           <Footer />

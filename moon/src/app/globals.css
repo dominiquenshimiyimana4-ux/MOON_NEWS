@@ -30,12 +30,52 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Prevents iOS from zooming the page when an input is focused. */
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
     background-color: rgb(var(--bg));
     color: rgb(var(--text));
     @apply font-sans antialiased;
+    /* Never let a single wide child (table, code block, long URL) scroll the
+       whole page sideways on phones. Wide children scroll in their own box. */
+    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Long words, URLs and e-mail addresses wrap instead of overflowing on
+     narrow screens. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  a,
+  li,
+  td,
+  th {
+    overflow-wrap: break-word;
+  }
+
+  /* Media can never be wider than its container. */
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  /* iOS Safari zooms the viewport when a <16px> field is focused. Keep form
+     controls at 16px on touch-sized screens. */
+  @media (max-width: 639px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
   }
 
   ::selection {
@@ -48,12 +88,19 @@
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
+  .table-scroll {
+    @apply w-full overflow-x-auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .card {
     @apply rounded-xl border border-border bg-[rgb(var(--surface))] shadow-card;
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    /* Comfortable touch target on phones without changing desktop density. */
+    min-height: 2.5rem;
   }
 
   .btn-primary {
