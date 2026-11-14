@@ -1,0 +1,33 @@
+
+> moon-news@1.0.0 dev
+> next dev -p 3001
+
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3001
+   - Network:      http://10.11.106.193:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 10.1s
+ ○ Compiling /calculator ...
+ ✓ Compiled /calculator in 11.9s (782 modules)
+ GET /calculator 200 in 18413ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 1530ms (801 modules)
+ POST /api/analytics/visit 202 in 2063ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 1385ms (891 modules)
+ GET /calculator 200 in 2082ms
+ POST /api/analytics/visit 202 in 2549ms
+ GET /favicon.ico 200 in 6662ms
+ GET /calculator 200 in 19895ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 13.5s (902 modules)
+ GET /login 200 in 15686ms
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3001
+   - Network:      http://10.11.106.191:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 13.8s

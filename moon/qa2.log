@@ -1,0 +1,23 @@
+url        http://localhost:3000/register
+http       0  NAV ERROR: TimeoutError: page.goto: Timeout 30000ms exceeded.
+load       44327643ms
+title      ""
+bodyChars  0
+patchright C:\Users\domin\.vscode\extensions\danielsanmedium.dscodegpt-3.24.79\standalone/
+screenshot qa-register.png  (read this file to look at it)
+
+console errors/warnings (7):
+  [error] Failed to load resource: net::ERR_CONNECTION_CLOSED
+  [error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED
+  [error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED
+  [error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED
+  [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_NETWORK_IO_SUSPENDED
+  [error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED
+  [error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED
+
+requests failed (6):
+  net::ERR_CONNECTION_CLOSED https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap
+  net::ERR_NETWORK_IO_SUSPENDED https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap
+  net::ERR_NETWORK_IO_SUSPENDED http://localhost:3000/_next/static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js
+  net::ERR_NETWORK_IO_SUSPENDED http://localhost:3000/api/analytics/visit
+  net::ERR_NETWORK_IO_SUSPENDED http://localhost:3000/__nextjs_original-stack-frames

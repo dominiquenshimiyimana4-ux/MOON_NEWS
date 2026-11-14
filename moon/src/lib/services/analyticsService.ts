@@ -1,6 +1,12 @@
 "use client";
 
-import type { AnalyticsSnapshot, TrafficRange, VisitorStats, TrafficSeries } from "@/lib/types";
+import type {
+  AnalyticsSnapshot,
+  TrafficRange,
+  VisitorFeed,
+  VisitorStats,
+  TrafficSeries,
+} from "@/lib/types";
 import { getToken } from "./api";
 
 /**
@@ -67,15 +73,15 @@ export const analyticsService = {
     }
   },
 
-  /** Admin: lightweight online count for polling. */
-  async online(): Promise<{ onlineNow: number; windowSeconds: number; at: string } | null> {
+  /** Admin: live visitor feed for polling (online count + who visited today). */
+  async online(): Promise<(VisitorFeed & { at: string }) | null> {
     try {
       const res = await fetch("/api/admin/analytics/online", {
         headers: authHeaders(),
         cache: "no-store",
       });
       if (!res.ok) return null;
-      return (await res.json()) as { onlineNow: number; windowSeconds: number; at: string };
+      return (await res.json()) as VisitorFeed & { at: string };
     } catch {
       return null;
     }

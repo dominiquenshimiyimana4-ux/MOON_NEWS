@@ -218,6 +218,8 @@ export interface Visit {
   /** Kept coarse on purpose (privacy): usually undefined. */
   country?: string;
   city?: string;
+  /** True for staff back-office pages — counted, but hidden from the visitor box. */
+  staff?: boolean;
   /** ISO timestamps. */
   firstVisit: string;
   lastVisit: string;
@@ -277,6 +279,55 @@ export interface AnalyticsBreakdown {
   visitors: number;
   pageViews: number;
   sharePct: number;
+}
+
+/**
+ * One row in the admin's live visitor feed: a real person currently browsing
+ * the site (or last seen today), with what they are viewing. Still privacy-safe
+ * — the id is opaque and rotates daily, and no IP or personal data is attached.
+ */
+export interface VisitorActivity {
+  /** Opaque, rotating visitor id (same value used for unique-visitor counting). */
+  visitorId: string;
+  /** Anonymous short-lived session id. */
+  sessionId: string;
+  /** Page they are on / last viewed. */
+  page: string;
+  source: string;
+  device: "desktop" | "mobile" | "tablet";
+  browser: string;
+  os: string;
+  country?: string;
+  city?: string;
+  /** ISO timestamps. */
+  firstVisit: string;
+  lastVisit: string;
+  /** Page views this visitor has made today. */
+  pageViews: number;
+  /** True while they are inside the online window. */
+  online: boolean;
+  /** True when today is the first day this visitor was ever seen. */
+  isNew: boolean;
+}
+
+/** The admin visitor box payload: live traffic counts + who just came in. */
+export interface VisitorFeed {
+  /** Unique visitors today (de-duplicated per day). */
+  visitorsToday: number;
+  /** Page views recorded today. */
+  pageViewsToday: number;
+  /** Visitors active within the online window. */
+  onlineNow: number;
+  /** Visitors whose first-ever visit is today. */
+  newVisitorsToday: number;
+  /** Visitors gained today vs. yesterday (signed). */
+  growthToday: number;
+  /** Rolling window, in seconds, used to decide who is "online". */
+  windowSeconds: number;
+  /** Most recent visits first. */
+  recent: VisitorActivity[];
+  /** ISO timestamp the feed was generated. */
+  generatedAt: string;
 }
 
 export interface AnalyticsSnapshot {

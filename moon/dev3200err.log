@@ -1,0 +1,472 @@
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\domin\package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\domin\OneDrive\Desktop\moon news\moon\package-lock.json
+
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack failed from C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\cache\webpack\server-development.pack.gz: Error: invalid block type
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-football/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-digital/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-markets/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-education/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-markets/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moonvid-1/800/450
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-startups/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-health/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-basketball/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app-paths-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\app-paths-manifest.json',
+  page: '/login'
+}
+ ⨯ Failed to generate static paths for /[category]:
+[Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Failed to generate static paths for /[category]:
+[Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Cannot find module './vendor-chunks/tailwind-merge.js'
+Require stack:
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\webpack-runtime.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\require.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\load-components.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\build\utils.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\server\dev\static-paths-worker.js
+- C:\Users\domin\OneDrive\Desktop\moon news\moon\node_modules\next\dist\compiled\jest-worker\processChild.js] {
+  type: 'Error',
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\[category]\page.js'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\app\\[category]\\page.js',
+  page: '/favicon.ico'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\login\page.js'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\app\\login\\page.js',
+  page: '/login'
+}
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\pages\_document.js'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\pages\\_document.js'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\login\page.js'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\app\\login\\page.js',
+  page: '/login'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\pages\_document.js'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\domin\\OneDrive\\Desktop\\moon news\\moon\\.next\\server\\pages\\_document.js'
+}
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ [Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.] {
+  page: '/favicon.ico'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Failed to generate static paths for /[category]:
+[Error: Page "/[category]/page" is missing param "/[category]" in "generateStaticParams()", which is required with "output: export" config.]
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}
+ ⨯ Error: export const dynamic = "force-dynamic" on page "/api/analytics/visit" cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+    at __webpack_exec__ (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:195:39)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:83)
+    at <unknown> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:196:47)
+    at Object.<anonymous> (C:\Users\domin\OneDrive\Desktop\moon news\moon\.next\server\app\api\analytics\visit\route.js:199:3) {
+  page: '/api/analytics/visit'
+}

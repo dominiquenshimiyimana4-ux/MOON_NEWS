@@ -30,10 +30,11 @@ import { useRouter } from "next/navigation";
 import { PageHeader, StatCard, ChartCard, StatusPill } from "@/components/admin/StatCard";
 import { AreaChart, BarChart, DonutChart } from "@/components/admin/Charts";
 import { UploadButton } from "@/components/admin/UploadButton";
+import { VisitorBox } from "@/components/admin/VisitorBox";
 
 export default function AdminDashboard() {
   const { articles, media, ads, hydrated, addMedia } = useAdmin();
-  const { snapshot, onlineNow } = useAnalytics("7d");
+  const { snapshot, onlineNow, feed, loading: analyticsLoading, refresh: refreshAnalytics } = useAnalytics("7d");
   const { pending: pendingLiveRequests } = useLiveRequests();
   const pendingLiveCount = pendingLiveRequests.length;
   const router = useRouter();
@@ -112,6 +113,9 @@ export default function AdminDashboard() {
           accent="#2563eb"
         />
       </div>
+
+      {/* Live visitor box — who is on Moon News right now and who visited today */}
+      <VisitorBox feed={feed} loading={analyticsLoading} onlineNow={onlineNow} onRefresh={refreshAnalytics} />
 
       {/* Stat cards */}
       <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">

@@ -1,0 +1,57 @@
+
+> moon-news@1.0.0 dev
+> next dev
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\domin\package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\domin\OneDrive\Desktop\moon news\moon\package-lock.json
+
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3000
+   - Network:      http://10.11.106.148:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 12.4s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 16.6s (790 modules)
+ GET /login 200 in 21864ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /[category] in 19.1s (1668 modules)
+ POST /api/analytics/visit 202 in 21262ms
+ GET / 200 in 27211ms
+ GET /favicon.ico 200 in 25127ms
+ POST /api/analytics/visit 202 in 78ms
+ GET /favicon.ico 200 in 1413ms
+ POST /api/analytics/visit 202 in 111ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-health/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-education/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-basketball/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-health/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-startups/1200/800
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moonvid-1/800/450
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ GET /login 200 in 7238ms
+ GET / 200 in 2978ms
+ POST /api/analytics/visit 202 in 584ms
+ POST /api/analytics/visit 202 in 326ms
+ GET /favicon.ico 200 in 1436ms
+ ○ Compiling /news/[category]/[slug] ...
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-health/1200/800
+ ✓ Compiled /news/[category]/[slug] in 16.3s (1713 modules)
+ GET /favicon.ico 200 in 21477ms
+ GET /news/technology/rwanda-launches-digital-innovation-initiative 200 in 31500ms

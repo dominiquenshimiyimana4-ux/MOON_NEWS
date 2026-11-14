@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/analytics/guard";
-import { ONLINE_WINDOW_SECONDS, onlineCount } from "@/lib/analytics/visitorStore";
+import { getVisitorFeed } from "@/lib/analytics/visitorStore";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,9 +8,11 @@ export const dynamic = "force-dynamic";
 /**
  * GET /api/admin/analytics/online
  *
- * Protected. Returns the number of visitors currently active (seen within the
- * window). The admin UI polls this cheap endpoint on a short interval for the
- * live "Online now" indicator.
+ * Protected. Returns live traffic for the admin's visitor box: the number of
+ * visitors currently active (seen within the window), today's totals, and one
+ * row per visitor seen today with what they are viewing. The admin UI polls
+ * this endpoint on a short interval, so a new visit appears in the box without
+ * a page reload.
  */
 export async function GET(req: NextRequest) {
   const guard = requireAdmin(req);
@@ -18,11 +20,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: guard.error }, { status: guard.status });
   }
 
+  const feed = getVisitorFeed();
+
   return NextResponse.json(
     {
-      onlineNow: onlineCount(),
-      windowSeconds: ONLINE_WINDOW_SECONDS,
-      at: new Date().toISOString(),
+      ...feed,
+      at: feed.generatedAt,
     },
     { headers: { "Cache-Control": "no-store" } }
   );

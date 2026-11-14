@@ -32,21 +32,32 @@ npm install
 ```
 
 3. Configure environment variables:
-   - Copy `.env.example` to `.env` (already done)
-   - Update the values:
+   - Copy `.env.example` to `.env`
+   - Set a working MongoDB connection string and private account passwords:
 ```env
 # Server
 PORT=5000
 NODE_ENV=development
 
-# Database
+# Local MongoDB:
 MONGODB_URI=mongodb://localhost:27017/moon-news
 
+# Or use the complete connection string from MongoDB Atlas:
+# MONGODB_URI=mongodb+srv://<db_user>:<URL-encoded-db-password>@<cluster-host>/moon-news?retryWrites=true&w=majority
+
 # JWT
-JWT_SECRET=your_super_secret_jwt_key_change_in_production
+JWT_SECRET=<a-long-random-secret>
 
 # Frontend
 FRONTEND_URL=http://localhost:3000
+
+# Provisioned account credentials (use unique passwords of at least 8 characters)
+ADMIN_EMAIL=<admin email>
+ADMIN_PASSWORD=<admin password>
+AUTHOR_EMAIL=<author email>
+AUTHOR_PASSWORD=<author password>
+ADVERTISER_EMAIL=<advertiser email>
+ADVERTISER_PASSWORD=<advertiser password>
 ```
 
 ## Setup
@@ -62,40 +73,47 @@ mongod
 - Create a cluster at https://www.mongodb.com/cloud/atlas
 - Get your connection string and add it to `.env` as `MONGODB_URI`
 
-### Seed Database
+### Provision login accounts
 
-Populate the database with sample data:
+Create or update the admin, author, and advertiser accounts without deleting
+existing users or other database data:
 ```bash
-npm run seed
+npm run provision:auth
 ```
 
-To update only the existing admin account credentials without deleting other
-database data, run:
+The passwords are bcrypt-hashed before being saved. Reader accounts are created
+through the public `/register` page and are always assigned the `reader` role.
+Do not run the sample seed command against a database containing data you want
+to keep; it clears existing users, articles, and comments before inserting
+sample records.
+
+To update only the administrator account, run:
 ```bash
 npm run admin:credentials
 ```
 
-This will create:
-- 5 test users (admin, editor, 2 journalists, reader)
-- 5 sample articles
-- 3 sample comments
-
-**Demo Credentials:**
-- Admin username: `kajipo tefu` / `kajipo123`
-- Editor: `editor@moonnews.rw` / `password123`
-- Journalist: `author1@moonnews.rw` / `password123`
-- Reader: `reader@moonnews.rw` / `password123`
-
 ## Development
+
+Run the backend from this directory after MongoDB is available:
+```bash
+npm run dev
+```
+
+In `moon/.env.local`, point the frontend to the backend:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+Set `FRONTEND_URL` to the exact origin used by the frontend (for example,
+`http://localhost:3200` if it runs on port 3200).
+
+Restart the frontend after changing `NEXT_PUBLIC_API_URL`; Next.js embeds
+`NEXT_PUBLIC_*` values into the browser bundle. For a deployed frontend, use
+the public backend URL instead of `localhost`.
 
 ### Build TypeScript
 ```bash
 npm run build
-```
-
-### Run Development Server
-```bash
-npm run dev
 ```
 
 Server runs on `http://localhost:5000` by default.

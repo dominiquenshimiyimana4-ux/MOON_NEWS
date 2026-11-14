@@ -1,0 +1,21 @@
+
+> moon-news@1.0.0 dev
+> next dev
+
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3001
+   - Network:      http://10.11.106.109:3001
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 14s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 41.8s (804 modules)
+ GET /login 200 in 46645ms
+ GET /login 200 in 1170ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /admin in 145.5s (980 modules)
+ GET /login 200 in 945616ms
+ ○ Compiling / ...
+ ✓ Compiled / in 42.8s (1658 modules)
+ GET / 200 in 48595ms

@@ -15,6 +15,14 @@ export const dynamic = "force-dynamic";
  * Body (all optional except `page`):
  *   { visitorToken, sessionId, page, source, device, browser, os, kind }
  */
+
+const STAFF_PREFIXES = ["/admin", "/author", "/advertiser"];
+
+/** Back-office pages: recorded in the totals, hidden from the reader-facing box. */
+function isStaffPage(page: string): boolean {
+  return STAFF_PREFIXES.some((prefix) => page === prefix || page.startsWith(`${prefix}/`));
+}
+
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown> = {};
   try {
@@ -39,6 +47,7 @@ export async function POST(req: NextRequest) {
     os: typeof body.os === "string" ? body.os : undefined,
     country: typeof body.country === "string" ? body.country : undefined,
     city: typeof body.city === "string" ? body.city : undefined,
+    staff: isStaffPage(page),
     kind: body.kind === "heartbeat" ? "heartbeat" : "pageview",
   });
 

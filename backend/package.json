@@ -9,6 +9,7 @@
     "start": "node dist/index.js",
     "seed": "ts-node src/seed.ts",
     "admin:credentials": "ts-node src/updateAdminCredentials.ts",
+    "provision:auth": "ts-node src/provisionAuthAccounts.ts",
     "lint": "eslint src --ext .ts"
   },
   "keywords": [

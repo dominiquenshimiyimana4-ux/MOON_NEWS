@@ -6,6 +6,8 @@ import type {
   TrafficRange,
   TrafficSeries,
   Visit,
+  VisitorActivity,
+  VisitorFeed,
   VisitorStats,
 } from "@/lib/types";
 
@@ -67,6 +69,14 @@ interface AnalyticsDb {
   visits: Visit[];
   /** sessionId -> last activity epoch ms (the "online now" table). */
   online: Map<string, { visitorId: string; page: string; lastSeen: number }>;
+  /**
+   * Raw visitor token (submitted by the visitor's browser) -> opaque visitor ids
+   * it was stored as. Because the stored id rotates every day, this is what lets
+   * us recognise the same browser again and report "new" honestly instead of
+   * counting every returning reader as new each morning. It holds only the
+   * browser's own random token, never personal data.
+   */
+  identities: Map<string, string[]>;
 }
 
 declare global {
@@ -74,12 +84,22 @@ declare global {
 }
 
 function emptyDb(): AnalyticsDb {
-  return { visitors: new Map(), visits: [], online: new Map() };
+  return { visitors: new Map(), visits: [], online: new Map(), identities: new Map() };
 }
 
 function db(): AnalyticsDb {
   if (!globalThis.__moonAnalyticsDb) globalThis.__moonAnalyticsDb = emptyDb();
-  return globalThis.__moonAnalyticsDb;
+  const store = globalThis.__moonAnalyticsDb;
+  // The store lives on globalThis so it survives hot reloads. That means a store
+  // created by an older build of this module can outlive a code change and be
+  // missing fields added since (e.g. `identities`). Back-fill them instead of
+  // crashing on the first `.get()`.
+  store.visitors ??= new Map();
+  store.online ??= new Map();
+  store.identities ??= new Map();
+  store.visits ??= [];
+  if (!Array.isArray(store.visits)) store.visits = [];
+  return store;
 }
 
 // ---------------------------------------------------------------------------
@@ -125,6 +145,12 @@ export interface VisitInput {
   os?: string;
   country?: string;
   city?: string;
+  /**
+   * Staff pages (admin/author/advertiser back office) are recorded for the
+   * analytics totals but are NOT shown in the public "who visited" box — the
+   * box is about readers on the news site, not the journalists using it.
+   */
+  staff?: boolean;
   /** Optional client session id; generated when absent. */
   sessionId?: string;
   /** "pageview" (default) or "heartbeat" (activity ping only). */
@@ -153,8 +179,15 @@ export function recordVisit(input: VisitInput): VisitResult {
   const page = normalizePage(input.page);
 
   // --- visitor identity -----------------------------------------------------
+  // A visitor is "new" only if their browser token has never been seen before —
+  // not merely because the (daily-rotating) id is new today.
+  const seenIds = input.visitorToken ? store.identities.get(input.visitorToken) ?? [] : [];
+  const isNewVisitor = seenIds.length === 0;
+  if (input.visitorToken && !seenIds.includes(visitorId)) {
+    store.identities.set(input.visitorToken, [...seenIds, visitorId]);
+  }
+
   const existing = store.visitors.get(visitorId);
-  const isNewVisitor = !existing;
   if (existing) {
     existing.lastVisit = now;
     existing.totalVisits += 1;
@@ -194,6 +227,7 @@ export function recordVisit(input: VisitInput): VisitResult {
         os: input.os ?? "unknown",
         country: input.country,
         city: input.city,
+        staff: input.staff,
         firstVisit: new Date(now).toISOString(),
         lastVisit: new Date(now).toISOString(),
         visitDate: dayKey,
@@ -249,6 +283,13 @@ function pruneRetention(now: number) {
   if (store.visits.length && new Date(store.visits[0].lastVisit).getTime() < cutoff) {
     store.visits = store.visits.filter((v) => new Date(v.lastVisit).getTime() >= cutoff);
   }
+
+  // Drop browser-token links whose ids have aged out, so the map stays small.
+  for (const [token, ids] of store.identities) {
+    const alive = ids.filter((id) => store.visitors.has(id));
+    if (alive.length) store.identities.set(token, alive);
+    else store.identities.delete(token);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -272,6 +313,26 @@ function uniqueVisitorsBetween(fromDay: string, toDay: string): number {
     }
   }
   return seen.size;
+}
+
+type Store = ReturnType<typeof db>;
+
+/**
+ * The day a stored visitor id was first seen. The id rotates daily, so we look
+ * up the other ids that came from the same browser token and take the earliest
+ * one — otherwise every returning reader would look "new" each morning.
+ */
+function firstVisitDay(visitorId: string, store: Store = db()): string {
+  const own = store.visitors.get(visitorId)?.firstVisit;
+  let earliest = own ?? Number.POSITIVE_INFINITY;
+  for (const ids of store.identities.values()) {
+    if (!ids.includes(visitorId)) continue;
+    for (const id of ids) {
+      const first = store.visitors.get(id)?.firstVisit;
+      if (first !== undefined && first < earliest) earliest = first;
+    }
+  }
+  return utcDateKey(earliest === Number.POSITIVE_INFINITY ? Date.now() : earliest);
 }
 
 function uniqueVisitorsOn(day: string): number {
@@ -315,8 +376,7 @@ export function getStats(): VisitorStats {
     visitorDays.set(v.visitorId, days);
   }
   for (const [visitorId, days] of visitorDays) {
-    const first = store.visitors.get(visitorId)?.firstVisit ?? 0;
-    const firstDay = utcDateKey(first);
+    const firstDay = firstVisitDay(visitorId, store);
     if (firstDay === today) newVisitors += 1;
     if (days.size > 1 || firstDay !== today) returningVisitors += 1;
   }
@@ -455,6 +515,104 @@ function topArticles(limit = 10): AnalyticsBreakdown[] {
 // ---------------------------------------------------------------------------
 // Full snapshot
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Live visitor feed (who is on the site right now)
+// ---------------------------------------------------------------------------
+
+/** Page path -> human label, e.g. "/news/technology/xyz" -> "Technology / Xyz". */
+function pageLabel(path: string): string {
+  return `/${path}`
+    .replace(/^\/$/, "Home")
+    .split("/")
+    .filter(Boolean)
+    .map((seg) => seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()))
+    .join(" / ");
+}
+
+/**
+ * Builds the admin's visitor box: today's counts plus one row per person seen
+ * today, most recently active first.
+ *
+ * The row list is derived from the same recorded visits the unique-visitor
+ * counts use, so it always shows real traffic — nothing is synthesised. Online
+ * state comes from the presence map, which prunes itself, so idle visitors drop
+ * out of "online now" automatically.
+ *
+ * Staff back-office views (admin, author, advertiser) are counted in the totals
+ * but left out of the rows: the box is about readers on the news site.
+ */
+export function getVisitorFeed(limit = 25): VisitorFeed {
+  const store = db();
+  const now = Date.now();
+  const today = utcDateKey(now);
+  const stats = getStats();
+
+  const byVisitor = new Map<string, VisitorActivity>();
+  for (const v of store.visits) {
+    if (v.visitDate !== today) continue;
+    // Readers only: staff back-office pages are excluded from the box.
+    if (v.staff) continue;
+    const lastVisitMs = new Date(v.lastVisit).getTime();
+    const entry = byVisitor.get(v.visitorId);
+    if (!entry) {
+      byVisitor.set(v.visitorId, {
+        visitorId: v.visitorId,
+        sessionId: v.sessionId,
+        page: pageLabel(v.page),
+        source: v.source,
+        device: v.device,
+        browser: v.browser,
+        os: v.os,
+        country: v.country,
+        city: v.city,
+        firstVisit: v.firstVisit,
+        lastVisit: v.lastVisit,
+        pageViews: 1,
+        online: false,
+        isNew: firstVisitDay(v.visitorId, store) === today,
+      });
+    } else if (lastVisitMs >= new Date(entry.lastVisit).getTime()) {
+      // Latest activity wins: this is the page the visitor is looking at now.
+      entry.page = pageLabel(v.page);
+      entry.sessionId = v.sessionId;
+      entry.lastVisit = v.lastVisit;
+      entry.pageViews += 1;
+    } else {
+      entry.pageViews += 1;
+    }
+  }
+
+  // Presence: a visitor is online if any of their sessions is inside the window.
+  const cutoff = now - ONLINE_WINDOW_SECONDS * 1000;
+  const onlineVisitors = new Set<string>();
+  for (const entry of store.online.values()) {
+    if (entry.lastSeen >= cutoff) onlineVisitors.add(entry.visitorId);
+  }
+  let newVisitorsToday = 0;
+  for (const v of byVisitor.values()) {
+    v.online = onlineVisitors.has(v.visitorId);
+    if (v.isNew) newVisitorsToday += 1;
+  }
+
+  const recent = [...byVisitor.values()]
+    .sort((a, b) => {
+      if (a.online !== b.online) return a.online ? -1 : 1;
+      return new Date(b.lastVisit).getTime() - new Date(a.lastVisit).getTime();
+    })
+    .slice(0, limit);
+
+  return {
+    visitorsToday: stats.visitorsToday,
+    pageViewsToday: stats.pageViewsToday,
+    onlineNow: onlineVisitors.size,
+    newVisitorsToday,
+    growthToday: stats.growthToday,
+    windowSeconds: ONLINE_WINDOW_SECONDS,
+    recent,
+    generatedAt: new Date(now).toISOString(),
+  };
+}
 
 export function getSnapshot(range: TrafficRange = "7d"): AnalyticsSnapshot {
   return {

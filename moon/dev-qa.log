@@ -1,0 +1,544 @@
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\domin\package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\domin\OneDrive\Desktop\moon news\moon\package-lock.json
+
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3000
+   - Network:      http://10.11.106.162:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 10.6s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 43.5s (790 modules)
+ GET /login 200 in 66084ms
+ GET /login 200 in 5998ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 50.3s (899 modules)
+ POST /api/analytics/visit 202 in 55228ms
+ GET /favicon.ico 200 in 65169ms
+ GET /login 200 in 8414ms
+ GET /login 200 in 4184ms
+ GET /login 200 in 4700ms
+ POST /api/analytics/visit 202 in 1507ms
+ GET /favicon.ico 200 in 4232ms
+ GET /login 200 in 5645ms
+ GET /login? 200 in 11373ms
+ POST /api/analytics/visit 202 in 320ms
+ GET /favicon.ico 200 in 3105ms
+ GET /favicon.ico 200 in 1456ms
+ GET /login 200 in 737ms
+ POST /api/analytics/visit 202 in 473ms
+ GET /favicon.ico 200 in 2121ms
+ GET /login 200 in 807ms
+ POST /api/analytics/visit 202 in 167ms
+ GET /favicon.ico 200 in 1536ms
+ ○ Compiling /advertiser ...
+ ✓ Compiled /advertiser in 5.6s (944 modules)
+ GET /advertiser 200 in 6696ms
+ POST /api/analytics/visit 202 in 481ms
+ GET /favicon.ico 200 in 3026ms
+ GET /login 200 in 6750ms
+ GET /login 200 in 3431ms
+ GET /login? 200 in 2737ms
+ POST /api/analytics/visit 202 in 6936ms
+ GET /favicon.ico 200 in 18134ms
+ GET /favicon.ico 200 in 10059ms
+ GET /login 200 in 5172ms
+ GET /login? 200 in 5086ms
+ POST /api/analytics/visit 202 in 4786ms
+ GET /favicon.ico 200 in 10059ms
+ GET /favicon.ico 200 in 5366ms
+ GET /login 200 in 13767ms
+ GET /login? 200 in 5564ms
+ GET /login 200 in 6694ms
+ GET /login 200 in 2560ms
+ GET /login? 200 in 2407ms
+ ✓ Compiled in 24.7s (890 modules)
+ ✓ Compiled in 3.4s (380 modules)
+ ✓ Compiled in 4s (380 modules)
+ ✓ Compiled in 661ms (380 modules)
+ ✓ Compiled in 1685ms (380 modules)
+ ✓ Compiled in 3s (890 modules)
+ ✓ Compiled in 1348ms (890 modules)
+ ✓ Compiled in 883ms (890 modules)
+ ✓ Compiled in 2.1s (890 modules)
+ ✓ Compiled in 1065ms (890 modules)
+ ✓ Compiled in 3.4s (380 modules)
+ ✓ Compiled in 1363ms (890 modules)
+ ✓ Compiled in 2.3s (380 modules)
+ ✓ Compiled in 2.1s (380 modules)
+ ✓ Compiled in 1535ms (380 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 8.1s (1689 modules)
+ GET / 200 in 10026ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 1165ms (953 modules)
+ POST /api/analytics/visit 202 in 1658ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 1089ms (972 modules)
+ GET /favicon.ico 200 in 3438ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moonvid-1/800/450
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-health/1200/800
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ ○ Compiling /_error ...
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ✓ Compiled /_error in 4.1s (2070 modules)
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ GET / 200 in 1687ms
+ POST /api/analytics/visit 202 in 368ms
+ GET / 200 in 1638ms
+ POST /api/analytics/visit 202 in 228ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moonvid-1/800/450
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ GET / 200 in 1114ms
+ POST /api/analytics/visit 202 in 84ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ GET / 200 in 648ms
+ POST /api/analytics/visit 202 in 80ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moonvid-1/800/450
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ✓ Compiled in 11.9s (2065 modules)
+ GET / 200 in 5567ms
+ POST /api/analytics/visit 202 in 178ms
+ GET / 200 in 888ms
+ POST /api/analytics/visit 202 in 96ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-markets/1200/800
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-markets/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ GET /_next/image?url=https%3A%2F%2Fpicsum.photos%2Fseed%2Fmoon-football%2F1200%2F800&w=384&q=75 500 in 7723ms
+ GET /_next/image?url=https%3A%2F%2Fpicsum.photos%2Fseed%2Fmoon-football%2F1200%2F800&w=384&q=75 500 in 640ms
+ GET /_next/image?url=https%3A%2F%2Fpicsum.photos%2Fseed%2Fmoon-digital%2F1200%2F800&w=384&q=75 500 in 7727ms
+ GET /_next/image?url=https%3A%2F%2Fpicsum.photos%2Fseed%2Fmoon-digital%2F1200%2F800&w=384&q=75 500 in 634ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 4.4s (1176 modules)
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ GET /favicon.ico 200 in 19901ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 11.9s (2082 modules)
+ GET / 200 in 4719ms
+ POST /api/analytics/visit 202 in 1023ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-education/1200/800
+[Error: "url" parameter is valid but upstream response timed out] {
+  statusCode: 504
+}
+ GET / 200 in 23870ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-markets/1200/800
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-digital/1200/800
+ POST /api/analytics/visit 202 in 12685ms
+[Error [TimeoutError]: The operation was aborted due to timeout] {
+  code: 23,
+  INDEX_SIZE_ERR: 1,
+  DOMSTRING_SIZE_ERR: 2,
+  HIERARCHY_REQUEST_ERR: 3,
+  WRONG_DOCUMENT_ERR: 4,
+  INVALID_CHARACTER_ERR: 5,
+  NO_DATA_ALLOWED_ERR: 6,
+  NO_MODIFICATION_ALLOWED_ERR: 7,
+  NOT_FOUND_ERR: 8,
+  NOT_SUPPORTED_ERR: 9,
+  INUSE_ATTRIBUTE_ERR: 10,
+  INVALID_STATE_ERR: 11,
+  SYNTAX_ERR: 12,
+  INVALID_MODIFICATION_ERR: 13,
+  NAMESPACE_ERR: 14,
+  INVALID_ACCESS_ERR: 15,
+  VALIDATION_ERR: 16,
+  TYPE_MISMATCH_ERR: 17,
+  SECURITY_ERR: 18,
+  NETWORK_ERR: 19,
+  ABORT_ERR: 20,
+  URL_MISMATCH_ERR: 21,
+  QUOTA_EXCEEDED_ERR: 22,
+  TIMEOUT_ERR: 23,
+  INVALID_NODE_TYPE_ERR: 24,
+  DATA_CLONE_ERR: 25
+}
+ GET /register 200 in 20278ms
+ ⨯ upstream image response timed out for https://picsum.photos/seed/moon-basketball/1200/800
+ GET /login 200 in 8015ms
+ POST /api/analytics/visit 202 in 2265ms
+ ○ Compiling /latest ...
+ GET /favicon.ico 200 in 28956ms
+ ✓ Compiled /latest in 43.1s (2087 modules)
+ ✓ Compiled in 101.1s (1950 modules)
+ ✓ Compiled in 146.5s (1950 modules)
+ ✓ Compiled in 50.4s (912 modules)
+ ✓ Compiled in 18.5s (912 modules)
+ ✓ Compiled in 43.2s (912 modules)
+ ✓ Compiled in 16.1s (912 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 9.9s (1951 modules)
+ GET / 404 in 12971ms
+[?25h

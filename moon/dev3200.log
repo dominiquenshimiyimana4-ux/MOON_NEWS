@@ -1,0 +1,272 @@
+
+> moon-news@1.0.0 dev
+> next dev -p 3200
+
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3200
+   - Network:      http://10.11.106.193:3200
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 9.2s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 15.2s (790 modules)
+ GET /login 200 in 18085ms
+ GET /login 200 in 1082ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 3s (809 modules)
+ POST /api/analytics/visit 202 in 3653ms
+ GET /login? 200 in 4138ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 3.1s (899 modules)
+ POST /api/analytics/visit 202 in 3391ms
+ GET /favicon.ico 200 in 6171ms
+ GET /login 200 in 1102ms
+ GET /login? 200 in 1678ms
+ POST /api/analytics/visit 202 in 132ms
+ GET /favicon.ico 200 in 1267ms
+ GET /favicon.ico 200 in 745ms
+ GET /login 200 in 632ms
+ GET /login? 200 in 593ms
+ POST /api/analytics/visit 202 in 179ms
+ GET /favicon.ico 200 in 2243ms
+ GET /favicon.ico 200 in 745ms
+ GET /login 200 in 607ms
+ GET /login? 200 in 510ms
+ POST /api/analytics/visit 202 in 125ms
+ GET /favicon.ico 200 in 1371ms
+ GET /favicon.ico 200 in 719ms
+ ○ Compiling / ...
+ ✓ Compiled / in 8.5s (1668 modules)
+ GET / 200 in 12872ms
+ POST /api/analytics/visit 202 in 436ms
+ GET /favicon.ico 200 in 1615ms
+ GET /login 200 in 924ms
+ POST /api/analytics/visit 202 in 216ms
+ GET /login 200 in 1819ms
+ POST /api/analytics/visit 202 in 156ms
+ GET /favicon.ico 200 in 964ms
+ POST /api/analytics/visit 202 in 181ms
+ POST /api/analytics/visit 202 in 183ms
+ GET /login 200 in 2339ms
+ POST /api/analytics/visit 202 in 229ms
+ GET /login 200 in 1244ms
+ POST /api/analytics/visit 202 in 116ms
+ GET /favicon.ico 200 in 1071ms
+ POST /api/analytics/visit 202 in 96ms
+ POST /api/analytics/visit 202 in 141ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 53.8s (1729 modules)
+ POST /api/analytics/visit 202 in 45962ms
+ GET /admin 200 in 65696ms
+ POST /api/analytics/visit 202 in 7078ms
+ GET /login 200 in 59860ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 3.1s (990 modules)
+ POST /api/analytics/visit 202 in 5475ms
+ GET /favicon.ico 200 in 8256ms
+ POST /api/analytics/visit 202 in 2606ms
+ POST /api/analytics/visit 202 in 3030ms
+ ○ Compiling /author ...
+ ✓ Compiled /author in 32.8s (1723 modules)
+ POST /api/analytics/visit 202 in 24437ms
+ GET /author 200 in 40705ms
+ GET /login 200 in 34582ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 1267ms (973 modules)
+ POST /api/analytics/visit 202 in 2909ms
+ GET /favicon.ico 200 in 6009ms
+ POST /api/analytics/visit 202 in 143ms
+ POST /api/analytics/visit 202 in 534ms
+ ○ Compiling /advertiser ...
+ ✓ Compiled /advertiser in 39.5s (1735 modules)
+ POST /api/analytics/visit 202 in 23964ms
+ GET /advertiser 200 in 45103ms
+ GET /login 200 in 34755ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 625ms (972 modules)
+ POST /api/analytics/visit 202 in 1364ms
+ GET /favicon.ico 200 in 3823ms
+ POST /api/analytics/visit 202 in 94ms
+ POST /api/analytics/visit 202 in 864ms
+ ○ Compiling /reader ...
+ ✓ Compiled /admin in 189.4s (1788 modules)
+ GET /login 200 in 2877ms
+ POST /api/analytics/visit 202 in 363ms
+ GET /login 200 in 1255ms
+ POST /api/analytics/visit 202 in 392ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 33.7s (947 modules)
+ POST /api/analytics/visit 202 in 1666ms
+ GET /favicon.ico 200 in 65986ms
+ POST /api/analytics/visit 202 in 600ms
+ ○ Compiling /_error ...
+ GET /login 500 in 44404ms
+ ✓ Compiled /_error in 126.8s (2069 modules)
+ GET /login 200 in 6993ms
+ GET /login 200 in 2162ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 10.6s (1032 modules)
+ GET /favicon.ico 200 in 19685ms
+ GET /login 200 in 20080ms
+ GET /favicon.ico 200 in 1304ms
+ GET /login 200 in 1167ms
+ GET /favicon.ico 200 in 1210ms
+ GET /login 200 in 1380ms
+ GET /favicon.ico 500 in 1921ms
+ ✓ Compiled in 7.7s (956 modules)
+ ✓ Compiled in 1394ms (956 modules)
+ ✓ Compiled in 1055ms (956 modules)
+ ✓ Compiled in 1155ms (956 modules)
+ ✓ Compiled in 884ms (956 modules)
+ ✓ Compiled in 656ms (956 modules)
+ ✓ Compiled in 1976ms (956 modules)
+ ✓ Compiled in 17.3s (1968 modules)
+ GET /login? 200 in 2446ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 3.3s (1032 modules)
+ GET /favicon.ico 200 in 8098ms
+ GET /login 200 in 2278ms
+ GET /favicon.ico 500 in 290ms
+ GET /login? 200 in 932ms
+ GET /favicon.ico 500 in 1347ms
+ GET /login 200 in 374ms
+ GET /favicon.ico 500 in 1348ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 9.9s (1975 modules)
+ GET /login? 404 in 14503ms
+ GET /favicon.ico 500 in 326ms
+ GET /login 200 in 22617ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /[category] in 20.4s (1031 modules)
+ ✓ Compiled (1051 modules)
+ POST /api/analytics/visit 202 in 24359ms
+ ○ Compiling /_error ...
+ GET /favicon.ico 200 in 21635ms
+ ✓ Compiled /_error in 23.3s (2094 modules)
+ POST /api/analytics/visit 202 in 11041ms
+ GET /login 500 in 139682ms
+ GET /login 500 in 2404ms
+ GET /login 200 in 4022ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.7s (1033 modules)
+ GET / 404 in 7636ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 1083ms (1052 modules)
+ POST /api/analytics/visit 202 in 2490ms
+ GET /login 200 in 4114ms
+ POST /api/analytics/visit 202 in 189ms
+ GET /favicon.ico 200 in 961ms
+ POST /api/analytics/visit 202 in 1004ms
+ POST /api/analytics/visit 202 in 228ms
+ GET /login 200 in 1060ms
+ POST /api/analytics/visit 202 in 171ms
+ GET /login 200 in 533ms
+ POST /api/analytics/visit 202 in 96ms
+ GET /login? 200 in 525ms
+ POST /api/analytics/visit 202 in 81ms
+ GET /favicon.ico 200 in 414ms
+ GET /login 200 in 10323ms
+   ▲ Next.js 15.5.27
+   - Local:        http://localhost:3200
+   - Network:      http://10.11.106.191:3200
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 13.8s
+ ○ Compiling /login ...
+ ✓ Compiled /login in 31.4s (790 modules)
+ GET /login 200 in 46878ms
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 1120ms (809 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1474ms (1166 modules)
+ POST /api/analytics/visit 500 in 5587ms
+ GET /login 200 in 3129ms
+ GET /login 200 in 225ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 5.3s (1256 modules)
+ GET /favicon.ico 500 in 9569ms
+ POST /api/analytics/visit 500 in 716ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 12.4s (1282 modules)
+ GET /register 200 in 13385ms
+ ✓ Compiled in 1251ms (517 modules)
+ GET /register 200 in 1409ms
+ GET /register 200 in 159ms
+ POST /api/analytics/visit 500 in 1114ms
+ POST /api/analytics/visit 500 in 446ms
+ ○ Compiling /reader ...
+ ✓ Compiled /reader in 2.4s (1274 modules)
+ GET /reader 200 in 3426ms
+ POST /api/analytics/visit 500 in 951ms
+ POST /api/analytics/visit 500 in 454ms
+ GET /reader 200 in 1358ms
+ POST /api/analytics/visit 500 in 636ms
+ ○ Compiling /[category] ...
+ ✓ Compiled /[category] in 1950ms (784 modules)
+ GET /favicon.ico 500 in 8711ms
+ POST /api/analytics/visit 500 in 979ms
+ POST /api/analytics/visit 500 in 841ms
+ GET /login 200 in 313ms
+ POST /api/analytics/visit 500 in 752ms
+ GET /favicon.ico 500 in 3598ms
+ POST /api/analytics/visit 500 in 576ms
+ GET /login 200 in 192ms
+ POST /api/analytics/visit 500 in 581ms
+ POST /api/analytics/visit 500 in 523ms
+ POST /api/analytics/visit 500 in 9920ms
+ GET /login 200 in 3383ms
+ POST /api/analytics/visit 500 in 3953ms
+ GET /register 200 in 3452ms
+ POST /api/analytics/visit 500 in 3448ms
+ POST /api/analytics/visit 500 in 5344ms
+ GET /favicon.ico 500 in 21235ms
+ GET /reader 200 in 3016ms
+ POST /api/analytics/visit 500 in 1549ms
+ ○ Compiling /saved ...
+ GET /favicon.ico 500 in 22481ms
+ ✓ Compiled /live in 33.6s (1355 modules)
+ GET /saved 200 in 37628ms
+ GET /live 200 in 25385ms
+ GET /latest 200 in 30711ms
+ GET /latest 200 in 6672ms
+ POST /api/analytics/visit 500 in 26048ms
+ POST /api/analytics/visit 500 in 608ms
+ GET /favicon.ico 500 in 4626ms
+ POST /api/analytics/visit 500 in 685ms
+ POST /api/analytics/visit 500 in 1223ms
+ GET /login 200 in 471ms
+ POST /api/analytics/visit 500 in 716ms
+ GET /reader 200 in 242ms
+ GET /favicon.ico 500 in 4773ms
+ POST /api/analytics/visit 500 in 998ms
+ GET /favicon.ico 500 in 3182ms
+ GET /login 200 in 228ms
+ POST /api/analytics/visit 500 in 875ms
+ GET /reader 200 in 133ms
+ POST /api/analytics/visit 500 in 694ms
+ GET /favicon.ico 500 in 4582ms
+ GET /favicon.ico 500 in 2624ms
+ ○ Compiling /author ...
+ ✓ Compiled /author in 9.1s (1365 modules)
+ POST /api/analytics/visit 500 in 10425ms
+ GET /author 200 in 12852ms
+ POST /api/analytics/visit 500 in 682ms
+ GET /favicon.ico 200 in 2658ms
+ GET /author 200 in 1176ms
+ GET /favicon.ico 500 in 574ms
+ POST /api/analytics/visit 500 in 737ms
+ GET /login 200 in 381ms
+ POST /api/analytics/visit 500 in 684ms
+ GET /favicon.ico 500 in 3985ms
+ POST /api/analytics/visit 500 in 782ms
+ POST /api/analytics/visit 500 in 571ms
+ GET /health 200 in 2827ms
+ GET /login 200 in 980ms
+ GET /register 200 in 3268ms
+ GET /register 200 in 2627ms
+ POST /api/analytics/visit 500 in 2789ms
+ GET /favicon.ico 200 in 5558ms
+ POST /api/analytics/visit 500 in 2172ms
+ POST /api/analytics/visit 500 in 812ms

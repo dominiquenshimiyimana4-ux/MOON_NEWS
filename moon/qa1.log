@@ -1,0 +1,18 @@
+url        http://localhost:3000/login
+http       0  NAV ERROR: TimeoutError: page.goto: Timeout 30000ms exceeded.
+load       70649ms
+title      ""
+bodyChars  0
+patchright C:\Users\domin\.vscode\extensions\danielsanmedium.dscodegpt-3.24.79\standalone/
+script     {
+ "loginLeaksAdminEmail": false,
+ "loginLeaksAdminPassword": false,
+ "loginStillHasAdvertiserDemo": false,
+ "registerBlocked": false,
+ "registeredAccountCreated": false,
+ "stayedOnRegister": true
+}
+
+console errors/warnings (0):
+
+requests failed (0):
