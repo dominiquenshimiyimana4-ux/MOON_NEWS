@@ -102,7 +102,7 @@ function Row({
         {active ? "Breaking" : "Mark breaking"}
       </button>
       <Link
-        href={`/admin/articles/${id}`}
+        href={`/admin/articles/edit?id=${encodeURIComponent(id)}`}
         className="btn-ghost h-8 w-8 shrink-0 rounded-lg !px-0"
         aria-label="Edit article"
       >

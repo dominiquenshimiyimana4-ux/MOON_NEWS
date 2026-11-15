@@ -174,7 +174,7 @@ export default function AuthorDashboardPage() {
               {myArticles.slice(0, 6).map((a) => (
                 <li key={a.id} className="flex items-center gap-3 px-5 py-3">
                   <span className="min-w-0 flex-1">
-                    <Link href={`/author/articles/${a.id}`} className="block truncate text-sm font-medium hover:text-brand-600">
+                    <Link href={`/author/articles/edit?id=${encodeURIComponent(a.id)}`} className="block truncate text-sm font-medium hover:text-brand-600">
                       {a.title.en}
                     </Link>
                     <span className="text-xs text-[rgb(var(--text-muted))]">

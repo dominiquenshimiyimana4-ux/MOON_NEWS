@@ -127,7 +127,7 @@ export default function MyArticlesPage() {
                   <Image src={a.image} alt="" fill sizes="80px" className="object-cover" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <Link href={`/author/articles/${a.id}`} className="block truncate font-medium hover:text-brand-600">
+                  <Link href={`/author/articles/edit?id=${encodeURIComponent(a.id)}`} className="block truncate font-medium hover:text-brand-600">
                     {a.title.en}
                   </Link>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[rgb(var(--text-muted))]">
@@ -184,7 +184,7 @@ export default function MyArticlesPage() {
                       Unsubmit
                     </button>
                   )}
-                  <Link href={`/author/articles/${a.id}`} className="btn-ghost h-8 w-8 rounded-lg !px-0" aria-label="Edit">
+                  <Link href={`/author/articles/edit?id=${encodeURIComponent(a.id)}`} className="btn-ghost h-8 w-8 rounded-lg !px-0" aria-label="Edit">
                     <Pencil className="h-4 w-4" />
                   </Link>
                   <button

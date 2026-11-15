@@ -77,7 +77,7 @@ export default function AdminArticlesPage() {
                   <Image src={a.image} alt="" fill sizes="80px" className="object-cover" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <Link href={`/admin/articles/${a.id}`} className="block truncate font-medium hover:text-brand-600">
+                  <Link href={`/admin/articles/edit?id=${encodeURIComponent(a.id)}`} className="block truncate font-medium hover:text-brand-600">
                     {a.title.en}
                   </Link>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[rgb(var(--text-muted))]">
@@ -95,7 +95,7 @@ export default function AdminArticlesPage() {
                   <IconBtn label={a.featured ? "Unmark featured" : "Mark featured"} active={a.featured} onClick={() => toggleFeatured(a.id)}>
                     <Star className="h-4 w-4" />
                   </IconBtn>
-                  <Link href={`/admin/articles/${a.id}`} className="btn-ghost h-8 w-8 rounded-lg !px-0" aria-label="Edit">
+                  <Link href={`/admin/articles/edit?id=${encodeURIComponent(a.id)}`} className="btn-ghost h-8 w-8 rounded-lg !px-0" aria-label="Edit">
                     <Pencil className="h-4 w-4" />
                   </Link>
                   <button

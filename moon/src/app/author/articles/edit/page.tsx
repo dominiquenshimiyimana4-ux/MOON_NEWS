@@ -1,23 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { AuthorArticleEditor } from "@/components/author/AuthorArticleEditor";
 import { useAuthor } from "@/lib/author/AuthorProvider";
 import { EmptyState } from "@/components/EmptyState";
 import type { Article } from "@/lib/types";
 
 export default function AuthorEditArticlePage() {
-  const params = useParams<{ id: string }>();
   const { myArticles, hydrated } = useAuthor();
   const [found, setFound] = useState<Article | undefined>(undefined);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (!hydrated) return;
-    setFound(myArticles.find((a) => a.id === params.id));
+    const id = new URLSearchParams(window.location.search).get("id");
+    setFound(id ? myArticles.find((article) => article.id === id) : undefined);
     setChecked(true);
-  }, [hydrated, myArticles, params.id]);
+  }, [hydrated, myArticles]);
 
   if (!hydrated || !checked) {
     return <div className="text-sm text-[rgb(var(--text-muted))]">Loading…</div>;
