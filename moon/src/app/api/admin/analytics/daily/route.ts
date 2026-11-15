@@ -4,7 +4,6 @@ import { getTraffic } from "@/lib/analytics/visitorStore";
 import type { TrafficRange } from "@/lib/types";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 const RANGES: TrafficRange[] = ["today", "7d", "30d", "12m"];
 

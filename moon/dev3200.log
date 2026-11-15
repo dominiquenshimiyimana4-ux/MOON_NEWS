@@ -270,3 +270,39 @@
  GET /favicon.ico 200 in 5558ms
  POST /api/analytics/visit 500 in 2172ms
  POST /api/analytics/visit 500 in 812ms
+ POST /api/analytics/visit 500 in 1738ms
+ POST /api/analytics/visit 500 in 1919ms
+ GET /author 200 in 2389ms
+ POST /api/analytics/visit 500 in 680ms
+ POST /api/analytics/visit 500 in 3050ms
+ POST /api/analytics/visit 500 in 2156ms
+ GET /login 200 in 433ms
+ POST /api/analytics/visit 500 in 620ms
+ POST /api/analytics/visit 500 in 812ms
+ POST /api/analytics/visit 500 in 570ms
+ POST /api/analytics/visit 500 in 525ms
+ POST /api/analytics/visit 500 in 436ms
+ POST /api/analytics/visit 500 in 553ms
+ POST /api/analytics/visit 500 in 5401ms
+ POST /api/analytics/visit 500 in 810ms
+ POST /api/analytics/visit 500 in 1703ms
+ GET /register 200 in 1078ms
+ POST /api/analytics/visit 500 in 735ms
+ GET /favicon.ico 500 in 3025ms
+ POST /api/analytics/visit 500 in 758ms
+ POST /api/analytics/visit 500 in 804ms
+   Reload env: .env.local
+ ✓ Compiled in 17.1s (1218 modules)
+ ○ Compiling /api/analytics/visit ...
+ ✓ Compiled /api/analytics/visit in 2.8s (1338 modules)
+ GET /register 500 in 16486ms
+ GET /register 500 in 1234ms
+ GET /login 500 in 18542ms
+ GET /login 500 in 1549ms
+ GET /login 500 in 19766ms
+ GET /login 500 in 1550ms
+ POST /api/analytics/visit 500 in 18216ms
+ POST /api/analytics/visit 500 in 208ms
+ GET /register 500 in 3465ms
+ GET /register 500 in 140ms
+[?25h

@@ -5,16 +5,18 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
-      - main
+      - moon
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm run build
+      - run: npm ci
+        working-directory: moon
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MOON_7A580 }}
           channelId: live
           projectId: moon-7a580
+          entryPoint: ./moon
