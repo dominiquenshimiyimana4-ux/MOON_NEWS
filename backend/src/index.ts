@@ -12,10 +12,13 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
-// FRONTEND_URL accepts a comma-separated list so production origins
-// (e.g. the Cloudflare Worker) can be allowed alongside localhost.
-const allowedOrigins = (process.env.FRONTEND_URL || 'https://moon-news.moonn.workers.dev/')
-  .split(',')
+// Keep the deployed frontend available even when a host's FRONTEND_URL is
+// still set to a development-only value. Additional origins remain configurable.
+const allowedOrigins = [
+  'https://moon-news.moonn.workers.dev',
+  'http://localhost:3000',
+  ...(process.env.FRONTEND_URL || '').split(','),
+]
   .map((origin) => origin.trim().replace(/\/+$/, ''))
   .filter(Boolean);
 
