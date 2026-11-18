@@ -164,7 +164,13 @@ export interface Notification {
   href?: string;
 }
 
-export type UserRole = "admin" | "editor" | "journalist" | "reader" | "advertiser";
+export type UserRole =
+  | "admin"
+  | "editor"
+  | "journalist"
+  | "reader"
+  | "advertiser"
+  | "station";
 
 export interface User {
   id: string;
@@ -208,7 +214,7 @@ export interface Visit {
   visitorId: string;
   /** Anonymous, short-lived session id grouping a burst of activity. */
   sessionId: string;
-  /** Path viewed, e.g. "/news/technology/xyz". */
+  /** Path viewed, e.g. "/story" or the legacy "/news/technology/xyz". */
   page: string;
   /** Referrer host or "direct". */
   source: string;
@@ -520,4 +526,62 @@ export interface RevenueReportRow {
   subscriptions: number;
   affiliate: number;
   other: number;
+}
+
+/* ------------------------------- Channels ------------------------------- */
+
+export type ChannelType = "radio" | "television";
+export type ChannelStatus = "pending" | "approved" | "rejected";
+export type ChannelSubscriptionStatus = "none" | "active" | "past_due" | "canceled";
+export type BillingPeriod = "monthly" | "yearly";
+
+export interface ChannelSubscription {
+  status: ChannelSubscriptionStatus;
+  plan: string | null;
+  planName: string | null;
+  billingPeriod: BillingPeriod | null;
+  startedAt?: string;
+  renewsAt?: string;
+}
+
+/** A radio or television station channel on Moon News. */
+export interface Channel {
+  id: string;
+  ownerId: string;
+  stationName: string;
+  logo?: string;
+  type: ChannelType;
+  description: string;
+  location: string;
+  streamUrl: string;
+  status: ChannelStatus;
+  reviewNote?: string;
+  subscription: ChannelSubscription;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ChannelPlan {
+  id: string;
+  name: string;
+  prices: { monthly: number; yearly: number };
+  features: string[];
+}
+
+/** A channel subscription payment processed through the secure provider. */
+export interface ChannelPayment {
+  id: string;
+  channelId: string;
+  ownerId: string;
+  planId: string;
+  planName: string;
+  billingPeriod: BillingPeriod;
+  amount: number; // RWF
+  currency: string;
+  status: "pending" | "confirmed" | "failed";
+  provider: string;
+  providerRef: string;
+  checkoutUrl?: string;
+  createdAt: string;
+  updatedAt: string;
 }

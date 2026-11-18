@@ -20,7 +20,7 @@ import type { AnalyticsBreakdown, TrafficRange } from "@/lib/types";
 import { useAnalytics } from "@/lib/analytics/useAnalytics";
 import { PageHeader, StatCard, ChartCard } from "@/components/admin/StatCard";
 import { AreaChart, RankedBars } from "@/components/admin/Charts";
-import { cn } from "@/lib/utils";
+import { articlePath, cn } from "@/lib/utils";
 
 const RANGES: { key: TrafficRange; label: string }[] = [
   { key: "today", label: "Today" },
@@ -206,7 +206,11 @@ export default function AdminAnalyticsPage() {
           rows={snapshot?.topArticles ?? []}
           color="#4c2fd0"
           unit="views"
-          hrefFor={(row) => `/news/${row.key.replace(/^\/news\//, "")}`}
+          hrefFor={(row) => {
+            const [category, ...slugParts] = row.key.replace(/^\/news\//, "").split("/");
+            const slug = slugParts.join("/");
+            return category && slug ? articlePath({ category, slug }) : "/latest";
+          }}
         />
         <BreakdownCard
           title="Top pages"

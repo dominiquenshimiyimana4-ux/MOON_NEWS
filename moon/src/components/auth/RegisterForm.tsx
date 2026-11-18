@@ -23,6 +23,8 @@ export function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  /** Account kind: a personal reader account or a radio/TV station account. */
+  const [accountType, setAccountType] = useState<"reader" | "station">("reader");
   const [error, setError] = useState("");
 
   async function onSubmit(e: React.FormEvent) {
@@ -58,9 +60,9 @@ export function RegisterForm() {
       return;
     }
     try {
-      // Only reader accounts can be self-registered. Advertiser, author and
-      // admin accounts are provisioned and sign in through the browser.
-      const user = await register({ name, email, password, role: "reader" });
+      // Reader and station accounts can be self-registered. Advertiser,
+      // author and admin accounts are provisioned and sign in directly.
+      const user = await register({ name, email, password, role: accountType });
       router.push(dashboardRouteFor(user));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed.");
@@ -93,8 +95,35 @@ export function RegisterForm() {
           )}
 
           <form onSubmit={onSubmit} className="space-y-4">
+            {/* Account type: readers get a personal library, stations get the
+                channel dashboard where they register a radio/TV channel. */}
             <div>
-              <label className="label" htmlFor="name">{t("auth.name")}</label>
+              <span className="label">Account type</span>
+              <div className="grid grid-cols-2 gap-2">
+                {([
+                  { value: "reader", label: "Reader", hint: "Personal account" },
+                  { value: "station", label: "Station", hint: "Radio / TV channel" },
+                ] as const).map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setAccountType(opt.value)}
+                    className={`rounded-lg border px-3 py-2.5 text-left transition-colors ${
+                      accountType === opt.value
+                        ? "border-brand-600 bg-brand-50 dark:bg-brand-500/10"
+                        : "border-border hover:bg-[rgb(var(--bg-subtle))]"
+                    }`}
+                  >
+                    <span className="block text-sm font-semibold">{opt.label}</span>
+                    <span className="block text-xs text-[rgb(var(--text-muted))]">{opt.hint}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="label" htmlFor="name">
+                {accountType === "station" ? "Station contact name" : t("auth.name")}
+              </label>
               <input id="name" required value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="Jane Doe" />
             </div>
             <div>
@@ -119,7 +148,7 @@ export function RegisterForm() {
             <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             {locale === "rw"
               ? "Ijambo ry'ibanga rihindurwa muburyo buhishwe (hashed) mbere yo kubikwa."
-              : "Your password is hashed before it is stored — only reader accounts can be created here."
+              : "Your password is hashed before it is stored — reader and station accounts can be created here."
             }
           </p>
 

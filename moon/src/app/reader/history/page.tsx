@@ -9,7 +9,7 @@ import { useAuth } from "@/lib/auth/AuthProvider";
 import { userService } from "@/lib/services/userService";
 import { categoryMap } from "@/lib/data/categories";
 import { useLanguage } from "@/lib/i18n";
-import { pick, formatDate } from "@/lib/utils";
+import { articlePath, pick, formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/admin/StatCard";
 import { EmptyState } from "@/components/EmptyState";
 
@@ -52,7 +52,7 @@ export default function ReaderHistoryPage() {
           <ul className="divide-y divide-[rgb(var(--border))]">
             {history.map((a) => (
               <li key={a.id}>
-                <Link href={`/news/${a.category}/${a.slug}`} className="group flex items-center gap-4 px-5 py-4">
+                <Link href={articlePath(a)} className="group flex items-center gap-4 px-5 py-4">
                   <span className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg">
                     <Image src={a.image} alt="" fill sizes="96px" className="object-cover" />
                   </span>

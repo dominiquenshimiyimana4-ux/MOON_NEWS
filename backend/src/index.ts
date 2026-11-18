@@ -38,7 +38,7 @@ app.use(
     maxAge: 86400,
   }),
 );
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Custom error handling middleware
@@ -59,11 +59,13 @@ import authRoutes from './routes/auth';
 import articlesRoutes from './routes/articles';
 import commentsRoutes from './routes/comments';
 import usersRoutes from './routes/users';
+import channelsRoutes from './routes/channels';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/news', articlesRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/channels', channelsRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

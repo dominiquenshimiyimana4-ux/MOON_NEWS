@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Check, ExternalLink, MessageSquare, Search, Trash2 } from "lucide-react";
 import { comments as seedComments } from "@/lib/data/comments";
 import { useAdmin } from "@/lib/admin/AdminProvider";
-import { timeAgo } from "@/lib/utils";
+import { articlePath, timeAgo } from "@/lib/utils";
 import { PageHeader } from "@/components/admin/StatCard";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { EmptyState } from "@/components/EmptyState";
@@ -20,7 +20,7 @@ export default function AdminCommentsPage() {
   const titleFor = (id: string) => articles.find((a) => a.id === id)?.title.en ?? "Article";
   const pathFor = (id: string) => {
     const a = articles.find((x) => x.id === id);
-    return a ? `/news/${a.category}/${a.slug}` : "#";
+    return a ? articlePath(a) : "#";
   };
 
   const visible = useMemo(

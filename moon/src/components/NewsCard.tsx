@@ -9,6 +9,7 @@ import { useLanguage } from "@/lib/i18n";
 import { articlePath, cn, formatCount, pick, readingLabel, timeAgo } from "@/lib/utils";
 import { CategoryBadge } from "./CategoryBadge";
 import { SaveButton } from "./SaveButton";
+import { QuickActions } from "./QuickActions";
 
 interface NewsCardProps {
   article: Article;
@@ -23,19 +24,22 @@ export function NewsCard({ article, variant = "default", className, priority }: 
 
   if (variant === "minimal") {
     return (
-      <Link href={href} className={cn("group block", className)}>
-        <CategoryBadge category={article.category} className="mb-1.5" />
-        <h4 className="line-clamp-2 text-sm font-semibold leading-snug transition-colors group-hover:text-brand-600">
-          {pick(article.title, locale)}
-        </h4>
-        <p className="mt-1 text-xs text-[rgb(var(--text-muted))]">{timeAgo(article.publishedAt, locale)}</p>
-      </Link>
+      <QuickActions article={article} className={className}>
+        <Link href={href} className="group block">
+          <CategoryBadge category={article.category} className="mb-1.5" />
+          <h4 className="line-clamp-2 text-sm font-semibold leading-snug transition-colors group-hover:text-brand-600">
+            {pick(article.title, locale)}
+          </h4>
+          <p className="mt-1 text-xs text-[rgb(var(--text-muted))]">{timeAgo(article.publishedAt, locale)}</p>
+        </Link>
+      </QuickActions>
     );
   }
 
   if (variant === "horizontal") {
     return (
-      <article className={cn("card group flex gap-4 overflow-hidden p-3 transition-shadow hover:shadow-card-hover", className)}>
+      <QuickActions article={article} className={className}>
+        <article className="card group flex gap-4 overflow-hidden p-3 transition-shadow hover:shadow-card-hover">
         <Link href={href} className="relative h-24 w-32 shrink-0 overflow-hidden rounded-lg sm:h-28 sm:w-40">
           <Image
             src={article.image}
@@ -56,11 +60,13 @@ export function NewsCard({ article, variant = "default", className, priority }: 
           </div>
         </div>
       </article>
+    </QuickActions>
     );
   }
 
   return (
-    <article className={cn("card group flex flex-col overflow-hidden transition-shadow hover:shadow-card-hover", className)}>
+    <QuickActions article={article} className={className}>
+      <article className="card group flex flex-col overflow-hidden transition-shadow hover:shadow-card-hover">
       <div className="relative">
         <Link href={href} className="relative block aspect-[16/10] overflow-hidden">
           <Image
@@ -92,6 +98,7 @@ export function NewsCard({ article, variant = "default", className, priority }: 
         </div>
       </div>
     </article>
+    </QuickActions>
   );
 }
 

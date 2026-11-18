@@ -7,7 +7,7 @@ import type {
   VisitorStats,
   TrafficSeries,
 } from "@/lib/types";
-import { getToken } from "./api";
+import { readStoredToken } from "@/lib/services/authService";
 
 /**
  * Client for the visitor-analytics API.
@@ -19,7 +19,7 @@ import { getToken } from "./api";
  */
 
 function authHeaders(): HeadersInit {
-  const token = getToken();
+  const token = readStoredToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 

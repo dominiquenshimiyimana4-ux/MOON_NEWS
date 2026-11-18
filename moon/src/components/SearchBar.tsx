@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Clock, Search, X } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import { articles } from "@/lib/data/articles";
-import { cn, pick } from "@/lib/utils";
+import { articlePath, cn, pick } from "@/lib/utils";
 
 const RECENT_KEY = "moon_news_recent_searches";
 
@@ -62,7 +62,7 @@ export function SearchBar({ variant = "full", autoFocus, className }: SearchBarP
 
   function goSuggestion(slug: string, category: string) {
     setOpen(false);
-    router.push(`/news/${category}/${slug}`);
+    router.push(articlePath({ category, slug }));
   }
 
   if (variant === "compact") {

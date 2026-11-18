@@ -19,7 +19,7 @@ import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { userService } from "@/lib/services/userService";
 import { categories, categoryMap } from "@/lib/data/categories";
 import { useLanguage } from "@/lib/i18n";
-import { pick, formatDate } from "@/lib/utils";
+import { articlePath, pick, formatDate } from "@/lib/utils";
 import { PageHeader, StatCard, ChartCard } from "@/components/admin/StatCard";
 import { BarChart } from "@/components/admin/Charts";
 import { NewsCard } from "@/components/NewsCard";
@@ -273,7 +273,7 @@ export default function ReaderDashboardPage() {
                 <li key={a.id} className="flex items-center gap-3 px-5 py-3">
                   <span className="min-w-0 flex-1">
                     <Link
-                      href={`/news/${a.category}/${a.slug}`}
+                      href={articlePath(a)}
                       className="block truncate text-sm font-medium hover:text-brand-600"
                     >
                       {pick(a.title, locale)}

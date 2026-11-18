@@ -17,11 +17,11 @@ export interface RegisterRequest {
 }
 
 /**
- * Roles a visitor may pick when signing up. Only reader accounts can be
+ * Roles a visitor may pick when signing up. Readers and stations can be
  * self-registered; advertiser, author and admin accounts are provisioned and
  * sign in through the browser.
  */
-const PUBLIC_REGISTER_ROLES = ['reader'];
+const PUBLIC_REGISTER_ROLES = ['reader', 'station'];
 
 /**
  * Provisioned accounts (admin, author, advertiser) are created by the seed
@@ -44,6 +44,18 @@ export interface AuthResponse {
     role: string;
     createdAt: string;
   };
+}
+
+export const AUTH_COOKIE_NAME = 'moon_news_token';
+
+function setAuthCookie(res: Response, token: string): void {
+  res.cookie(AUTH_COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000,
+    path: '/',
+  });
 }
 
 export const authController = {
@@ -70,6 +82,8 @@ export const authController = {
         email: user.email,
         role: user.role,
       });
+
+      setAuthCookie(res, token);
 
       const response: AuthResponse = {
         token,
@@ -153,7 +167,12 @@ export const authController = {
   },
 
   logout: async (req: AuthRequest, res: Response) => {
-    // JWT is stateless, logout is handled on frontend by removing token
+    res.clearCookie(AUTH_COOKIE_NAME, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
     res.json({ message: 'Logged out successfully' });
   },
 };

@@ -1,15 +1,13 @@
 import type { User, UserRole } from "@/lib/types";
 import {
   ADMIN_EMAIL,
-  checkCredentials,
-  createCredential,
-  credentialToUser,
   isReservedEmail,
   type PublicRole,
 } from "@/lib/auth/credentials";
-import { api, hasBackend, setToken, simulateLatency } from "./api";
+import { api, hasBackend } from "./api";
 
 const USER_KEY = "moon_news_user";
+const TOKEN_KEY = "moon_news_token";
 
 export interface LoginPayload {
   email: string;
@@ -35,6 +33,7 @@ export const roleLabels: Record<UserRole, string> = {
   journalist: "Journalist",
   reader: "Reader",
   advertiser: "Advertiser",
+  station: "Station",
 };
 
 /** The administrator sign-in address (kept out of every public UI surface). */
@@ -73,31 +72,30 @@ function storeUser(user: User | null) {
   else window.localStorage.removeItem(USER_KEY);
 }
 
-function fakeToken(user: User): string {
-  // Demo-only token. Never use this shape in production; the backend issues real JWTs.
-  const payload = btoa(JSON.stringify({ sub: user.id, role: user.role, iat: Date.now() }));
-  return `demo.${payload}.signature`;
+function storeToken(token: string | null) {
+  if (typeof window === "undefined") return;
+  if (token) window.localStorage.setItem(TOKEN_KEY, token);
+  else window.localStorage.removeItem(TOKEN_KEY);
+}
+
+export function readStoredToken(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(TOKEN_KEY);
+  } catch {
+    return null;
+  }
 }
 
 export const authService = {
   async login({ email, password }: LoginPayload): Promise<AuthResponse> {
-    if (hasBackend) {
-      const res = await api.post<AuthResponse>("/api/auth/login", { email, password });
-      setToken(res.token);
-      storeUser(res.user);
-      return res;
+    if (!hasBackend) {
+      throw new Error("Sign-in is unavailable because the authentication service is not configured.");
     }
-    await simulateLatency(300);
-    // Passwords are compared against a salted SHA-256 digest, never plain text.
-    const credential = await checkCredentials(email, password);
-    if (!credential) {
-      throw new Error("Invalid email or password.");
-    }
-    const user = credentialToUser(credential);
-    const token = fakeToken(user);
-    setToken(token);
-    storeUser(user);
-    return { token, user };
+    const res = await api.post<AuthResponse>("/api/auth/login", { email, password });
+    storeUser(res.user);
+    storeToken(res.token);
+    return res;
   },
 
   async register({
@@ -117,26 +115,17 @@ export const authService = {
         password,
         role,
       });
-      setToken(res.token);
       storeUser(res.user);
+      storeToken(res.token);
       return res;
     }
-    await simulateLatency(300);
-    if (!password || password.length < MIN_PASSWORD_LENGTH) {
-      throw new Error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
-    }
-    const credential = await createCredential({ name, email, password, role });
-    const user = credentialToUser(credential);
-    const token = fakeToken(user);
-    setToken(token);
-    storeUser(user);
-    return { token, user };
+    throw new Error("Registration is unavailable because the authentication service is not configured.");
   },
 
   async logout(): Promise<void> {
     if (hasBackend) await api.post("/api/auth/logout").catch(() => undefined);
-    setToken(null);
     storeUser(null);
+    storeToken(null);
   },
 
   currentUser(): User | null {
@@ -178,6 +167,7 @@ export function dashboardRouteFor(user: User | null): string {
   if (!user) return "/login";
   if (user.role === "reader") return "/reader";
   if (user.role === "advertiser") return "/advertiser";
+  if (user.role === "station") return "/station";
   if (user.role === "journalist") return "/author";
   return "/admin";
 }

@@ -47,7 +47,9 @@ interface LiveRequestContextValue {
   approvedEvents: LiveEvent[];
   /** The user's most recent request, regardless of status. */
   latestFor: (userId: string) => LiveRequest | null;
-  /** Submit a new request to go live. Returns the created request. */
+  /** Submit a new request to go live. Returns the created request.
+   *  Authors (journalist/editor/admin) go live immediately without approval;
+   *  readers still need an admin or author to confirm. */
   requestLive: (user: User, draft: LiveRequestDraft) => LiveRequest;
   /** Approve a request (author/admin action). */
   approve: (id: string, reviewerName: string) => void;
@@ -131,6 +133,11 @@ function byNewest(a: LiveRequest, b: LiveRequest): number {
   return +new Date(b.createdAt) - +new Date(a.createdAt);
 }
 
+/** Staff roles may broadcast without admin approval. */
+export function isStaff(user: Pick<User, "role">): boolean {
+  return user.role === "admin" || user.role === "editor" || user.role === "journalist";
+}
+
 export function LiveRequestProvider({ children }: { children: ReactNode }) {
   const [requests, setRequests] = useState<LiveRequest[]>([]);
   const [hydrated, setHydrated] = useState(false);
@@ -153,8 +160,9 @@ export function LiveRequestProvider({ children }: { children: ReactNode }) {
 
   const requestLive = useCallback(
     (user: User, draft: LiveRequestDraft) => {
-      // Reviewers need a badge even when no admin tab is open yet, so the
-      // request is also written to the admin's persistent notification store.
+      // Authors and staff can broadcast without asking anyone. Readers must
+      // still be confirmed by an admin or author before going live.
+      const staff = isStaff(user);
       const request: LiveRequest = {
         id: `lr-${Date.now()}`,
         userId: user.id,
@@ -163,10 +171,15 @@ export function LiveRequestProvider({ children }: { children: ReactNode }) {
         title: draft.title.trim(),
         description: draft.description.trim(),
         streamUrl: draft.streamUrl.trim(),
-        status: "pending",
+        status: staff ? "approved" : "pending",
+        // Staff self-authorize: record them as the reviewer of their own
+        // request so the queue never shows an author waiting on approval.
+        reviewedBy: staff ? user.name : undefined,
+        reviewedAt: staff ? new Date().toISOString() : undefined,
         createdAt: new Date().toISOString(),
       };
       persist([request, ...requests]);
+      if (staff) return request;
       // Remind the admin even if they have no admin tab open yet.
       pushNotification({
         id: liveRequestNotificationId(request.id),

@@ -64,6 +64,7 @@ export function Header() {
     { label: t("nav.live"), href: "/live" },
     { label: t("nav.video"), href: "/video" },
     { label: t("nav.photos"), href: "/photos" },
+    { label: "Channels", href: "/channels" },
     { label: t("nav.authors"), href: "/authors" },
   ];
 

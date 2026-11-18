@@ -8,10 +8,25 @@ import { categoryMap } from "@/lib/data/categories";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://moonnews.rw";
 
-export function generateStaticParams() {
-  return allArticles
-    .filter((a) => a.status === "published")
-    .map((a) => ({ category: a.category, slug: a.slug }));
+export async function generateStaticParams() {
+  const firstPage = await newsService.list({ status: "published", page: 1, pageSize: 100 });
+  const apiArticles = [...firstPage.items];
+
+  for (let page = 2; page <= firstPage.totalPages; page++) {
+    const result = await newsService.list({ status: "published", page, pageSize: 100 });
+    apiArticles.push(...result.items);
+  }
+
+  const articlesByPath = new Map(
+    [...allArticles.filter((article) => article.status === "published"), ...apiArticles].map(
+      (article) => [`${article.category}/${article.slug}`, article]
+    )
+  );
+
+  return Array.from(articlesByPath.values()).map((article) => ({
+    category: article.category,
+    slug: article.slug,
+  }));
 }
 
 export async function generateMetadata({

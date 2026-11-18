@@ -11,7 +11,7 @@ import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { EmptyState } from "@/components/EmptyState";
 
 const USERS_KEY = "moon_news_admin_users";
-const ROLES: UserRole[] = ["admin", "editor", "journalist", "reader", "advertiser"];
+const ROLES: UserRole[] = ["admin", "editor", "journalist", "reader", "advertiser", "station"];
 
 const roleStyles: Record<UserRole, string> = {
   admin: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300",
@@ -19,6 +19,7 @@ const roleStyles: Record<UserRole, string> = {
   journalist: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
   reader: "bg-[rgb(var(--bg-subtle))] text-[rgb(var(--text-muted))]",
   advertiser: "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300",
+  station: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300",
 };
 
 function loadUsers(): User[] {

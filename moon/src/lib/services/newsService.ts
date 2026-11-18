@@ -131,7 +131,11 @@ export const newsService = {
 
   async getBySlug(slug: string): Promise<Article | undefined> {
     if (hasBackend) {
-      return api.get<Article>(`/api/news/${slug}`).catch(() => undefined);
+      try {
+        return await api.get<Article>(`/api/news/${slug}`);
+      } catch {
+        return getArticles().find((article) => article.slug === slug);
+      }
     }
     await simulateLatency(150);
     return getArticles().find((a) => a.slug === slug);

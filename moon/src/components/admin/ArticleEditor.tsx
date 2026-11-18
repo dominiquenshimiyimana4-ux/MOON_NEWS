@@ -8,7 +8,7 @@ import type { Article, ArticleStatus, CategorySlug } from "@/lib/types";
 import { useAdmin } from "@/lib/admin/AdminProvider";
 import { categories } from "@/lib/data/categories";
 import { authors } from "@/lib/data/authors";
-import { slugify } from "@/lib/utils";
+import { articlePath, slugify } from "@/lib/utils";
 import { PageHeader } from "@/components/admin/StatCard";
 import { UploadButton } from "@/components/admin/UploadButton";
 
@@ -122,7 +122,7 @@ export function ArticleEditor({ existing }: { existing?: Article }) {
       alert("Add a title first to preview.");
       return;
     }
-    window.open(`/news/${form.category}/${effectiveSlug}`, "_blank", "noopener,noreferrer");
+    window.open(articlePath({ category: form.category, slug: effectiveSlug }), "_blank", "noopener,noreferrer");
   }
 
   if (!hydrated) return <div className="text-sm text-[rgb(var(--text-muted))]">Loading editor…</div>;

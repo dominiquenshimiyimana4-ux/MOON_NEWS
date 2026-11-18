@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Article, Locale } from "@/lib/types";
+import type { Locale } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -64,8 +64,8 @@ export function readingLabel(mins: number, locale: Locale): string {
   return locale === "rw" ? `Gusoma ${mins} min` : `${mins} min read`;
 }
 
-export function articlePath(a: Pick<Article, "category" | "slug">): string {
-  return `/news/${a.category}/${a.slug}`;
+export function articlePath(a: { category: string; slug: string }): string {
+  return `/story?category=${encodeURIComponent(a.category)}&slug=${encodeURIComponent(a.slug)}`;
 }
 
 export function slugify(input: string): string {

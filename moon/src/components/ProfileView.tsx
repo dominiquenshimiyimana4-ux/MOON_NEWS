@@ -10,6 +10,7 @@ import { useAuth } from "@/lib/auth/AuthProvider";
 import { roleLabels } from "@/lib/services/authService";
 import { userService } from "@/lib/services/userService";
 import { useLanguage } from "@/lib/i18n";
+import { articlePath } from "@/lib/utils";
 import { NewsCard } from "./NewsCard";
 import { EmptyState } from "./EmptyState";
 
@@ -101,7 +102,7 @@ export function ProfileView() {
             <ol className="space-y-3">
               {history.slice(0, 8).map((a) => (
                 <li key={a.id}>
-                  <Link href={`/news/${a.category}/${a.slug}`} className="group flex gap-3">
+                  <Link href={articlePath(a)} className="group flex gap-3">
                     <span className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg">
                       <Image src={a.image} alt="" fill sizes="80px" className="object-cover" />
                     </span>

@@ -1,23 +1,10 @@
-﻿/**
+/**
  * Thin API client. When NEXT_PUBLIC_API_URL is set, requests go to the real
  * backend; otherwise the service layer falls back to local sample data so the
  * UI is fully functional before integration.
  */
 export const API_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "";
 export const hasBackend = API_URL.length > 0;
-
-const TOKEN_KEY = "moon_news_token";
-
-export function getToken(): string | null {
-  if (typeof window === "undefined") return null;
-  return window.localStorage.getItem(TOKEN_KEY);
-}
-
-export function setToken(token: string | null) {
-  if (typeof window === "undefined") return;
-  if (token) window.localStorage.setItem(TOKEN_KEY, token);
-  else window.localStorage.removeItem(TOKEN_KEY);
-}
 
 export class ApiError extends Error {
   status: number;
@@ -33,7 +20,7 @@ export interface RequestOptions extends Omit<RequestInit, "body"> {
 }
 
 function buildUrl(path: string, query?: RequestOptions["query"]): string {
-  const url = `${API_URL}${path}`;
+  const url = hasBackend ? `/api/backend${path}` : path;
   if (!query) return url;
   const params = new URLSearchParams();
   Object.entries(query).forEach(([k, v]) => {
@@ -45,12 +32,11 @@ function buildUrl(path: string, query?: RequestOptions["query"]): string {
 
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { body, query, headers, ...rest } = options;
-  const token = getToken();
   const res = await fetch(buildUrl(path, query), {
     ...rest,
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -58,12 +44,11 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
 
   if (!res.ok) {
     const message = await res.text().catch(() => res.statusText);
-    throw new ApiError(message || `Request failed (${res.status})`, res.status);
+    throw new ApiError(message || 'Request failed', res.status);
   }
   if (res.status === 204) return undefined as T;
   return (await res.json()) as T;
 }
-
 export const api = {
   get: <T>(path: string, query?: RequestOptions["query"]) =>
     request<T>(path, { method: "GET", query }),

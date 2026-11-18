@@ -53,6 +53,8 @@ export const translations = {
   "article.tags": { rw: "Amagambo y'ingenzi", en: "Tags" },
   "article.source": { rw: "Aho byakuwe", en: "Source" },
   "article.progress": { rw: "Aho ugeze usoma", en: "Reading progress" },
+  "article.longPressHint": { rw: "Kanda kugira ngo ubone ibikorwa", en: "Long-press for quick actions" },
+  "article.quickActions": { rw: "Ibikorwa byihuse", en: "Quick actions" },
 
   "comments.title": { rw: "Ibitekerezo", en: "Comments" },
   "comments.placeholder": { rw: "Andika igitekerezo...", en: "Write a comment..." },

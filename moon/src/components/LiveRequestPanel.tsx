@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { CheckCircle2, Clock, Radio, Send, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
+import { isStaff, useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { useLanguage } from "@/lib/i18n";
 import { timeAgo } from "@/lib/utils";
 
 /**
  * "Go Live" request panel for readers on the Live page.
  *
- * Signed-out visitors are prompted to log in. A signed-in user can submit a
- * request (title, description, stream link) which an author or admin then
- * approves or rejects. Their latest request status is shown here so they always
- * know where they stand.
+ * Signed-out visitors are prompted to log in. Authors and staff go live
+ * instantly — no permission needed. Readers can submit a request
+ * (title, description, stream link) which an author or admin then approves or
+ * rejects. Their latest request status is shown here so they always know where
+ * they stand.
  */
 export function LiveRequestPanel() {
   const { user, hydrated } = useAuth();
@@ -54,7 +55,9 @@ export function LiveRequestPanel() {
           <div>
             <h2 className="font-serif text-base font-bold">{t("Ushaka gukora LIVE?", "Want to go live?")}</h2>
             <p className="text-xs text-[rgb(var(--text-muted))]">
-              {t("Saba uruhushya — umwanditsi cyangwa umuyobozi azabyemeza.", "Request permission — an author or admin will approve it.")}
+              {user && isStaff(user)
+                ? t("Nka mwanditsi — urashobora gutangira LIVE ubwo wenyine.", "As an author — you can go live right away, no approval needed.")
+                : t("Saba uruhushya — umwanditsi cyangwa umuyobozi azabyemeza.", "Request permission — an author or admin will approve it.")}
             </p>
           </div>
         </div>
@@ -62,7 +65,7 @@ export function LiveRequestPanel() {
             stream); the latest status is always shown below the form entry. */}
         {user && !open && (
           <button type="button" onClick={() => setOpen(true)} className="btn-primary">
-            <Radio className="h-4 w-4" /> {t("Saba LIVE", "Request to go live")}
+            <Radio className="h-4 w-4" /> {isStaff(user) ? t("Tangira LIVE", "Go live") : t("Saba LIVE", "Request to go live")}
           </button>
         )}
       </div>
@@ -148,7 +151,7 @@ export function LiveRequestPanel() {
               {t("Reka", "Cancel")}
             </button>
             <button type="submit" className="btn-primary">
-              <Send className="h-4 w-4" /> {t("Ohereza ubusabe", "Submit request")}
+              <Send className="h-4 w-4" /> {user && isStaff(user) ? t("Tangira LIVE", "Go live") : t("Ohereza ubusabe", "Submit request")}
             </button>
           </div>
         </form>
