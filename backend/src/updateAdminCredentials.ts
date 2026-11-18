@@ -18,7 +18,7 @@ dotenv.config();
  *   ADMIN_PASSWORD  – plain password, hashed before it touches the database
  */
 const ADMIN_NAME = process.env.ADMIN_NAME ?? 'Dominique Nshimiyimana';
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com').toLowerCase();
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'Dominique@2006';
 
 const updateAdminCredentials = async () => {

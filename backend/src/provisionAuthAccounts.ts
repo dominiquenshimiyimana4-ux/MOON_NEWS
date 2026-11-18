@@ -59,7 +59,7 @@ async function main(): Promise<void> {
       'ADMIN_PASSWORD',
       'admin',
       'Moon News Administrator',
-      'nshimiyimanadominique4@gmail.com'
+      'dominiquenshimiyimana4@gmail.com'
     ),
     accountFromEnvironment(
       'AUTHOR_NAME',

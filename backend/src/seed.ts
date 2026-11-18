@@ -22,7 +22,7 @@ const seedData = async () => {
     // Create users
     const hashedPassword = await hashPassword('password123');
     // Admin credentials come from the environment; only the bcrypt hash is stored.
-    const adminEmail = (process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com').toLowerCase();
+    const adminEmail = (process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase();
     const adminPassword = await hashPassword(process.env.ADMIN_PASSWORD ?? 'Dominique@2006');
     // Staff accounts for the author studio and the advertiser dashboard.
     // Like the admin, they come from the environment and only the bcrypt hash

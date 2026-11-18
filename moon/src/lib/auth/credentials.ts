@@ -110,7 +110,7 @@ function env(value: string | undefined, fallback: string): string {
 }
 
 /** Administrator sign-in address. Self-registration for this e-mail is blocked. */
-export const ADMIN_EMAIL = env(process.env.NEXT_PUBLIC_ADMIN_EMAIL, "nshimiyimanadominique4@gmail.com").toLowerCase();
+export const ADMIN_EMAIL = env(process.env.NEXT_PUBLIC_ADMIN_EMAIL, "dominiquenshimiyimana4@gmail.com").toLowerCase();
 const ADMIN_NAME = env(process.env.NEXT_PUBLIC_ADMIN_NAME, "Dominique Nshimiyimana");
 const ADMIN_PASSWORD = env(process.env.NEXT_PUBLIC_ADMIN_PASSWORD, "Dominique@2006");
 

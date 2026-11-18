@@ -29,7 +29,7 @@ const PUBLIC_REGISTER_ROLES = ['reader'];
  * reserved so nobody can sign up with them and shadow the real account.
  */
 const RESERVED_ADMIN_EMAILS = [
-  process.env.ADMIN_EMAIL ?? 'nshimiyimanadominique4@gmail.com',
+  process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com',
   process.env.AUTHOR_EMAIL ?? 'authormoonnews@gmail.com',
   process.env.ADVERTISER_EMAIL ?? 'advertisermoonnews@gmail.com',
 ].map((email) => email.trim().toLowerCase());
