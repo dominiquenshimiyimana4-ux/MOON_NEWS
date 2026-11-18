@@ -14,10 +14,13 @@ import { ReadingProgressBar } from "./ReadingProgressBar";
 import { CategoryBadge } from "./CategoryBadge";
 import { ArticleBody } from "./ArticleBody";
 import { ShareButtons } from "./ShareButtons";
+import { StickyShareButtons } from "./StickyShareButtons";
+import { PushNotificationPrompt } from "./PushNotificationPrompt";
 import { ArticleReaderControls } from "./ArticleReaderControls";
 import { CommentSection } from "./CommentSection";
 import { PopularStories } from "./PopularStories";
 import { NewsCard } from "./NewsCard";
+import { AdSlot, LeaderboardAd, SidebarAd, InArticleAd } from "./AdSlot";
 
 interface ArticleViewProps {
   article: Article;
@@ -40,6 +43,8 @@ export function ArticleView({ article, related, popular }: ArticleViewProps) {
 
   return (
     <>
+      <PushNotificationPrompt />
+
       <ReadingProgressBar />
       <article className="container-page py-6">
         {/* Breadcrumb */}
@@ -50,6 +55,9 @@ export function ArticleView({ article, related, popular }: ArticleViewProps) {
           <ChevronRight className="h-3.5 w-3.5" />
           <span className="truncate text-[rgb(var(--text))]">{title}</span>
         </nav>
+
+        {/* Leaderboard ad above content */}
+        <LeaderboardAd placement="article-leaderboard" />
 
         <div className="grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
@@ -95,7 +103,7 @@ export function ArticleView({ article, related, popular }: ArticleViewProps) {
             {/* Reader controls */}
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <ArticleReaderControls slug={article.slug} url={url || articlePath(article)} />
-              <ShareButtons url={url || articlePath(article)} title={title} compact className="sm:hidden" />
+              <StickyShareButtons url={url || articlePath(article)} title={title} />
             </div>
 
             {/* Main image */}
@@ -120,6 +128,9 @@ export function ArticleView({ article, related, popular }: ArticleViewProps) {
 
             {/* Body */}
             <ArticleBody content={pick(article.content, locale)} className="mt-8" />
+
+            {/* In-article ad slot after body */}
+            <InArticleAd placement="article-native" fallbackUrl="/latest" />
 
             {/* Tags */}
             {article.tags.length > 0 && (
@@ -168,6 +179,7 @@ export function ArticleView({ article, related, popular }: ArticleViewProps) {
           {/* Sidebar */}
           <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
             <PopularStories articles={popular} />
+            <SidebarAd placement="sidebar-rectangle" fallbackUrl="/latest" />
           </aside>
         </div>
 

@@ -36,6 +36,49 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// Push: show a notification when a push is received.
+self.addEventListener("push", (event) => {
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || "Moon News";
+  const options = {
+    body: data.body || "Breaking news from Moon News.",
+    icon: "/icons/icon-192x192.png",
+    badge: "/icons/icon-72x72.png",
+    tag: data.tag || "moon-news-push",
+    data: data.url ? { url: data.url } : {},
+    actions: data.actions
+      ? data.actions.map((a) => ({ action: a.action, title: a.title }))
+      : [{ action: "open", title: "Open" }],
+    requireInteraction: data.requireInteraction ?? false,
+    silent: data.silent ?? false,
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click: open the article or focus the app.
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = event.notification.data?.url || "/";
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      // Focus an existing window if one is already open.
+      for (const client of clients) {
+        if (client.url.includes(url) || client.url === self.location.origin + url) {
+          return client.focus();
+        }
+      }
+      // Otherwise open a new window.
+      return self.clients.openWindow(url);
+    })
+  );
+});
+
+// Notification dismiss (close).
+self.addEventListener("notificationclose", (event) => {
+  const { notification } = event;
+  // Optionally track dismissal analytics here.
+});
+
 // Fetch: network-first for pages, cache-first for assets.
 self.addEventListener("fetch", (event) => {
   const { request } = event;

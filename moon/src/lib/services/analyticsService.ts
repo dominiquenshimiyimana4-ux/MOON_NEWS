@@ -7,20 +7,18 @@ import type {
   VisitorStats,
   TrafficSeries,
 } from "@/lib/types";
-import { readStoredToken } from "@/lib/services/authService";
 
 /**
  * Client for the visitor-analytics API.
  *
  * Ingestion (`track`) is public — the visitor tracker calls it. All reporting
- * endpoints require an admin token, so they send the bearer token the auth
- * service stored. Requests go to the app's own `/api/*` routes, which normalise
- * access to the analytics store on the server.
+ * endpoints require an admin token, which is stored in an HTTP-only cookie.
+ * Requests go to the app's own `/api/*` routes with credentials, which the
+ * backend uses to authenticate.
  */
 
 function authHeaders(): HeadersInit {
-  const token = readStoredToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  return {};
 }
 
 export interface TrackPayload {
@@ -48,6 +46,7 @@ export const analyticsService = {
     try {
       const res = await fetch("/api/analytics/visit", {
         method: "POST",
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
         keepalive: true,
@@ -63,7 +62,7 @@ export const analyticsService = {
   async snapshot(range: TrafficRange = "7d"): Promise<AnalyticsSnapshot | null> {
     try {
       const res = await fetch(`/api/admin/analytics/visitors?range=${range}`, {
-        headers: authHeaders(),
+        credentials: "same-origin",
         cache: "no-store",
       });
       if (!res.ok) return null;
@@ -77,7 +76,7 @@ export const analyticsService = {
   async online(): Promise<(VisitorFeed & { at: string }) | null> {
     try {
       const res = await fetch("/api/admin/analytics/online", {
-        headers: authHeaders(),
+        credentials: "same-origin",
         cache: "no-store",
       });
       if (!res.ok) return null;
@@ -91,7 +90,7 @@ export const analyticsService = {
   async daily(range: TrafficRange = "7d"): Promise<TrafficSeries | null> {
     try {
       const res = await fetch(`/api/admin/analytics/daily?range=${range}`, {
-        headers: authHeaders(),
+        credentials: "same-origin",
         cache: "no-store",
       });
       if (!res.ok) return null;

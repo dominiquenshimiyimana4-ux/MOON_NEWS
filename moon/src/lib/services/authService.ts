@@ -7,7 +7,6 @@ import {
 import { api, hasBackend } from "./api";
 
 const USER_KEY = "moon_news_user";
-const TOKEN_KEY = "moon_news_token";
 
 export interface LoginPayload {
   email: string;
@@ -23,7 +22,6 @@ export interface RegisterPayload {
 }
 
 export interface AuthResponse {
-  token: string;
   user: User;
 }
 
@@ -72,21 +70,6 @@ function storeUser(user: User | null) {
   else window.localStorage.removeItem(USER_KEY);
 }
 
-function storeToken(token: string | null) {
-  if (typeof window === "undefined") return;
-  if (token) window.localStorage.setItem(TOKEN_KEY, token);
-  else window.localStorage.removeItem(TOKEN_KEY);
-}
-
-export function readStoredToken(): string | null {
-  if (typeof window === "undefined") return null;
-  try {
-    return window.localStorage.getItem(TOKEN_KEY);
-  } catch {
-    return null;
-  }
-}
-
 export const authService = {
   async login({ email, password }: LoginPayload): Promise<AuthResponse> {
     if (!hasBackend) {
@@ -94,7 +77,6 @@ export const authService = {
     }
     const res = await api.post<AuthResponse>("/api/auth/login", { email, password });
     storeUser(res.user);
-    storeToken(res.token);
     return res;
   },
 
@@ -116,8 +98,7 @@ export const authService = {
         role,
       });
       storeUser(res.user);
-      storeToken(res.token);
-      return res;
+        return res;
     }
     throw new Error("Registration is unavailable because the authentication service is not configured.");
   },
@@ -125,7 +106,6 @@ export const authService = {
   async logout(): Promise<void> {
     if (hasBackend) await api.post("/api/auth/logout").catch(() => undefined);
     storeUser(null);
-    storeToken(null);
   },
 
   currentUser(): User | null {

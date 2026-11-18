@@ -154,6 +154,9 @@ export const translations = {
   "common.dark": { rw: "Umwijima", en: "Dark" },
   "common.system": { rw: "Sisitemu", en: "System" },
   "common.language": { rw: "Ururimi", en: "Language" },
+
+  "notifications.enable": { rw: "Nyamunyesha", en: "Enable" },
+  "notifications.later": { rw: "Bikurikira", en: "Later" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

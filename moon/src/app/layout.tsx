@@ -8,6 +8,7 @@ import { MobileTabBar } from "@/components/MobileTabBar";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { VisitorTracker } from "@/components/analytics/VisitorTracker";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://moonnews.rw";
 
@@ -138,6 +139,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <MobileTabBar />
           <InstallPrompt />
+          <PushNotificationPrompt />
         </Providers>
       </body>
     </html>
