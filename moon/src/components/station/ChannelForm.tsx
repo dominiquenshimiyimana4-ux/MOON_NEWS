@@ -177,7 +177,7 @@ export function ChannelForm({
             required
           />
           <span className="mt-1 block text-xs text-[rgb(var(--text-muted))]">
-            A live-stream URL or your station's website — shown on your channel page.
+            A live-stream URL or your station&apos;s website — shown on your channel page.
           </span>
         </label>
 

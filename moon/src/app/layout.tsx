@@ -7,6 +7,7 @@ import { BreakingNews } from "@/components/BreakingNews";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { VisitorTracker } from "@/components/analytics/VisitorTracker";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://moonnews.rw";
 
@@ -93,10 +94,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap"
           rel="stylesheet"
         />
+        {/* PWA: web app manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/apple-icon-180x180.svg" />
+        <link rel="icon" href="/icons/icon-192x192.svg" />
         {/* Apply the persisted theme before paint to avoid a flash. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('moon_news_theme');var d=t==='dark'||((!t||t==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.classList.toggle('dark',d);r.style.colorScheme=d?'dark':'light';}catch(e){}})();`,
+          }}
+        />
+        {/* PWA: register service worker */}
+        <script
+          id="sw-register"
+          dangerouslySetInnerHTML={{
+            __html: `(()=>{if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(()=>{}).catch(()=>{})}})();`,
           }}
         />
         <script
@@ -125,6 +137,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <Footer />
           <MobileTabBar />
+          <InstallPrompt />
         </Providers>
       </body>
     </html>

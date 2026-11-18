@@ -1,6 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import { extractTokenFromHeader, verifyToken } from '../utils/jwt';
 
+function extractToken(req: AuthRequest): string | null {
+  const headerToken = extractTokenFromHeader(req.headers.authorization);
+  if (headerToken) return headerToken;
+
+  const cookie = req.headers.cookie;
+  if (!cookie) return null;
+  const match = cookie
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith('moon_news_token='));
+  return match ? decodeURIComponent(match.slice(match.indexOf('=') + 1)) : null;
+}
+
 export interface AuthRequest extends Request {
   user?: {
     id: string;
@@ -10,7 +23,7 @@ export interface AuthRequest extends Request {
 }
 
 export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = extractTokenFromHeader(req.headers.authorization);
+  const token = extractToken(req);
 
   if (!token) {
     return res.status(401).json({ error: 'Unauthorized - No token provided' });
@@ -26,7 +39,7 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
 };
 
 export const optionalAuth = (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = extractTokenFromHeader(req.headers.authorization);
+  const token = extractToken(req);
 
   if (token) {
     const payload = verifyToken(token);

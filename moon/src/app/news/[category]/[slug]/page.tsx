@@ -8,6 +8,8 @@ import { categoryMap } from "@/lib/data/categories";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://moonnews.rw";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const firstPage = await newsService.list({ status: "published", page: 1, pageSize: 100 });
   const apiArticles = [...firstPage.items];

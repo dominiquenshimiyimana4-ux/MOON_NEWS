@@ -21,6 +21,8 @@ async function proxy(req: NextRequest, path: string[], method: string) {
   if (contentType) headers.set("content-type", contentType);
   const cookie = req.headers.get("cookie");
   if (cookie) headers.set("cookie", cookie);
+  const origin = req.headers.get("origin");
+  if (origin) headers.set("origin", origin);
 
   const response = await fetch(backendUrl(req, path), {
     method,

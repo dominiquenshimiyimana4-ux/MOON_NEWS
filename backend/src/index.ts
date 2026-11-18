@@ -38,6 +38,14 @@ app.use(
     maxAge: 86400,
   }),
 );
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (!['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) return next();
+  const origin = req.headers.origin?.trim().replace(/\/+$/, '');
+  if (!origin) return next();
+  if (allowedOrigins.includes(origin)) return next();
+  return res.status(403).json({ error: 'Forbidden cross-origin request' });
+});
+
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 

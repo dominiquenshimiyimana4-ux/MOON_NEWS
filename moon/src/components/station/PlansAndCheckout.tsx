@@ -102,7 +102,7 @@ export function PlansAndCheckout({
           ) : channel.status === "pending" ? (
             <>⏳ Your channel is awaiting administrator review. Plans unlock once it is approved.</>
           ) : (
-            <>Your channel was not approved yet — see the dashboard for the reviewer's note.</>
+            <>Your channel was not approved yet — see the dashboard for the reviewer&apos;s note.</>
           )}
         </div>
       )}
@@ -165,7 +165,7 @@ export function PlansAndCheckout({
 
             <div className="mt-4 flex items-start gap-2 rounded-lg border border-border bg-[rgb(var(--bg-subtle))] p-3 text-xs text-[rgb(var(--text-muted))]">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-              You'll pay on our payment provider's secure hosted page. Moon News never
+              You&apos;ll pay on our payment provider&apos;s secure hosted page. Moon News never
               sees or stores your card details. Reference{" "}
               <strong className="ml-1">{checkout.providerRef}</strong>
             </div>
@@ -190,7 +190,7 @@ export function PlansAndCheckout({
                 ) : (
                   <Check className="h-4 w-4" />
                 )}
-                I've paid — activate my channel
+                I&apos;ve paid — activate my channel
               </button>
               <button
                 type="button"

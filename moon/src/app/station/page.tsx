@@ -105,7 +105,7 @@ export default function StationDashboardPage() {
         </span>
         {channel.status === "pending" && (
           <p className="text-sm text-[rgb(var(--text-muted))]">
-            ⏳ An administrator is reviewing your channel. You can pick a plan once it's approved.
+            ⏳ An administrator is reviewing your channel. You can pick a plan once it&apos;s approved.
           </p>
         )}
         {channel.status === "rejected" && (
