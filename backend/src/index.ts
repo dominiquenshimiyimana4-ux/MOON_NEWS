@@ -16,7 +16,7 @@ app.use(helmet());
 // still set to a development-only value. Additional origins remain configurable.
 const allowedOrigins = [
   'https://moon-news.moonn.workers.dev',
-  'http://localhost:3000',
+ // 'http://localhost:3000',
   ...(process.env.FRONTEND_URL || '').split(','),
 ]
   .map((origin) => origin.trim().replace(/\/+$/, ''))

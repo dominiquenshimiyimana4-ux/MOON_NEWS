@@ -2,7 +2,6 @@ import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import Channel, { IChannel } from '../models/Channel';
 import ChannelPayment from '../models/ChannelPayment';
-import User from '../models/User';
 
 /* ------------------------- Station channel plans ------------------------- */
 /* Prices in RWF. Yearly billing carries a ~2-month discount.               */

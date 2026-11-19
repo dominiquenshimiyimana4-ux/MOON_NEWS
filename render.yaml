@@ -3,6 +3,7 @@ services:
     name: moon-news-backend
     runtime: node
     plan: free
+    rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -21,18 +22,18 @@ services:
       - key: ADMIN_EMAIL
         value: dominiquenshimiyimana4@gmail.com
       - key: ADMIN_PASSWORD
-        value: Dominique@2006
+        sync: false
       - key: AUTHOR_NAME
         value: Moon News Author
       - key: AUTHOR_EMAIL
         value: authormoonnews@gmail.com
       - key: AUTHOR_PASSWORD
-        value: Author01
+        sync: false
       - key: ADVERTISER_NAME
         value: Moon News Advertiser
       - key: ADVERTISER_EMAIL
         value: advertisermoonnews@gmail.com
       - key: ADVERTISER_PASSWORD
-        value: Advertiser02
+        sync: false
     # Run provision after first deploy via Render shell:
     # npm run provision:auth

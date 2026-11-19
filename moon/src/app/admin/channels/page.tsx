@@ -123,13 +123,80 @@ export default function AdminChannelsPage() {
       {adding && (
         <form onSubmit={addChannel} className="card mb-6 grid gap-4 p-5 sm:grid-cols-2">
           <h2 className="font-serif text-lg font-bold sm:col-span-2">Add a published radio or TV channel</h2>
-          <label className="text-sm font-medium">Station name *<input className="input mt-1" required minLength={2} maxLength={80} value={newChannel.stationName} onChange={(e) => setNewChannel({ ...newChannel, stationName: e.target.value })} /></label>
-          <label className="text-sm font-medium">Type *<select className="input mt-1" value={newChannel.type} onChange={(e) => setNewChannel({ ...newChannel, type: e.target.value as Channel["type"] })}><option value="radio">Radio</option><option value="television">Television</option></select></label>
-          <label className="text-sm font-medium">Location *<input className="input mt-1" required minLength={2} maxLength={80} value={newChannel.location} onChange={(e) => setNewChannel({ ...newChannel, location: e.target.value })} /></label>
-          <label className="text-sm font-medium">Stream / website URL *<input className="input mt-1" type="url" required value={newChannel.streamUrl} onChange={(e) => setNewChannel({ ...newChannel, streamUrl: e.target.value })} placeholder="https://..." /></label>
-          <label className="text-sm font-medium sm:col-span-2">Description *<textarea className="input mt-1 min-h-24" required minLength={20} maxLength={1000} value={newChannel.description} onChange={(e) => setNewChannel({ ...newChannel, description: e.target.value })} /></label>
-          <label className="text-sm font-medium sm:col-span-2">Logo URL<input className="input mt-1" type="url" value={newChannel.logo} onChange={(e) => setNewChannel({ ...newChannel, logo: e.target.value })} placeholder="Optional" /></label>
-          <div className="flex gap-2 sm:col-span-2"><button className="btn-primary" type="submit" disabled={creating}>{creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />} Add and publish</button><button className="btn-outline" type="button" onClick={() => setAdding(false)}>Cancel</button></div>
+          <label className="text-sm font-medium">
+            Station name *
+            <input
+              className="input mt-1"
+              required
+              minLength={2}
+              maxLength={80}
+              value={newChannel.stationName}
+              onChange={(e) => setNewChannel({ ...newChannel, stationName: e.target.value })}
+            />
+          </label>
+          <label className="text-sm font-medium">
+            Type *
+            <select
+              className="input mt-1"
+              value={newChannel.type}
+              onChange={(e) => setNewChannel({ ...newChannel, type: e.target.value as Channel["type"] })}
+            >
+              <option value="radio">Radio</option>
+              <option value="television">Television</option>
+            </select>
+          </label>
+          <label className="text-sm font-medium">
+            Location *
+            <input
+              className="input mt-1"
+              required
+              minLength={2}
+              maxLength={80}
+              value={newChannel.location}
+              onChange={(e) => setNewChannel({ ...newChannel, location: e.target.value })}
+            />
+          </label>
+          <label className="text-sm font-medium">
+            Stream / website URL *
+            <input
+              className="input mt-1"
+              type="url"
+              required
+              value={newChannel.streamUrl}
+              onChange={(e) => setNewChannel({ ...newChannel, streamUrl: e.target.value })}
+              placeholder="https://..."
+            />
+          </label>
+          <label className="text-sm font-medium sm:col-span-2">
+            Description *
+            <textarea
+              className="input mt-1 min-h-24"
+              required
+              minLength={20}
+              maxLength={1000}
+              value={newChannel.description}
+              onChange={(e) => setNewChannel({ ...newChannel, description: e.target.value })}
+            />
+          </label>
+          <label className="text-sm font-medium sm:col-span-2">
+            Logo URL
+            <input
+              className="input mt-1"
+              type="url"
+              value={newChannel.logo}
+              onChange={(e) => setNewChannel({ ...newChannel, logo: e.target.value })}
+              placeholder="Optional"
+            />
+          </label>
+          <div className="flex gap-2 sm:col-span-2">
+            <button className="btn-primary" type="submit" disabled={creating}>
+              {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+              Add and publish
+            </button>
+            <button className="btn-outline" type="button" onClick={() => setAdding(false)}>
+              Cancel
+            </button>
+          </div>
         </form>
       )}
 

@@ -98,7 +98,7 @@ export const authService = {
         role,
       });
       storeUser(res.user);
-        return res;
+      return res;
     }
     throw new Error("Registration is unavailable because the authentication service is not configured.");
   },

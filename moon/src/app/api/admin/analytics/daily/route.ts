@@ -14,7 +14,7 @@ const RANGES: TrafficRange[] = ["today", "7d", "30d", "12m"];
  * for the requested range — the data behind the visitor chart.
  */
 export async function GET(req: NextRequest) {
-  const guard = requireAdmin(req);
+  const guard = await requireAdmin(req);
   if (!guard.ok) {
     return NextResponse.json({ error: guard.error }, { status: guard.status });
   }

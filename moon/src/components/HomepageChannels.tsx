@@ -11,11 +11,14 @@ export function HomepageChannels() {
 
   useEffect(() => {
     let active = true;
-    channelService.listActive().then((items) => {
-      if (active) setChannels(items.slice(0, 4));
-    }).catch(() => {
-      if (active) setChannels([]);
-    });
+    channelService
+      .listActive()
+      .then((items) => {
+        if (active) setChannels(items.slice(0, 4));
+      })
+      .catch(() => {
+        if (active) setChannels([]);
+      });
     return () => {
       active = false;
     };
@@ -24,13 +27,15 @@ export function HomepageChannels() {
   if (channels.length === 0) return null;
 
   return (
-    <section aria-labelledby="homepage-channels-heading" className="card rounded-2xl p-5 sm:p-6">
+    <section aria-labelledby="homepage-channels-heading" className="card rounded-2xl border-border p-5 sm:p-6">
       <div className="mb-4 flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-brand-600">Listen & watch live</p>
           <h2 id="homepage-channels-heading" className="mt-1 font-serif text-2xl font-bold">Radio & TV</h2>
         </div>
-        <Link href="/channels" className="text-sm font-semibold text-brand-600 hover:underline">All channels →</Link>
+        <Link href="/channels" className="text-sm font-semibold text-brand-600 hover:underline">
+          All channels →
+        </Link>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {channels.map((channel) => (
@@ -49,8 +54,21 @@ export function HomepageChannels() {
                 <p className="text-xs capitalize text-[rgb(var(--text-muted))]">{channel.type} · {channel.location}</p>
               </div>
             </div>
-            <a href={channel.streamUrl} target="_blank" rel="noopener noreferrer" className="btn-primary mt-4 w-full text-sm">
-              {channel.type === "radio" ? <><Radio className="h-4 w-4" /> Listen now</> : <><Tv className="h-4 w-4" /> Watch TV</>}
+            <a
+              href={channel.streamUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary mt-4 w-full text-sm"
+            >
+              {channel.type === "radio" ? (
+                <>
+                  <Radio className="h-4 w-4" /> Listen now
+                </>
+              ) : (
+                <>
+                  <Tv className="h-4 w-4" /> Watch TV
+                </>
+              )}
             </a>
           </article>
         ))}

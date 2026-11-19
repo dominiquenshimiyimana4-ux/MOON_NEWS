@@ -17,10 +17,6 @@ import type {
  * backend uses to authenticate.
  */
 
-function authHeaders(): HeadersInit {
-  return {};
-}
-
 export interface TrackPayload {
   visitorToken: string;
   sessionId: string;

@@ -35,7 +35,6 @@ const RESERVED_ADMIN_EMAILS = [
 ].map((email) => email.trim().toLowerCase());
 
 export interface AuthResponse {
-  token: string;
   user: {
     id: string;
     name: string;
@@ -86,7 +85,6 @@ export const authController = {
       setAuthCookie(res, token);
 
       const response: AuthResponse = {
-        token,
         user: {
           id: user._id.toString(),
           name: user.name,
@@ -147,8 +145,9 @@ export const authController = {
         role: newUser.role,
       });
 
+      setAuthCookie(res, token);
+
       const response: AuthResponse = {
-        token,
         user: {
           id: newUser._id.toString(),
           name: newUser.name,

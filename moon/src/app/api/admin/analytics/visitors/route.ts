@@ -15,7 +15,7 @@ const RANGES: TrafficRange[] = ["today", "7d", "30d", "12m"];
  * top articles/pages/sources/devices. Only admins and editors may read it.
  */
 export async function GET(req: NextRequest) {
-  const guard = requireAdmin(req);
+  const guard = await requireAdmin(req);
   if (!guard.ok) {
     return NextResponse.json({ error: guard.error }, { status: guard.status });
   }

@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
  * a page reload.
  */
 export async function GET(req: NextRequest) {
-  const guard = requireAdmin(req);
+  const guard = await requireAdmin(req);
   if (!guard.ok) {
     return NextResponse.json({ error: guard.error }, { status: guard.status });
   }
