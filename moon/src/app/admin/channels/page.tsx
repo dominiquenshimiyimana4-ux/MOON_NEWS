@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { Check, Loader2, Radio, ShieldAlert, Tv, X } from "lucide-react";
+import { Check, Loader2, Plus, Radio, ShieldAlert, Tv, X } from "lucide-react";
 import type { Channel } from "@/lib/types";
 import { api } from "@/lib/services/api";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -32,6 +32,16 @@ export default function AdminChannelsPage() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejecting, setRejecting] = useState<Channel | null>(null);
   const [note, setNote] = useState("");
+  const [adding, setAdding] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [newChannel, setNewChannel] = useState({
+    stationName: "",
+    type: "radio" as Channel["type"],
+    description: "",
+    location: "",
+    streamUrl: "",
+    logo: "",
+  });
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -48,6 +58,22 @@ export default function AdminChannelsPage() {
   useEffect(() => {
     load();
   }, [load]);
+
+  async function addChannel(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setCreating(true);
+    setError("");
+    try {
+      await api.post<Channel>("/api/channels/admin", newChannel);
+      setNewChannel({ stationName: "", type: "radio", description: "", location: "", streamUrl: "", logo: "" });
+      setAdding(false);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not add the channel.");
+    } finally {
+      setCreating(false);
+    }
+  }
 
   async function decide(channel: Channel, decision: "approved" | "rejected", reviewNote?: string) {
     setBusyId(channel.id);
@@ -81,13 +107,31 @@ export default function AdminChannelsPage() {
     <div>
       <PageHeader
         title="Channel Review"
-        subtitle="Approve radio and television stations before they can subscribe and go live."
+        subtitle="Review station submissions or add official radio and TV feeds for immediate public access."
         action={
-          <button type="button" className="btn-outline" onClick={load} disabled={loading}>
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null} Refresh
-          </button>
+          <div className="flex gap-2">
+            <button type="button" className="btn-primary" onClick={() => setAdding((value) => !value)}>
+              <Plus className="h-4 w-4" /> Add channel
+            </button>
+            <button type="button" className="btn-outline" onClick={load} disabled={loading}>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null} Refresh
+            </button>
+          </div>
         }
       />
+
+      {adding && (
+        <form onSubmit={addChannel} className="card mb-6 grid gap-4 p-5 sm:grid-cols-2">
+          <h2 className="font-serif text-lg font-bold sm:col-span-2">Add a published radio or TV channel</h2>
+          <label className="text-sm font-medium">Station name *<input className="input mt-1" required minLength={2} maxLength={80} value={newChannel.stationName} onChange={(e) => setNewChannel({ ...newChannel, stationName: e.target.value })} /></label>
+          <label className="text-sm font-medium">Type *<select className="input mt-1" value={newChannel.type} onChange={(e) => setNewChannel({ ...newChannel, type: e.target.value as Channel["type"] })}><option value="radio">Radio</option><option value="television">Television</option></select></label>
+          <label className="text-sm font-medium">Location *<input className="input mt-1" required minLength={2} maxLength={80} value={newChannel.location} onChange={(e) => setNewChannel({ ...newChannel, location: e.target.value })} /></label>
+          <label className="text-sm font-medium">Stream / website URL *<input className="input mt-1" type="url" required value={newChannel.streamUrl} onChange={(e) => setNewChannel({ ...newChannel, streamUrl: e.target.value })} placeholder="https://..." /></label>
+          <label className="text-sm font-medium sm:col-span-2">Description *<textarea className="input mt-1 min-h-24" required minLength={20} maxLength={1000} value={newChannel.description} onChange={(e) => setNewChannel({ ...newChannel, description: e.target.value })} /></label>
+          <label className="text-sm font-medium sm:col-span-2">Logo URL<input className="input mt-1" type="url" value={newChannel.logo} onChange={(e) => setNewChannel({ ...newChannel, logo: e.target.value })} placeholder="Optional" /></label>
+          <div className="flex gap-2 sm:col-span-2"><button className="btn-primary" type="submit" disabled={creating}>{creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />} Add and publish</button><button className="btn-outline" type="button" onClick={() => setAdding(false)}>Cancel</button></div>
+        </form>
+      )}
 
       {error && (
         <div className="mb-4 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300">

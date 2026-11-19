@@ -555,6 +555,7 @@ export interface Channel {
   location: string;
   streamUrl: string;
   status: ChannelStatus;
+  adminManaged?: boolean;
   reviewNote?: string;
   subscription: ChannelSubscription;
   createdAt: string;

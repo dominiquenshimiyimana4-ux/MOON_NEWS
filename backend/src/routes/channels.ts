@@ -26,7 +26,8 @@ router.post('/subscribe', authMiddleware, writeLimiter, channelController.subscr
 router.post('/payments/:ref/confirm', authMiddleware, channelController.confirmPayment);
 router.delete('/mine/subscription', authMiddleware, channelController.cancelSubscription);
 
-// Administrator review queue and decisions.
+// Administrator channel management and review queue.
+router.post('/admin', authMiddleware, writeLimiter, requireRole('admin'), channelController.createAdmin);
 router.get('/admin/all', authMiddleware, requireRole('admin'), channelController.listAll);
 router.patch('/:id/review', authMiddleware, requireRole('admin'), channelController.review);
 

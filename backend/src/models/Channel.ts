@@ -13,6 +13,7 @@ export interface IChannel extends Document {
   location: string;
   streamUrl: string; // streaming or website link
   status: ChannelStatus;
+  adminManaged: boolean;
   reviewNote?: string; // admin note on rejection
   reviewedBy?: string;
   reviewedAt?: Date;
@@ -38,6 +39,7 @@ const channelSchema = new Schema<IChannel>(
     location: { type: String, required: true, trim: true },
     streamUrl: { type: String, required: true, trim: true },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending', index: true },
+    adminManaged: { type: Boolean, default: false, index: true },
     reviewNote: { type: String },
     reviewedBy: { type: String },
     reviewedAt: { type: Date },

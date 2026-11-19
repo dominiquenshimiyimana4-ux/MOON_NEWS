@@ -6,6 +6,7 @@ import { CategorySection } from "@/components/CategorySection";
 import { VideoSection } from "@/components/VideoSection";
 import { PhotoSection } from "@/components/PhotoSection";
 import { Newsletter } from "@/components/Newsletter";
+import { HomepageChannels } from "@/components/HomepageChannels";
 import { newsService } from "@/lib/services/newsService";
 
 export default async function HomePage() {
@@ -47,6 +48,8 @@ export default async function HomePage() {
       <CategorySection category="technology" articles={technology.items} />
 
       <PhotoSection limit={4} />
+
+      <HomepageChannels />
 
       <Newsletter />
     </div>

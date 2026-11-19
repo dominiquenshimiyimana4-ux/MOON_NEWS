@@ -61,6 +61,7 @@ function publicChannel(ch: IChannel) {
     location: ch.location,
     streamUrl: ch.streamUrl,
     status: ch.status,
+    adminManaged: ch.adminManaged ?? false,
     reviewNote: ch.reviewNote,
     subscription: ch.subscription,
     createdAt: ch.createdAt,
@@ -113,7 +114,7 @@ export const channelController = {
     try {
       const channels = await Channel.find({
         status: 'approved',
-        'subscription.status': 'active',
+        $or: [{ adminManaged: true }, { 'subscription.status': 'active' }],
       }).sort({ createdAt: -1 });
       res.json(channels.map(publicChannel));
     } catch (error) {
@@ -151,7 +152,7 @@ export const channelController = {
         return res.status(400).json({ error: errors[0], errors });
       }
 
-      const channel = new Channel({ ...values, ownerId: req.user!.id, status: 'pending' });
+      const channel = new Channel({ ...values, ownerId: req.user!.id, status: 'pending', adminManaged: false });
       await channel.save();
       res.status(201).json(publicChannel(channel));
     } catch (error) {
@@ -197,6 +198,7 @@ export const channelController = {
       if (!channel) return res.status(404).json({ error: 'Channel not found' });
 
       channel.status = decision;
+      channel.adminManaged = false;
       channel.reviewNote = decision === 'rejected' ? note!.trim() : undefined;
       channel.reviewedBy = req.user!.id;
       channel.reviewedAt = new Date();
@@ -204,6 +206,33 @@ export const channelController = {
       res.json(publicChannel(channel));
     } catch (error) {
       console.error('Review channel error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
+  /** POST /api/channels/admin — add and immediately publish an administrator-managed channel. */
+  createAdmin: async (req: AuthRequest, res: Response) => {
+    try {
+      const { errors, values } = validateChannelInput(req.body);
+      if (errors.length > 0) {
+        return res.status(400).json({ error: errors[0], errors });
+      }
+
+      const channel = new Channel({
+        ...values,
+        // Admin-managed public channels do not belong to a station account.
+        // Give each a distinct owner key because station accounts have a unique owner index.
+        ownerId: `admin:${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+        status: 'approved',
+        adminManaged: true,
+        subscription: { status: 'none', plan: null, planName: null, billingPeriod: null },
+        reviewedBy: req.user!.id,
+        reviewedAt: new Date(),
+      });
+      await channel.save();
+      res.status(201).json(publicChannel(channel));
+    } catch (error) {
+      console.error('Admin create channel error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   },
