@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -9,7 +8,7 @@ export const connectDB = async (): Promise<void> => {
 
   if (!mongoUri) {
     throw new Error(
-      'MONGODB_URI is missing. Set it in Render Environment.'
+      'MONGODB_URI is missing. Set it in Render Environment or your local .env file.',
     );
   }
 
@@ -19,7 +18,7 @@ export const connectDB = async (): Promise<void> => {
     parsedUri = new URL(mongoUri);
   } catch {
     throw new Error(
-      'MONGODB_URI is not a valid URL. Copy the complete URI from MongoDB Atlas.'
+      'MONGODB_URI is not a valid URL. Copy the complete URI from MongoDB Atlas.',
     );
   }
 
@@ -28,13 +27,18 @@ export const connectDB = async (): Promise<void> => {
     parsedUri.protocol !== 'mongodb+srv:'
   ) {
     throw new Error(
-      'MONGODB_URI must start with mongodb:// or mongodb+srv://'
+      'MONGODB_URI must start with mongodb:// or mongodb+srv://',
     );
   }
 
-  if (!parsedUri.hostname || !parsedUri.hostname.includes('.')) {
+  const isLocalMongoHost =
+    parsedUri.hostname === 'localhost' ||
+    parsedUri.hostname === '127.0.0.1' ||
+    parsedUri.hostname === '::1';
+
+  if (!parsedUri.hostname || (!parsedUri.hostname.includes('.') && !isLocalMongoHost)) {
     throw new Error(
-      'MongoDB hostname is missing or incomplete. Copy the URI from Atlas.'
+      'MongoDB hostname is missing or incomplete. Copy the URI from Atlas.',
     );
   }
 
@@ -43,7 +47,7 @@ export const connectDB = async (): Promise<void> => {
     mongoUri.includes('YOUR_REAL_CLUSTER_HOST')
   ) {
     throw new Error(
-      'MONGODB_URI still contains a placeholder. Replace it with your actual Atlas values.'
+      'MONGODB_URI still contains a placeholder. Replace it with your actual MongoDB values.',
     );
   }
 
@@ -56,7 +60,7 @@ export const connectDB = async (): Promise<void> => {
   } catch (error) {
     console.error(
       'MongoDB connection failed. Check Atlas credentials, hostname, and Network Access.',
-      error instanceof Error ? error.message : 'Unknown connection error'
+      error instanceof Error ? error.message : 'Unknown connection error',
     );
 
     throw error;
