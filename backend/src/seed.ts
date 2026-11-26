@@ -10,6 +10,15 @@ dotenv.config();
 
 const seedData = async () => {
   try {
+    // This seeder deletes users, articles, and comments. Never allow it in production,
+    // and require an explicit opt-in even for development databases.
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('The demo seeder is disabled in production.');
+    }
+    if (process.env.SEED_DEMO_DATA !== 'true') {
+      throw new Error('Set SEED_DEMO_DATA=true to confirm that this disposable database may be cleared.');
+    }
+
     await connectDB();
     console.log('Connected to MongoDB');
 
@@ -116,7 +125,7 @@ const seedData = async () => {
           en: 'Rwanda has launched a new digital innovation initiative designed to empower young people and expand the country\'s software industry. This marks a significant moment for digital innovation in Rwanda, and observers say its effects will be felt well beyond the announcement.',
         },
         category: 'technology',
-        authorId: users[2]._id,
+        authorId: users[1]._id,
         image: 'https://picsum.photos/seed/moon-digital/1200/800',
         imageCaption: 'Young developers at a Kigali innovation hub.',
         tags: ['innovation', 'technology', 'youth', 'kigali'],
@@ -144,7 +153,7 @@ const seedData = async () => {
           en: 'Kigali\'s financial markets closed the quarter on a strong footing, buoyed by new investment and cross-border trade.',
         },
         category: 'business',
-        authorId: users[3]._id,
+        authorId: users[1]._id,
         image: 'https://picsum.photos/seed/moon-markets/1200/800',
         tags: ['economy', 'markets', 'investment'],
         status: 'published',
@@ -170,7 +179,7 @@ const seedData = async () => {
           en: 'The national football league title race has intensified after a dramatic round of results.',
         },
         category: 'sports',
-        authorId: users[2]._id,
+        authorId: users[1]._id,
         image: 'https://picsum.photos/seed/moon-football/1200/800',
         tags: ['football', 'league', 'sports'],
         status: 'published',
@@ -195,7 +204,7 @@ const seedData = async () => {
           en: 'The Health Ministry has launched a comprehensive wellness program designed to reduce lifestyle diseases and improve public health outcomes.',
         },
         category: 'health',
-        authorId: users[3]._id,
+        authorId: users[1]._id,
         image: 'https://picsum.photos/seed/moon-health/1200/800',
         tags: ['health', 'wellness', 'public health'],
         status: 'published',
@@ -220,7 +229,7 @@ const seedData = async () => {
           en: 'A new education reform initiative has been launched to modernize school curricula and prepare students for the digital age.',
         },
         category: 'education',
-        authorId: users[2]._id,
+        authorId: users[1]._id,
         image: 'https://picsum.photos/seed/moon-education/1200/800',
         tags: ['education', 'reform', 'schools'],
         status: 'published',
