@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // "output: export" builds a static site for Firebase Hosting, but it forbids
-  // dynamic API routes (the /api/backend proxy). During local development we
-  // need a real server, so only export when explicitly building for deploy.
-  ...(process.env.BUILD_EXPORT === "1" ? { output: "export" } : {}),
+  // Moon News uses Next.js server features (Route Handlers, SSR, and
+  // request-time analytics), so production builds must remain server-capable.
+  // Static export is intentionally not enabled by default.
   reactStrictMode: true,
+  outputFileTracingRoot: process.cwd(),
   images: {
-    // The default Next.js image optimizer needs a server.
-    // Use unoptimized images with static export.
+    // Keep images unoptimized so the app also works with serverless/edge
+    // deployments without requiring the Next.js image optimizer service.
     unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
