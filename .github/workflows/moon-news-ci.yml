@@ -36,4 +36,4 @@ jobs:
           cache-dependency-path: moon/package-lock.json
       - run: npm ci
       - run: npm run typecheck
-      - run: BUILD_EXPORT=1 npm run build
+      - run: npm run build
