@@ -18,17 +18,17 @@ dotenv.config();
  *   ADMIN_PASSWORD  – plain password, hashed before it touches the database
  */
 const ADMIN_NAME = process.env.ADMIN_NAME ?? 'Dominique Nshimiyimana';
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase();
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'Dominique@2006';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const updateAdminCredentials = async () => {
   try {
-    await connectDB();
-
-    if (ADMIN_PASSWORD.length < 8) {
-      throw new Error('ADMIN_PASSWORD must be at least 8 characters long.');
+    if (!ADMIN_EMAIL) throw new Error('ADMIN_EMAIL must be configured in the environment.');
+    if (!ADMIN_PASSWORD || ADMIN_PASSWORD.length < 12) {
+      throw new Error('ADMIN_PASSWORD must be configured with at least 12 characters.');
     }
 
+    await connectDB();
     const passwordHash = await hashPassword(ADMIN_PASSWORD);
 
     const admin = await User.findOne({ email: ADMIN_EMAIL }).select('+password');
@@ -51,8 +51,6 @@ const updateAdminCredentials = async () => {
       console.log(`Admin created: ${ADMIN_EMAIL} (password stored as bcrypt hash)`);
     }
 
-    // Only the hash is ever persisted; show the beginning of it as a sanity check.
-    console.log(`Stored hash prefix: ${passwordHash.slice(0, 7)}...`);
   } catch (error) {
     console.error('Failed to update admin credentials:', error);
     process.exitCode = 1;
