@@ -25,8 +25,8 @@ function accountFromEnvironment(
   const email = (process.env[emailKey]?.trim() || defaultEmail).toLowerCase();
   const password = process.env[passwordKey] ?? '';
 
-  if (!password || password.length < 8) {
-    throw new Error(`${passwordKey} must be set to at least 8 characters.`);
+  if (!password || password.length < 12) {
+    throw new Error(`${passwordKey} must be set to at least 12 characters.`);
   }
 
   return { name, email, password, role };
