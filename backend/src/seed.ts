@@ -13,7 +13,16 @@ const seedData = async () => {
     await connectDB();
     console.log('Connected to MongoDB');
 
-    // Clear existing data
+    // Validate admin secrets before touching existing database records.
+    const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+    const rawAdminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminEmail) throw new Error('ADMIN_EMAIL must be configured before seeding.');
+    if (!rawAdminPassword || rawAdminPassword.length < 12) {
+      throw new Error('ADMIN_PASSWORD must be configured with at least 12 characters before seeding.');
+    }
+
+    // WARNING: this demo seeder deletes all users, articles, and comments.
+    // Use only with a disposable development database, never production.
     await User.deleteMany({});
     await Article.deleteMany({});
     await Comment.deleteMany({});
@@ -21,9 +30,8 @@ const seedData = async () => {
 
     // Create users
     const hashedPassword = await hashPassword('password123');
-    // Admin credentials come from the environment; only the bcrypt hash is stored.
-    const adminEmail = (process.env.ADMIN_EMAIL ?? 'dominiquenshimiyimana4@gmail.com').toLowerCase();
-    const adminPassword = await hashPassword(process.env.ADMIN_PASSWORD ?? 'Dominique@2006');
+    // Admin password is read only from the environment and stored as a bcrypt hash.
+    const adminPassword = await hashPassword(rawAdminPassword);
     // Staff accounts for the author studio and the advertiser dashboard.
     // Like the admin, they come from the environment and only the bcrypt hash
     // is stored, so the same credentials work against the frontend login form.
