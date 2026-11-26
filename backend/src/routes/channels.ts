@@ -18,13 +18,13 @@ const writeLimiter = rateLimit({
 // Public: the active channel directory.
 router.get('/', channelController.listPublic);
 
-// Station endpoints (any signed-in station account).
-router.get('/mine', authMiddleware, channelController.getMine);
-router.post('/', authMiddleware, writeLimiter, channelController.create);
-router.patch('/mine', authMiddleware, channelController.updateMine);
-router.post('/subscribe', authMiddleware, writeLimiter, channelController.subscribe);
-router.post('/payments/:ref/confirm', authMiddleware, channelController.confirmPayment);
-router.delete('/mine/subscription', authMiddleware, channelController.cancelSubscription);
+// Station account endpoints.
+router.get('/mine', authMiddleware, requireRole('station'), channelController.getMine);
+router.post('/', authMiddleware, requireRole('station'), writeLimiter, channelController.create);
+router.patch('/mine', authMiddleware, requireRole('station'), channelController.updateMine);
+router.post('/subscribe', authMiddleware, requireRole('station'), writeLimiter, channelController.subscribe);
+router.post('/payments/:ref/confirm', authMiddleware, requireRole('station'), writeLimiter, channelController.confirmPayment);
+router.delete('/mine/subscription', authMiddleware, requireRole('station'), channelController.cancelSubscription);
 
 // Administrator channel management and review queue.
 router.post('/admin', authMiddleware, writeLimiter, requireRole('admin'), channelController.createAdmin);

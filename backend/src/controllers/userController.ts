@@ -3,6 +3,7 @@ import { AuthRequest } from '../middleware/auth';
 import Bookmark from '../models/Bookmark';
 import NewsletterSubscriber from '../models/NewsletterSubscriber';
 import Article from '../models/Article';
+import User from '../models/User';
 import { Types } from 'mongoose';
 
 export const userController = {
@@ -184,17 +185,56 @@ export const userController = {
         return res.status(401).json({ error: 'Unauthorized - Must be logged in' });
       }
 
-      const { name, avatar, bio } = req.body;
-      // This would update the user in the User model
-      // For now, just return success
+      const allowedFields = ['name', 'avatar', 'bio'] as const;
+      const updates: Partial<Record<(typeof allowedFields)[number], string>> = {};
+      const unset: Partial<Record<(typeof allowedFields)[number], 1>> = {};
+      for (const field of allowedFields) {
+        if (Object.prototype.hasOwnProperty.call(req.body, field)) {
+          const value: unknown = req.body[field];
+          if (value !== null && typeof value !== 'string') {
+            return res.status(400).json({ error: `${field} must be a string` });
+          }
+          const trimmed = typeof value === 'string' ? value.trim() : '';
+          if ((field === 'name' && (trimmed.length < 1 || trimmed.length > 100)) ||
+            (field === 'bio' && trimmed.length > 500) ||
+            (field === 'avatar' && trimmed.length > 2048)) {
+            return res.status(400).json({ error: `Invalid ${field} length` });
+          }
+          if (!trimmed && field !== 'name') {
+            unset[field] = 1;
+          } else {
+            updates[field] = trimmed;
+          }
+        }
+      }
+
+      if (Object.keys(updates).length === 0 && Object.keys(unset).length === 0) {
+        return res.status(400).json({ error: 'No valid profile fields provided' });
+      }
+
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          ...(Object.keys(updates).length > 0 && { $set: { ...updates, updatedAt: new Date() } }),
+          ...(Object.keys(unset).length > 0 && { $unset: unset }),
+        },
+        { new: true, runValidators: true },
+      );
+      if (user && Object.keys(unset).length > 0) {
+        user.updatedAt = new Date();
+        await user.save();
+      }
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
 
       res.json({
-        id: req.user.id,
-        email: req.user.email,
-        role: req.user.role,
-        name,
-        avatar,
-        bio,
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+        bio: user.bio,
       });
     } catch (error) {
       console.error('Update profile error:', error);

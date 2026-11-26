@@ -15,6 +15,7 @@ export interface IChannelPayment extends Document {
   /** Provider reference from the secure payment provider — never card data. */
   provider: string;
   providerRef: string;
+  providerTransactionId?: string;
   checkoutUrl?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -31,7 +32,8 @@ const channelPaymentSchema = new Schema<IChannelPayment>(
     currency: { type: String, default: 'RWF' },
     status: { type: String, enum: ['pending', 'confirmed', 'failed'], default: 'pending', index: true },
     provider: { type: String, default: 'flutterwave' },
-    providerRef: { type: String, required: true },
+    providerRef: { type: String, required: true, unique: true },
+    providerTransactionId: { type: String },
     checkoutUrl: { type: String },
   },
   { timestamps: true }

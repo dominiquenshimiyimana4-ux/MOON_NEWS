@@ -1,7 +1,9 @@
+import { randomUUID } from 'node:crypto';
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import Channel, { IChannel } from '../models/Channel';
 import ChannelPayment from '../models/ChannelPayment';
+import User from '../models/User';
 
 /* ------------------------- Station channel plans ------------------------- */
 /* Prices in RWF. Yearly billing carries a ~2-month discount.               */
@@ -270,9 +272,53 @@ export const channelController = {
       if (channel.status !== 'approved') {
         return res.status(403).json({ error: 'Your channel must be approved by an administrator before subscribing.' });
       }
+      if (channel.adminManaged) {
+        return res.status(403).json({ error: 'Admin-managed channels cannot subscribe to a station plan.' });
+      }
 
       const amount = plan.prices[billingPeriod];
-      const providerRef = `MN-CH-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+      const providerRef = `MN-CH-${randomUUID()}`;
+      const secretKey = process.env.FLUTTERWAVE_SECRET_KEY?.trim();
+      const frontendUrl = (process.env.FRONTEND_URL || '').split(',')[0].trim().replace(/\/+$/, '');
+      if (!secretKey || !frontendUrl) {
+        return res.status(503).json({ error: 'Payment checkout is not configured.' });
+      }
+
+      const user = await User.findById(req.user!.id).select('name email');
+      if (!user) return res.status(404).json({ error: 'Station account not found.' });
+
+      const checkoutResponse = await fetch('https://api.flutterwave.com/v3/payments', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          tx_ref: providerRef,
+          amount,
+          currency: 'RWF',
+          redirect_url: `${frontendUrl}/station/plans`,
+          customer: { email: user.email, name: user.name },
+          customizations: { title: 'Moon News Channel Subscription', description: plan.name },
+          configuration: { session_duration: 30, max_retry_attempt: 3 },
+          meta: { ownerId: user.id, channelId: channel._id.toString(), planId: plan.id },
+        }),
+        signal: AbortSignal.timeout(15000),
+      });
+      if (!checkoutResponse.ok) {
+        console.error('Payment provider checkout failed:', checkoutResponse.status);
+        return res.status(502).json({ error: 'Could not start checkout with the payment provider.' });
+      }
+
+      const checkoutResult = (await checkoutResponse.json()) as {
+        status?: string;
+        data?: { link?: string };
+      };
+      if (checkoutResult.status !== 'success' || !checkoutResult.data?.link) {
+        console.error('Payment provider returned an invalid checkout response.');
+        return res.status(502).json({ error: 'The payment provider did not return a checkout link.' });
+      }
 
       const payment = new ChannelPayment({
         channelId: channel._id.toString(),
@@ -283,17 +329,10 @@ export const channelController = {
         amount,
         currency: 'RWF',
         status: 'pending',
-        provider: process.env.PAYMENT_GATEWAY_URL ? 'gateway' : 'flutterwave-sandbox',
+        provider: 'flutterwave',
         providerRef,
+        checkoutUrl: checkoutResult.data.link,
       });
-
-      // Hosted-checkout URL. With a real PAYMENT_GATEWAY_URL this is the URL
-      // returned by the provider's "create checkout session" API.
-      const gatewayUrl = process.env.PAYMENT_GATEWAY_URL?.trim();
-      payment.checkoutUrl =
-        gatewayUrl
-          ? `${gatewayUrl.replace(/\/$/, '')}/checkout?ref=${providerRef}&amount=${amount}&currency=RWF`
-          : `https://checkout.flutterwave.com/sandbox?ref=${providerRef}&amount=${amount}&currency=RWF`;
 
       await payment.save();
       res.status(201).json(payment);
@@ -304,9 +343,8 @@ export const channelController = {
   },
 
   /**
-   * POST /api/channels/payments/:ref/confirm — the payment provider (or the
-   * station returning from hosted checkout) confirms the charge. Only here is
-   * the subscription activated.
+   * POST /api/channels/payments/:ref/confirm — verifies the Flutterwave
+   * transaction server-to-server before activating a subscription.
    */
   confirmPayment: async (req: AuthRequest, res: Response) => {
     try {
@@ -316,29 +354,103 @@ export const channelController = {
         return res.status(403).json({ error: 'Not your payment.' });
       }
       if (payment.status === 'confirmed') {
+        const confirmedTransactionId = req.body?.transactionId;
+        if (
+          confirmedTransactionId &&
+          String(confirmedTransactionId) !== payment.providerTransactionId
+        ) {
+          return res.status(409).json({ error: 'Transaction does not match this payment.' });
+        }
         return res.json(payment);
       }
 
-      // In production this endpoint is called by the provider's webhook after
-      // signature verification. Here the owner confirms after hosted checkout.
-      payment.status = 'confirmed';
-      await payment.save();
-
-      const channel = await Channel.findById(payment.channelId);
-      if (channel) {
-        const days = payment.billingPeriod === 'yearly' ? 365 : 30;
-        channel.subscription = {
-          status: 'active',
-          plan: payment.planId,
-          planName: payment.planName,
-          billingPeriod: payment.billingPeriod,
-          startedAt: new Date(),
-          renewsAt: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
-        };
-        await channel.save();
+      // Never trust the browser redirect as proof of payment. The only payment
+      // provider that is currently implemented is Flutterwave, so sandbox
+      // payments remain pending until its transaction verification succeeds.
+      if (payment.provider !== 'flutterwave') {
+        return res.status(503).json({ error: 'Payment provider verification is not configured.' });
       }
 
-      res.json(payment);
+      const transactionId = req.body?.transactionId;
+      if (typeof transactionId !== 'string' && typeof transactionId !== 'number') {
+        return res.status(400).json({ error: 'A valid Flutterwave transactionId is required.' });
+      }
+      const transactionIdString = String(transactionId);
+      if (!/^\d+$/.test(transactionIdString)) {
+        return res.status(400).json({ error: 'A valid Flutterwave transactionId is required.' });
+      }
+
+      const apiKey = process.env.FLUTTERWAVE_SECRET_KEY?.trim();
+      if (!apiKey) {
+        return res.status(503).json({ error: 'Payment verification is not configured.' });
+      }
+
+      const verification = await fetch(
+        `https://api.flutterwave.com/v3/transactions/${encodeURIComponent(transactionIdString)}/verify`,
+        {
+          headers: { Authorization: `Bearer ${apiKey}`, Accept: 'application/json' },
+          signal: AbortSignal.timeout(10000),
+        },
+      );
+      if (!verification.ok) {
+        console.error('Payment provider verification failed:', verification.status);
+        return res.status(502).json({ error: 'Could not verify payment with the provider.' });
+      }
+
+      const result = (await verification.json()) as {
+        status?: string;
+        data?: {
+          id?: number;
+          status?: string;
+          tx_ref?: string;
+          customer?: { email?: string };
+          amount?: number;
+          currency?: string;
+        };
+      };
+      const station = await User.findById(payment.ownerId).select('email');
+      if (
+        !station ||
+        result.status !== 'success' ||
+        result.data?.status !== 'successful' ||
+        result.data.tx_ref !== payment.providerRef ||
+        String(result.data.id) !== transactionIdString ||
+        String(result.data.customer?.email ?? '').trim().toLowerCase() !== station.email.toLowerCase() ||
+        Number(result.data.amount) !== payment.amount ||
+        result.data.currency !== payment.currency ||
+        !result.data.id
+      ) {
+        return res.status(402).json({ error: 'The provider has not verified this payment.' });
+      }
+
+      const channel = await Channel.findOne({ _id: payment.channelId, ownerId: payment.ownerId });
+      if (!channel) return res.status(404).json({ error: 'Channel not found.' });
+
+      // Conditional update makes duplicate confirmation requests idempotent and
+      // prevents a concurrent request from replacing a newer subscription.
+      const confirmedPayment = await ChannelPayment.findOneAndUpdate(
+        { _id: payment._id, status: 'pending' },
+        { $set: { status: 'confirmed', providerTransactionId: String(result.data.id) } },
+        { new: true },
+      );
+      if (!confirmedPayment) {
+        const currentPayment = await ChannelPayment.findById(payment._id);
+        if (currentPayment?.status === 'confirmed') return res.json(currentPayment);
+        return res.status(409).json({ error: 'Payment status changed. Please refresh and try again.' });
+      }
+
+      const days = payment.billingPeriod === 'yearly' ? 365 : 30;
+      channel.subscription = {
+        status: 'active',
+        plan: payment.planId,
+        planName: payment.planName,
+        billingPeriod: payment.billingPeriod,
+        startedAt: new Date(),
+        renewsAt: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
+      };
+      await channel.save();
+
+      res.json(confirmedPayment);
     } catch (error) {
       console.error('Confirm payment error:', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -350,6 +462,9 @@ export const channelController = {
     try {
       const channel = await Channel.findOne({ ownerId: req.user!.id });
       if (!channel) return res.status(404).json({ error: 'Channel not found' });
+      if (channel.adminManaged) {
+        return res.status(403).json({ error: 'Admin-managed channels do not have station subscriptions.' });
+      }
       channel.subscription.status = 'canceled';
       await channel.save();
       res.json(publicChannel(channel));
