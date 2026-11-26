@@ -43,10 +43,19 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   });
 
   if (!res.ok) {
-    const message = await res.text().catch(() => res.statusText);
-    throw new ApiError(message || 'Request failed', res.status);
+    let message = res.statusText || 'Request failed';
+    try {
+      const payload: unknown = await res.json();
+      if (payload && typeof payload === 'object' && 'error' in payload && typeof payload.error === 'string') {
+        message = payload.error;
+      }
+    } catch {
+      // Non-JSON errors keep the response status text.
+    }
+    throw new ApiError(message, res.status);
   }
   if (res.status === 204) return undefined as T;
+  if (res.headers.get("content-length") === "0") return undefined as T;
   return (await res.json()) as T;
 }
 export const api = {
@@ -63,5 +72,6 @@ export const api = {
 
 /** Small delay so loading/skeleton states are visible in the demo. */
 export function simulateLatency(ms = 250): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

@@ -2,7 +2,6 @@
 
 import { Loader2 } from "lucide-react";
 import { useChannelDashboard } from "@/lib/hooks/useChannelDashboard";
-import { channelService } from "@/lib/services/channelService";
 import { PlansAndCheckout } from "@/components/station/PlansAndCheckout";
 import { PageHeader } from "@/components/admin/StatCard";
 

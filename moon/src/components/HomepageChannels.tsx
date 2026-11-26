@@ -27,7 +27,7 @@ export function HomepageChannels() {
   if (channels.length === 0) return null;
 
   return (
-    <section aria-labelledby="homepage-channels-heading" className="card rounded-2xl border-border p-5 sm:p-6">
+    <section aria-labelledby="homepage-channels-heading" className="card p-5 sm:p-6">
       <div className="mb-4 flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-brand-600">Listen & watch live</p>

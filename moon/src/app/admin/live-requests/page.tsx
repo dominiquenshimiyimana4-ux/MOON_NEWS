@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, ExternalLink, Radio, X, Filter } from "lucide-react";
+import { Check, ExternalLink, Radio, X } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { useLiveRequests } from "@/lib/live/LiveRequestProvider";
 import { roleLabels } from "@/lib/services/authService";

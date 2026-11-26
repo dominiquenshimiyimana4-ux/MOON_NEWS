@@ -582,6 +582,7 @@ export interface ChannelPayment {
   status: "pending" | "confirmed" | "failed";
   provider: string;
   providerRef: string;
+  providerTransactionId?: string;
   checkoutUrl?: string;
   createdAt: string;
   updatedAt: string;

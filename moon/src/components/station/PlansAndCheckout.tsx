@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, CreditCard, ExternalLink, Loader2, ShieldCheck } from "lucide-react";
 import type { BillingPeriod, Channel, ChannelPayment, ChannelPlan } from "@/lib/types";
 import { channelService } from "@/lib/services/channelService";
@@ -34,6 +34,25 @@ export function PlansAndCheckout({
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [confirming, setConfirming] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returnedRef = params.get("tx_ref");
+    const returnedTransactionId = params.get("transaction_id");
+    if (returnedRef && returnedTransactionId) {
+      channelService.getMyChannel().then(({ payments }) => {
+        const payment = payments.find((item) => item.providerRef === returnedRef);
+        if (payment) {
+          setCheckout(payment);
+          setTransactionId(returnedTransactionId);
+        }
+        window.history.replaceState({}, "", window.location.pathname);
+      }).catch(() => {
+        setError("Could not load payment details. Refresh the page and try again.");
+      });
+    }
+  }, []);
 
   const canSubscribe = channel.status === "approved" && channel.subscription.status !== "active";
 
@@ -51,11 +70,14 @@ export function PlansAndCheckout({
   }
 
   async function confirm() {
-    if (!checkout) return;
+    if (!checkout || !transactionId.trim()) {
+      setError("Enter the transaction ID returned by the payment provider.");
+      return;
+    }
     setConfirming(true);
     setError("");
     try {
-      await channelService.confirmPayment(checkout.providerRef);
+      await channelService.confirmPayment(checkout.providerRef, transactionId.trim());
       setCheckout(null);
       await onDone();
     } catch (err) {
@@ -171,14 +193,26 @@ export function PlansAndCheckout({
             </div>
 
             <div className="mt-5 flex flex-col gap-2">
-              <a
-                href={checkout.checkoutUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary w-full"
-              >
-                <ExternalLink className="h-4 w-4" /> Open secure payment page
-              </a>
+              {checkout.checkoutUrl && (
+                <a
+                  href={checkout.checkoutUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary w-full"
+                >
+                  <ExternalLink className="h-4 w-4" /> Open secure payment page
+                </a>
+              )}
+              <label className="label" htmlFor="flutterwave-transaction-id">Payment transaction ID</label>
+              <input
+                id="flutterwave-transaction-id"
+                value={transactionId}
+                onChange={(event) => setTransactionId(event.target.value)}
+                inputMode="numeric"
+                autoComplete="off"
+                className="input"
+                placeholder="Enter the transaction ID from Flutterwave"
+              />
               <button
                 type="button"
                 className="btn-outline w-full"
@@ -190,7 +224,7 @@ export function PlansAndCheckout({
                 ) : (
                   <Check className="h-4 w-4" />
                 )}
-                I&apos;ve paid — activate my channel
+                Verify payment
               </button>
               <button
                 type="button"

@@ -1,8 +1,6 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
-
-type Operator = "+" | "-" | "*" | "/";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 type CalculatorContextValue = {
   display: string;
@@ -18,15 +16,15 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
   const [display, setDisplay] = useState("0");
   const [error, setError] = useState<string | null>(null);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     setDisplay("0");
     setError(null);
-  };
+  }, []);
 
-  const input = (value: string) => {
+  const input = useCallback((value: string) => {
     setError(null);
     setDisplay((current) => {
-      if (value === "." && current.includes(".")) return current;
+      if (value === "." && current.split(/[+\-*/]/).at(-1)?.includes(".")) return current;
       if (/^[+\-*/]$/.test(value)) {
         if (/^[+\-*/]$/.test(current.slice(-1))) return current.slice(0, -1) + value;
         return current + value;
@@ -34,9 +32,9 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
       if (current === "0" && value !== ".") return value;
       return current + value;
     });
-  };
+  }, []);
 
-  const calculate = () => {
+  const calculate = useCallback(() => {
     try {
       const expression = display.replace(/×/g, "*").replace(/÷/g, "/");
       if (!/^[0-9+\-*/. ]+$/.test(expression) || /[+\-*/.]$/.test(expression)) {
@@ -49,9 +47,12 @@ export function CalculatorProvider({ children }: { children: React.ReactNode }) 
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid calculation");
     }
-  };
+  }, [display]);
 
-  const value = useMemo(() => ({ display, error, input, clear, calculate }), [display, error]);
+  const value = useMemo(
+    () => ({ display, error, input, clear, calculate }),
+    [display, error, input, clear, calculate]
+  );
 
   return <CalculatorContext.Provider value={value}>{children}</CalculatorContext.Provider>;
 }
@@ -78,13 +79,26 @@ export function HookCalculator() {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3">
-        <button type="button" onClick={clear} className="col-span-4 rounded-xl bg-rose-600 py-3 text-lg font-semibold hover:bg-rose-500" aria-label="Clear calculator">Clear</button>
+        <button
+          type="button"
+          onClick={clear}
+          className="col-span-4 rounded-xl bg-rose-600 py-3 text-lg font-semibold hover:bg-rose-500"
+          aria-label="Clear calculator"
+        >
+          Clear
+        </button>
         {keys.map((key) => (
           <button
             key={key}
             type="button"
             onClick={() => (key === "=" ? calculate() : input(key))}
-            className={`rounded-xl py-4 text-xl font-semibold transition-colors ${key === "=" ? "bg-emerald-600 hover:bg-emerald-500" : /^[+\-*/]$/.test(key) ? "bg-slate-700 hover:bg-slate-600" : "bg-slate-800 hover:bg-slate-700"}`}
+            className={`rounded-xl py-4 text-xl font-semibold transition-colors ${
+              key === "="
+                ? "bg-emerald-600 hover:bg-emerald-500"
+                : /^[+\-*/]$/.test(key)
+                  ? "bg-slate-700 hover:bg-slate-600"
+                  : "bg-slate-800 hover:bg-slate-700"
+            }`}
             aria-label={key === "=" ? "Calculate" : key}
           >
             {key === "*" ? "×" : key === "/" ? "÷" : key}

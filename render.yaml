@@ -21,20 +21,24 @@ services:
       - key: ADMIN_NAME
         value: Moon News Administrator
       - key: ADMIN_EMAIL
-        value: dominiquenshimiyimana4@gmail.com
+        sync: false
       - key: ADMIN_PASSWORD
         sync: false
       - key: AUTHOR_NAME
         value: Moon News Author
       - key: AUTHOR_EMAIL
-        value: authormoonnews@gmail.com
+        sync: false
       - key: AUTHOR_PASSWORD
         sync: false
       - key: ADVERTISER_NAME
         value: Moon News Advertiser
       - key: ADVERTISER_EMAIL
-        value: advertisermoonnews@gmail.com
+        sync: false
+      - key: FLUTTERWAVE_PUBLIC_KEY
+        sync: false
+      - key: FLUTTERWAVE_SECRET_KEY
+        sync: false
       - key: ADVERTISER_PASSWORD
         sync: false
-    # Run provision after first deploy via Render shell:
-    # npm run provision:auth
+    # Configure generated secrets and provision accounts after first deploy.
+    # Payments remain unavailable until Flutterwave credentials are configured.

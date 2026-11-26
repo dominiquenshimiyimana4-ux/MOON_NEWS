@@ -16,20 +16,20 @@ async function proxy(req: NextRequest, path: string[], method: string) {
     return NextResponse.json({ error: "Backend API is not configured." }, { status: 503 });
   }
 
-  const headers = new Headers();
+  const requestHeaders = new Headers();
   const contentType = req.headers.get("content-type");
-  if (contentType) headers.set("content-type", contentType);
+  if (contentType) requestHeaders.set("content-type", contentType);
   const cookie = req.headers.get("cookie");
-  if (cookie) headers.set("cookie", cookie);
-  const origin = req.headers.get("origin");
-  if (origin) headers.set("origin", origin);
+  if (cookie) requestHeaders.set("cookie", cookie);
 
-  const response = await fetch(backendUrl(req, path), {
-    method,
-    headers,
-    body: method === "GET" || method === "HEAD" ? undefined : await req.arrayBuffer(),
-    redirect: "manual",
-  });
+  try {
+    const response = await fetch(backendUrl(req, path), {
+      method,
+      headers: requestHeaders,
+      body: method === "GET" || method === "HEAD" ? undefined : await req.arrayBuffer(),
+      redirect: "manual",
+      signal: AbortSignal.timeout(15000),
+    });
 
   const responseHeaders = new Headers(response.headers);
   responseHeaders.delete("set-cookie");
@@ -44,8 +44,12 @@ async function proxy(req: NextRequest, path: string[], method: string) {
     responseHeaders.set("set-cookie", rewritten);
   }
 
-  const body = method === "HEAD" ? null : await response.arrayBuffer();
-  return new NextResponse(body, { status: response.status, headers: responseHeaders });
+    const body = method === "HEAD" ? null : await response.arrayBuffer();
+    return new NextResponse(body, { status: response.status, headers: responseHeaders });
+  } catch (error) {
+    console.error("Backend API proxy request failed:", error);
+    return NextResponse.json({ error: "Backend API is temporarily unavailable." }, { status: 502 });
+  }
 }
 
 export function GET(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
@@ -62,7 +66,4 @@ export function PATCH(req: NextRequest, context: { params: Promise<{ path: strin
 }
 export function DELETE(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
   return context.params.then((p) => proxy(req, p.path, "DELETE"));
-}
-export function OPTIONS(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
-  return context.params.then((p) => proxy(req, p.path, "OPTIONS"));
 }

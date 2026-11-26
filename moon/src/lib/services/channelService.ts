@@ -69,10 +69,11 @@ export const channelService = {
     });
   },
 
-  /** Confirm the hosted-checkout payment; activates the subscription. */
-  async confirmPayment(providerRef: string): Promise<ChannelPayment> {
+  /** Verify the hosted-checkout transaction and activate the subscription. */
+  async confirmPayment(providerRef: string, transactionId: string): Promise<ChannelPayment> {
     return api.post<ChannelPayment>(
-      `/api/channels/payments/${encodeURIComponent(providerRef)}/confirm`
+      `/api/channels/payments/${encodeURIComponent(providerRef)}/confirm`,
+      { transactionId },
     );
   },
 
